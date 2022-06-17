@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="email">Email</string>
+    <string name="password">Пароль</string>
+    <string name="phone">Номер телефона</string>
+    <string name="userName">Имя пользователя</string>
+</resources>

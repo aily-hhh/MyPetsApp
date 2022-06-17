@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">MyPetsApp</string>
+    <string name="signIn">Войти</string>
+    <string name="registration">Зарегистрироваться</string>
+    <string name="settings">Настройки</string>
+    <string name="email">Email</string>
+    <string name="password">Пароль</string>
+    <string name="phone">Номер телефона</string>
+    <string name="userName">Имя пользователя</string>
+
+</resources>
