@@ -20,10 +20,10 @@
             app:layout_constraintVertical_bias="0.173" />
 
         <Button
-            android:id="@+id/signInButton"
+            android:id="@+id/vetPassportButton"
             style="@style/buttonStyle"
-            android:layout_marginBottom="156dp"
-            android:text="@string/signIn"
+            android:layout_marginBottom="216dp"
+            android:text="@string/vetPassport"
             android:textAlignment="center"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -31,16 +31,29 @@
             app:layout_constraintStart_toStartOf="parent" />
 
         <Button
-            android:id="@+id/registrationButton"
+            android:id="@+id/aboutMeButton"
             style="@style/buttonStyle"
-            android:text="@string/registration"
+            android:text="@string/aboutMe"
             android:textAlignment="center"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/signInButton"
-            app:layout_constraintVertical_bias="0.132" />
+            app:layout_constraintTop_toBottomOf="@+id/vetPassportButton"
+            app:layout_constraintVertical_bias="0.111" />
+
+        <Button
+            android:id="@+id/signOutButton"
+            style="@style/buttonStyle"
+            android:layout_marginBottom="72dp"
+            android:text="@string/signOut"
+            android:textAlignment="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/aboutMeButton"
+            app:layout_constraintVertical_bias="0.766" />
 
         <ImageButton
             android:id="@+id/settingsButton"

@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">My Pets</string>
+    <string name="vetPassport">Vet passport</string>
+    <string name="aboutMe">About me</string>
+    <string name="settings">Settings</string>
+    <string name="signOut">Sign out</string>
+    <string name="userSignedOut">You signed out</string>
+</resources>
