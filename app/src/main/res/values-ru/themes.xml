@@ -4,7 +4,9 @@
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/purple_500</item>
         <item name="colorPrimaryDark">#8E74C9</item>
-        <item name="colorAccent">@color/teal_200</item>
+        <item name="colorAccent">@color/forButtons</item>
+        <item name="android:textColor">@color/purple_500</item>
+        <item name="fontFamily">monospace</item>
         <!-- Customize your theme here. -->
     </style>
 </resources>
