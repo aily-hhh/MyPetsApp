@@ -1,18 +1,22 @@
 package com.hhh.mypetsapp;
 
+import android.net.Uri;
+
 public class User {
     private String email;
     private String userName;
     private String phone;
     private String password;
+    private Uri photoUri;
 
     public User() {}
 
-    public User(String email, String userName, String phone, String password){
+    public User(String email, String userName, String phone, String password, Uri photoUri){
         this.email = email;
         this.userName = userName;
         this.phone = phone;
         this.password = password;
+        this.photoUri = photoUri;
     }
 
     public String getEmail() {
@@ -41,5 +45,12 @@ public class User {
     }
     public void setPassword(String password){
         this.password = password;
+    }
+
+    public Uri getPhotoUri() {
+        return photoUri;
+    }
+    public void setPhotoUri(Uri photoUri){
+        this.photoUri = photoUri;
     }
 }

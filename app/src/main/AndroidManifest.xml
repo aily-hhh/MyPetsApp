@@ -13,6 +13,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyPetsApp">
         <activity
+            android:name=".NewPetActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AboutMeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".PetProfileActivity"
+            android:exported="false" />
+        <activity
             android:name=".VetPassportActivity"
             android:exported="false"
             android:label="@string/title_activity_vet_passport"

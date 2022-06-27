@@ -53,6 +53,7 @@ dependencies {
     implementation platform('com.google.firebase:firebase-bom:30.1.0')
     implementation 'com.google.firebase:firebase-analytics'
     implementation 'com.firebaseui:firebase-ui-auth:7.2.0'
+    implementation 'com.google.firebase:firebase-firestore'
 
     implementation platform('com.google.firebase:firebase-auth:21.0.5')
     implementation platform('com.google.firebase:firebase-database:20.0.5')
