@@ -64,27 +64,21 @@
                 android:layout_height="wrap_content" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <RadioGroup
-            android:id="@+id/petNewSex"
-            android:layout_marginTop="14dp"
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="7dp">
+            android:enabled="false"
+            android:paddingLeft="4dp"
+            android:textSize="12dp"
+            android:fontFamily="monospace"
+            android:text="Sex"
+            android:textColor="@color/hint" />
 
-            <RadioButton
-                android:id="@+id/petNewMale"
-                android:text="Male"
-                android:textSize="17sp"
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"/>
-
-            <RadioButton
-                android:id="@+id/petNewFemale"
-                android:text="Female"
-                android:textSize="17sp"
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"/>
-        </RadioGroup>
+        <Spinner
+            android:id="@+id/spinnerNewSex"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"/>
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
@@ -96,7 +90,8 @@
                 android:id="@+id/petNewBirthday"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="date"/>
+                android:onClick="onClickBirthday"
+                android:focusable="false" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -115,7 +110,7 @@
             android:layout_marginTop="7dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Update"
+            android:text="Create"
             android:onClick="createInformationForPet" />
 
     </LinearLayout>

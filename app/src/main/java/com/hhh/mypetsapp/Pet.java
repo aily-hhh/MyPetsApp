@@ -9,13 +9,13 @@ public class Pet {
     private String species;
     private String breed;
     private String sex;
-    private Date birthday;
+    private String birthday;
     private String hair;
     private Uri photoUri;
 
     public Pet(){}
 
-    public Pet(String name, String species, String breed, String sex, Date birthday, String hair, Uri photoUri) {
+    public Pet(String name, String species, String breed, String sex, String birthday, String hair, Uri photoUri) {
         this.name = name;
         this.species = species;
         this.breed = breed;
@@ -57,11 +57,11 @@ public class Pet {
         this.sex = sex;
     }
 
-    public Date getBirthday() {
+    public String getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(Date birthday) {
+    public void setBirthday(String birthday) {
         this.birthday = birthday;
     }
 

@@ -94,12 +94,18 @@ public class MainActivity extends AppCompatActivity {
                                 pets.add(doc.getString("name"));
                             }
                         }
-                        Log.d(TAG, "Current cites in CA: " + pets);
+                        Log.d(TAG, "Current pets: " + pets);
                     }
                 });
 
         adapter = new ArrayAdapter<String>(this,
                 android.R.layout.select_dialog_item, pets);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        adapter.clear();
     }
 
     private void signOutMethod(){
@@ -123,7 +129,9 @@ public class MainActivity extends AppCompatActivity {
         alertDialog.setAdapter(adapter, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-
+                Intent intent = new Intent(MainActivity.this, PetProfileActivity.class);
+                intent.putExtra("petName", adapter.getItem(i).toString());
+                startActivity(intent);
             }
         });
         alertDialog.setPositiveButton("Cancel", new DialogInterface.OnClickListener() {
@@ -132,7 +140,7 @@ public class MainActivity extends AppCompatActivity {
                 dialogInterface.dismiss();
             }
         });
-        alertDialog.setNegativeButton("Add a new pet", new DialogInterface.OnClickListener() {
+        alertDialog.setNeutralButton("Add a new pet", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 Intent intent = new Intent(MainActivity.this, NewPetActivity.class);
@@ -141,10 +149,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         alertDialog.show();
-
-
-        //Intent intent = new Intent(MainActivity.this, VetPassportActivity.class);
-        //startActivity(intent);
     }
 
     private void goToSettings(){

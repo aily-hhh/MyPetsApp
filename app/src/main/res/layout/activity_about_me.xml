@@ -14,12 +14,10 @@
 
         <ImageView
             android:id="@+id/userPhoto"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:src="@drawable/icon"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            />
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:src="@drawable/icon" />
 
     </RelativeLayout>
 
