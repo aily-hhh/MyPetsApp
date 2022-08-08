@@ -5,23 +5,27 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    style="@style/Theme.MyPetsApp.NoActionBar"
     tools:context=".NewPetActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="280dp"
         android:background="@drawable/side_nav_bar">
 
         <ImageView
             android:id="@+id/petNewPhoto"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:src="@drawable/icon"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            />
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/icon" />
 
     </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -110,11 +114,12 @@
             android:layout_marginTop="7dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            style="@style/buttonStyle"
             android:text="Create"
             android:onClick="createInformationForPet" />
 
     </LinearLayout>
-
+    </ScrollView>
 
 
 </LinearLayout>

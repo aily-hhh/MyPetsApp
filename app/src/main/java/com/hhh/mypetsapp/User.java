@@ -7,11 +7,11 @@ public class User {
     private String userName;
     private String phone;
     private String password;
-    private Uri photoUri;
+    private String photoUri;
 
     public User() {}
 
-    public User(String email, String userName, String phone, String password, Uri photoUri){
+    public User(String email, String userName, String phone, String password, String photoUri){
         this.email = email;
         this.userName = userName;
         this.phone = phone;
@@ -47,10 +47,10 @@ public class User {
         this.password = password;
     }
 
-    public Uri getPhotoUri() {
+    public String getPhotoUri() {
         return photoUri;
     }
-    public void setPhotoUri(Uri photoUri){
+    public void setPhotoUri(String photoUri){
         this.photoUri = photoUri;
     }
 }

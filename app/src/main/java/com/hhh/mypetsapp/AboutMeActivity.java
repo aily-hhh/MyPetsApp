@@ -20,22 +20,32 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.auth.GoogleAuthUtil;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.annotations.Nullable;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
+import java.util.Objects;
+import java.util.UUID;
 
 public class AboutMeActivity extends AppCompatActivity {
 
@@ -43,6 +53,9 @@ public class AboutMeActivity extends AppCompatActivity {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     String uID = FirebaseAuth.getInstance().getCurrentUser().getUid();
     ImageView userPhoto;
+    private Uri filePath;
+    FirebaseStorage storage;
+    StorageReference storageReference;
     private final int GALLERY_REQUEST = 1;
     private final int PERMISSION_REQUEST = 0;
 
@@ -55,6 +68,8 @@ public class AboutMeActivity extends AppCompatActivity {
         userEmail = (TextInputEditText) findViewById(R.id.userEmail);
         userPhone = (TextInputEditText) findViewById(R.id.userPhone);
 
+        infoFromDatabase();
+
         userPhoto = (ImageView) findViewById(R.id.userPhoto);
         userPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,13 +77,13 @@ public class AboutMeActivity extends AppCompatActivity {
                 updateUserPhoto();
             }
         });
+        storage = FirebaseStorage.getInstance();
+        storageReference = storage.getReference();
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISSION_REQUEST);
         }
-
-        infoFromDatabase();
     }
 
     private void infoFromDatabase() {
@@ -84,11 +99,25 @@ public class AboutMeActivity extends AppCompatActivity {
 
                 if (snapshot != null && snapshot.exists()) {
                     Log.d(TAG, "Current data: " + snapshot.getData());
-                    if (FirebaseAuth.getInstance().getCurrentUser().getEmail() != null)
+                    if (snapshot.get("photoUri") != null){
+                        Task<Uri> storageReference = FirebaseStorage.getInstance().getReference()
+                                .child("images/"+snapshot.get("photoUri").toString()).getDownloadUrl()
+                                .addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                    @Override
+                                    public void onSuccess(Uri uri) {
+                                        Glide.with(getApplicationContext())
+                                                .load(uri)
+                                                .into(userPhoto);
+                                    }
+                                });
+
+                    }
+                    if (Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getEmail() != null) {
+                        userEmail.setText(FirebaseAuth.getInstance().getCurrentUser().getEmail().toString());
                         userEmail.setEnabled(false);
-                        userEmail.setText(FirebaseAuth.getInstance().getCurrentUser().getEmail());
+                    }
                     if (FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber() != null)
-                        userPhone.setText(FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber());
+                        userPhone.setText(FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber().toString());
                     if (snapshot.get("userName") != null)
                         userName.setText(snapshot.get("userName").toString());
                 } else {
@@ -101,6 +130,7 @@ public class AboutMeActivity extends AppCompatActivity {
     public void updateInformationForUser(View view){
         DocumentReference updateName = db.collection("users").document(uID);
         updateName.update("userName", userName.getText().toString());
+        uploadImage();
     }
 
     public void updateUserPhoto(){
@@ -123,22 +153,84 @@ public class AboutMeActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent imageReturnedIntent) {
-        super.onActivityResult(requestCode, resultCode, imageReturnedIntent);
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
         Bitmap bitmap = null;
 
         switch(requestCode) {
             case GALLERY_REQUEST:
                 if(resultCode == RESULT_OK){
-                    Uri selectedImage = imageReturnedIntent.getData();
+                    filePath = data.getData();
                     try {
-                        bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), selectedImage);
+                        bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
+                        userPhoto.setImageBitmap(bitmap);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    userPhoto.setImageBitmap(bitmap);
                 }
+        }
+    }
+
+    private void uploadImage()
+    {
+        if (filePath != null) {
+            String photoStr = UUID.randomUUID().toString();
+            StorageReference ref
+                    = storageReference.child("images/" + photoStr);
+            DocumentReference updatePhoto = db.collection("users").document(uID);
+            updatePhoto.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                @Override
+                public void onEvent(@Nullable DocumentSnapshot snapshot,
+                                    @Nullable FirebaseFirestoreException e) {
+                    if (e != null) {
+                        Log.w(TAG, "Listen failed.", e);
+                        return;
+                    }
+
+                    if (snapshot != null && snapshot.exists()) {
+                        if (FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl() != null){
+                            String photoDelete = snapshot.get("photoUri").toString();
+                            StorageReference storageRef = storage.getReference();
+                            StorageReference desertRef = storageRef.child("images/"+photoDelete);
+                            desertRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    // File deleted successfully
+                                    Log.d(TAG, "onSuccess: deleted file");
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception exception) {
+                                    // Uh-oh, an error occurred!
+                                    Log.d(TAG, "onFailure: did not delete file");
+                                }
+                            });
+                        }
+                    } else {
+                        Log.d(TAG, "Current data: null");
+                    }
+                }
+            });
+            updatePhoto.update("photoUri", photoStr);
+
+            ref.putFile(filePath)
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                @Override
+                                public void onSuccess(
+                                        UploadTask.TaskSnapshot taskSnapshot)
+                                {
+                                    Toast.makeText(AboutMeActivity.this, "Image Uploaded!!",
+                                                    Toast.LENGTH_SHORT).show();
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e)
+                        {
+                            Toast.makeText(AboutMeActivity.this, "Failed " + e.getMessage(),
+                                            Toast.LENGTH_SHORT).show();
+                        }
+                    });
         }
     }
 }

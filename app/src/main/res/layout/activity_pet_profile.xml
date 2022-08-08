@@ -5,22 +5,27 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    style="@style/Theme.MyPetsApp.NoActionBar"
     tools:context=".PetProfileActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="290dp"
         android:background="@drawable/side_nav_bar">
 
         <ImageView
             android:id="@+id/petPhoto"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_centerInParent="true"
+            android:scaleType="centerCrop"
             android:src="@drawable/icon" />
 
     </RelativeLayout>
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -114,10 +119,12 @@
             android:layout_marginTop="7dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            style="@style/buttonStyle"
             android:text="Update"
             android:onClick="updateInformationForPet" />
 
         <Button
+            style="@style/buttonStyle"
             android:id="@+id/buttonBack"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -125,7 +132,6 @@
             android:text="Back" />
 
     </LinearLayout>
-
-
+    </ScrollView>
 
 </LinearLayout>

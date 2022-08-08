@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="@dimen/nav_header_height"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@drawable/side_nav_bar"
     android:gravity="bottom"
     android:orientation="vertical"
@@ -10,10 +11,11 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    android:theme="@style/Theme.MyPetsApp">
+    android:theme="@style/Theme.MyPetsApp"
+    tools:context=".HeaderFragment">
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/iconPetProfile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:contentDescription="@string/nav_header_desc"
@@ -22,6 +24,7 @@
         android:onClick="goToPetProfile"/>
 
     <TextView
+        android:id="@+id/namePetProfile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
@@ -29,7 +32,7 @@
         android:textSize="20sp" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/agePetProfile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="15sp"

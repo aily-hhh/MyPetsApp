@@ -6,6 +6,7 @@
     <string name="signOut">Sign out</string>
     <string name="userSignedOut">Вы вышли</string>
     <string name="title_activity_settings">SettingsActivity</string>
+    <string name="title">Title: </string>
 
     <!-- Preference Titles -->
     <string name="messages_header">Messages</string>

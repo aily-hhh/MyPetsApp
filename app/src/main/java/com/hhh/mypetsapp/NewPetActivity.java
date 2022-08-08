@@ -37,9 +37,13 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.io.IOException;
 import java.util.Date;
+import java.util.UUID;
 
 public class NewPetActivity extends AppCompatActivity {
 
@@ -48,6 +52,9 @@ public class NewPetActivity extends AppCompatActivity {
     Spinner spinnerNewSex;
 
     ImageView petNewPhoto;
+    private Uri filePath;
+    StorageReference storageReference;
+    FirebaseStorage storage;
     private final int GALLERY_REQUEST = 1;
     private final int PERMISSION_REQUEST = 0;
 
@@ -164,14 +171,77 @@ public class NewPetActivity extends AppCompatActivity {
         switch(requestCode) {
             case GALLERY_REQUEST:
                 if(resultCode == RESULT_OK){
-                    Uri selectedImage = imageReturnedIntent.getData();
+                    filePath = imageReturnedIntent.getData();
                     try {
-                        bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), selectedImage);
+                        bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
+                        petNewPhoto.setImageBitmap(bitmap);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    petNewPhoto.setImageBitmap(bitmap);
                 }
+        }
+    }
+
+    private void uploadImage()
+    {
+        if (filePath != null) {
+            String photoStr = UUID.randomUUID().toString();
+            StorageReference ref
+                    = storageReference.child("images/" + photoStr);
+            DocumentReference updatePhoto = db.collection("users").document(uID)
+                    .collection("pets").document(petNewName.getText().toString());
+            updatePhoto.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                @Override
+                public void onEvent(@Nullable DocumentSnapshot snapshot,
+                                    @Nullable FirebaseFirestoreException e) {
+                    if (e != null) {
+                        Log.w(TAG, "Listen failed.", e);
+                        return;
+                    }
+
+                    if (snapshot != null && snapshot.exists()) {
+                        if (snapshot.get("photoUri") != null){
+                            String photoDelete = snapshot.get("photoUri").toString();
+                            StorageReference storageRef = storage.getReference();
+                            StorageReference desertRef = storageRef.child("images/"+photoDelete);
+                            desertRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    // File deleted successfully
+                                    Log.d(TAG, "onSuccess: deleted file");
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception exception) {
+                                    // Uh-oh, an error occurred!
+                                    Log.d(TAG, "onFailure: did not delete file");
+                                }
+                            });
+                        }
+                    } else {
+                        Log.d(TAG, "Current data: null");
+                    }
+                }
+            });
+            updatePhoto.update("photoUri", photoStr);
+
+            ref.putFile(filePath)
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(
+                                UploadTask.TaskSnapshot taskSnapshot)
+                        {
+                            Toast.makeText(NewPetActivity.this, "Image Uploaded!!",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e)
+                {
+                    Toast.makeText(NewPetActivity.this, "Failed " + e.getMessage(),
+                            Toast.LENGTH_SHORT).show();
+                }
+            });
         }
     }
 }

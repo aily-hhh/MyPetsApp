@@ -16,6 +16,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyPetsApp">
         <activity
+            android:name=".NotesTakerActivity"
+            android:exported="false" />
+        <activity
             android:name=".NewPetActivity"
             android:exported="false" />
         <activity

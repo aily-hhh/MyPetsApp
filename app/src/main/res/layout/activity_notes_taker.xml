@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".NotesTakerActivity"
+    android:background="@drawable/side_nav_bar"
+    android:orientation="vertical">
+
+    <Toolbar
+        android:id="@+id/toolbarNotes"
+        android:title="notes"
+        android:titleTextColor="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/saveNote"
+                android:layout_margin="8dp"
+                android:src="@drawable/ic_baseline_save_24"
+                android:layout_alignParentEnd="true"
+                android:background="@color/fui_transparent"
+                android:layout_width="?actionBarSize"
+                android:layout_height="?actionBarSize"/>
+        </RelativeLayout>
+    </Toolbar>
+
+    <EditText
+        android:id="@+id/titleNotesAdd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Title"
+        android:padding="8dp"
+        android:singleLine="true"
+        android:textColor="@color/purple_500"
+        android:textColorHint="@color/white"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/descriptionNotesAdd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:hint="Description"
+        android:textColorHint="@color/white"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:padding="8dp"
+        android:textColor="@color/purple_500" />
+</LinearLayout>

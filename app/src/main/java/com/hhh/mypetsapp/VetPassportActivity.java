@@ -1,14 +1,19 @@
 package com.hhh.mypetsapp;
 
+import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Layout;
 import android.view.View;
 import android.view.Menu;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.core.app.ShareCompat;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -22,22 +27,24 @@ public class VetPassportActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityVetPassportBinding binding;
+    private ItemViewModel viewModel;
+    private String name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        Intent intent = getIntent();
+        name = intent.getStringExtra("petName");
+
+        viewModel = new ViewModelProvider(this).get(ItemViewModel.class);
+        viewModel.namePet = name;
+
         binding = ActivityVetPassportBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         setSupportActionBar(binding.appBarVetPassport.toolbar);
-        binding.appBarVetPassport.fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView = binding.navView;
         // Passing each menu ID as a set of Ids because each
@@ -67,6 +74,8 @@ public class VetPassportActivity extends AppCompatActivity {
 
     public void goToPetProfile(View view){
         Intent intent = new Intent(VetPassportActivity.this, PetProfileActivity.class);
+        intent.putExtra("petName", name);
         startActivity(intent);
+        finish();
     }
 }
