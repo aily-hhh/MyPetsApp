@@ -6,11 +6,16 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.PopupMenu;
+import android.widget.SearchView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -37,11 +42,13 @@ import com.hhh.mypetsapp.NotesTakerActivity;
 import com.hhh.mypetsapp.R;
 import com.hhh.mypetsapp.databinding.FragmentNotesBinding;
 
+import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
-public class NotesFragment extends Fragment {
+public class NotesFragment extends Fragment implements PopupMenu.OnMenuItemClickListener{
 
     private FragmentNotesBinding binding;
 
@@ -53,6 +60,7 @@ public class NotesFragment extends Fragment {
     List<Notes> notes = new ArrayList<>();
     private ItemViewModel viewModel;
     private String name;
+    Notes selectedNote;
 
     @Nullable
     @Override
@@ -101,15 +109,27 @@ public class NotesFragment extends Fragment {
 
     private final NotesClickListener notesClickListener = new NotesClickListener() {
         @Override
-        public void onClick(Notes notes) {
-
+        public void onClick(Notes currentNote) {
+            Intent intent = new Intent(NotesFragment.this.getActivity(), NotesTakerActivity.class);
+            intent.putExtra("oldNote", currentNote.title);
+            intent.putExtra("petName", name.toString());
+            startActivity(intent);
         }
 
         @Override
-        public void onLongClick(Notes notes, CardView cardView) {
-
+        public void onLongClick(Notes currentNote, CardView cardView) {
+            selectedNote = new Notes();
+            selectedNote = currentNote;
+            showPopUp(cardView);
         }
     };
+
+    private void showPopUp(CardView cardView) {
+        PopupMenu popupMenu = new PopupMenu(this.getContext(), cardView);
+        popupMenu.setOnMenuItemClickListener(this);
+        popupMenu.inflate(R.menu.notes_menu);
+        popupMenu.show();
+    }
 
     private void infoFromDataBase(){
         db.collection("users").document(uID)
@@ -130,5 +150,40 @@ public class NotesFragment extends Fragment {
                         }
                     }
                 });
+    }
+
+    @Override
+    public boolean onMenuItemClick(MenuItem menuItem) {
+        switch (menuItem.getItemId()){
+            case R.id.pinMenuNotes:
+                if (selectedNote.isPinned()){
+                    DocumentReference docRef = db.collection("users").document(uID)
+                            .collection("pets").document(name)
+                            .collection("notes").document(selectedNote.getTitle());
+                    docRef.update("pinned", false);
+                    Toast.makeText(NotesFragment.this.getContext(), "Unpinned", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    DocumentReference docRef = db.collection("users").document(uID)
+                            .collection("pets").document(name)
+                            .collection("notes").document(selectedNote.getTitle());
+                    docRef.update("pinned", true);
+                    Toast.makeText(NotesFragment.this.getContext(), "Pinned", Toast.LENGTH_SHORT).show();
+                }
+                notes.clear();
+                infoFromDataBase();
+                return true;
+
+            case R.id.deleteMenuNotes:
+                db.collection("users").document(uID)
+                        .collection("pets").document(name)
+                        .collection("notes").document(selectedNote.getTitle()).delete();
+                Toast.makeText(NotesFragment.this.getContext(), "Deleted", Toast.LENGTH_SHORT).show();
+                notes.clear();
+                infoFromDataBase();
+                return true;
+
+            default: return false;
+        }
     }
 }

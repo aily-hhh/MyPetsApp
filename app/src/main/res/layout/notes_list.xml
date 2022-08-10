@@ -58,7 +58,7 @@
             android:padding="8dp"
             android:fontFamily="monospace"
             android:text="Description"
-            android:maxLines="10"/>
+            android:maxLines="5"/>
 
         <TextView
             android:id="@+id/dateNotes"

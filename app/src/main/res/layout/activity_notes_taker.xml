@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".NotesTakerActivity"
-    android:background="#C3C8F1"
+    android:background="#99C3C8F1"
     android:orientation="vertical">
 
     <Toolbar
