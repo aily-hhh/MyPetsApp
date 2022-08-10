@@ -67,7 +67,6 @@ public class AuthActivity extends AppCompatActivity {
                 // below line is used for getting current user which is
                 // authenticated previously.
                 FirebaseUser user = firebaseAuth.getCurrentUser();
-                FirebaseFirestore db = FirebaseFirestore.getInstance();
 
                 // checking if the user
                 // is null or not.

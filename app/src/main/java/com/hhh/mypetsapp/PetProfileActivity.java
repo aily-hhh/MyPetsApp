@@ -241,7 +241,7 @@ public class PetProfileActivity extends AppCompatActivity {
         if (filePath != null) {
             String photoStr = UUID.randomUUID().toString();
             StorageReference ref
-                    = storageReference.child("images/" + photoStr);
+                    = storageReference.child("images/");
             DocumentReference updatePhoto = db.collection("users").document(uID)
                     .collection("pets").document(petName.getText().toString());
             updatePhoto.addSnapshotListener(new EventListener<DocumentSnapshot>() {

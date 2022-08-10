@@ -5,8 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     style="@style/Theme.MyPetsApp.NoActionBar"
+    android:background="@drawable/side_nav_bar"
     tools:context=".ui.notes.NotesFragment"
-    android:background="@drawable/side_nav_bar">
+    >
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerNotes"

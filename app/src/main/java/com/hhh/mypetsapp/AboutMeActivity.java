@@ -24,6 +24,7 @@ import com.bumptech.glide.Glide;
 import com.google.android.gms.auth.GoogleAuthUtil;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -36,6 +37,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -67,10 +69,10 @@ public class AboutMeActivity extends AppCompatActivity {
         userName = (TextInputEditText) findViewById(R.id.userName);
         userEmail = (TextInputEditText) findViewById(R.id.userEmail);
         userPhone = (TextInputEditText) findViewById(R.id.userPhone);
+        userPhoto = (ImageView) findViewById(R.id.userPhoto);
 
         infoFromDatabase();
 
-        userPhoto = (ImageView) findViewById(R.id.userPhoto);
         userPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -88,6 +90,21 @@ public class AboutMeActivity extends AppCompatActivity {
 
     private void infoFromDatabase() {
         final DocumentReference docRef = db.collection("users").document(uID);
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        Log.d(TAG, "DocumentSnapshot data: " + document.getData());
+                    } else {
+                        docRef.set(new User());
+                    }
+                } else {
+                    Log.d(TAG, "get failed with ", task.getException());
+                }
+            }
+        });
         docRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot snapshot,
@@ -112,9 +129,11 @@ public class AboutMeActivity extends AppCompatActivity {
                                 });
 
                     }
-                    if (Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getEmail() != null) {
+                    if (FirebaseAuth.getInstance().getCurrentUser().getEmail() != null) {
                         userEmail.setText(FirebaseAuth.getInstance().getCurrentUser().getEmail().toString());
                         userEmail.setEnabled(false);
+                        db.collection("users").document(uID)
+                                .update("email", FirebaseAuth.getInstance().getCurrentUser().getEmail().toString());
                     }
                     if (FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber() != null)
                         userPhone.setText(FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber().toString());
@@ -189,7 +208,7 @@ public class AboutMeActivity extends AppCompatActivity {
                     }
 
                     if (snapshot != null && snapshot.exists()) {
-                        if (FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl() != null){
+                        if (snapshot.get("photoUri") != null){
                             String photoDelete = snapshot.get("photoUri").toString();
                             StorageReference storageRef = storage.getReference();
                             StorageReference desertRef = storageRef.child("images/"+photoDelete);

@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -59,19 +60,14 @@ public class NotesTakerActivity extends AppCompatActivity {
         @SuppressLint("SimpleDateFormat") SimpleDateFormat date = new SimpleDateFormat("dd.MM.yyyy ',' HH:mm:ss");
         note.setDate(date.toString());
 
-        if(!db.collection("users").document(uID)
-                .collection("pets").document(name)
-                .collection("notes").getId().equals(note.getTitle())) {
-            db.collection("users").document(uID)
-                    .collection("pets").document(name)
-                    .collection("notes").document(note.getTitle()).set(note);
-        }
-        else {
 
-        }
+        db.collection("users").document(uID)
+                .collection("pets").document(name)
+                .collection("notes").document(note.getTitle()).set(note);
+
 
         Intent intent = new Intent(NotesTakerActivity.this, NotesFragment.class);
-        setResult(RESULT_OK, intent);
+        setResult(Activity.RESULT_OK, intent);
         finish();
     }
 }

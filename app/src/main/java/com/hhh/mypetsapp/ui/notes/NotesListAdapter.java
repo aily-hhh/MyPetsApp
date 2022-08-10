@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.hhh.mypetsapp.R;
+import com.hhh.mypetsapp.databinding.FragmentNotesBinding;
 
 import java.util.List;
 
@@ -27,7 +28,8 @@ public class NotesListAdapter extends RecyclerView.Adapter<NotesViewHolder> {
     @NonNull
     @Override
     public NotesViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new NotesViewHolder(LayoutInflater.from(context).inflate(R.layout.notes_list, parent,false));
+        return new NotesViewHolder(LayoutInflater.from(context).inflate(R.layout.notes_list,
+                parent, false));
     }
 
     @Override

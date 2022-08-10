@@ -2,6 +2,8 @@ package com.hhh.mypetsapp.ui.notes;
 
 import static android.content.ContentValues.TAG;
 
+import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -35,6 +37,7 @@ import com.hhh.mypetsapp.NotesTakerActivity;
 import com.hhh.mypetsapp.R;
 import com.hhh.mypetsapp.databinding.FragmentNotesBinding;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -72,11 +75,15 @@ public class NotesFragment extends Fragment {
             }
         });
 
-        //Getting notes from DB
-
-        updateRecycler();
-
         return root;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        notes.clear();
+        infoFromDataBase();
     }
 
     public void addNotes() {
@@ -105,7 +112,6 @@ public class NotesFragment extends Fragment {
     };
 
     private void infoFromDataBase(){
-        ArrayList<String> listID = new ArrayList<>();
         db.collection("users").document(uID)
                 .collection("pets").document(name).collection("notes")
                 .get()
@@ -114,15 +120,15 @@ public class NotesFragment extends Fragment {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                listID.add(document.getId());
                                 Log.d(TAG,document.getId() + " => " + document.getData());
+                                Notes newNote = document.toObject(Notes.class);
+                                notes.add(newNote);
+                                updateRecycler();
                             }
                         } else {
                             Log.d(TAG, "Error getting documents: ", task.getException());
                         }
                     }
                 });
-
-
     }
 }
