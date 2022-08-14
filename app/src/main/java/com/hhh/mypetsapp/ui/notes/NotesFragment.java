@@ -4,6 +4,8 @@ import static android.content.ContentValues.TAG;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -38,6 +40,8 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.hhh.mypetsapp.ItemViewModel;
+import com.hhh.mypetsapp.MainActivity;
+import com.hhh.mypetsapp.NewPetActivity;
 import com.hhh.mypetsapp.NotesTakerActivity;
 import com.hhh.mypetsapp.R;
 import com.hhh.mypetsapp.databinding.FragmentNotesBinding;
@@ -69,7 +73,6 @@ public class NotesFragment extends Fragment implements PopupMenu.OnMenuItemClick
 
         binding = FragmentNotesBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-        View view = inflater.inflate(R.layout.fragment_notes, null);
         recyclerNotes = binding.recyclerNotes;
         addNotesButton = binding.addNotesButton;
 
@@ -175,12 +178,29 @@ public class NotesFragment extends Fragment implements PopupMenu.OnMenuItemClick
                 return true;
 
             case R.id.deleteMenuNotes:
-                db.collection("users").document(uID)
-                        .collection("pets").document(name)
-                        .collection("notes").document(selectedNote.getTitle()).delete();
-                Toast.makeText(NotesFragment.this.getContext(), "Deleted", Toast.LENGTH_SHORT).show();
-                notes.clear();
-                infoFromDataBase();
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(this.getContext());
+                alertDialog.setIcon(R.drawable.icon);
+                alertDialog.setTitle(R.string.delete);
+                alertDialog.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        db.collection("users").document(uID)
+                                .collection("pets").document(name)
+                                .collection("notes").document(selectedNote.getTitle()).delete();
+                        Toast.makeText(NotesFragment.this.getContext(), "Deleted", Toast.LENGTH_SHORT).show();
+                        dialogInterface.dismiss();
+                        notes.clear();
+                        infoFromDataBase();
+                        updateRecycler();
+                    }
+                });
+                alertDialog.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                });
+                alertDialog.show();
                 return true;
 
             default: return false;

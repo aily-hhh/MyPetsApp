@@ -64,7 +64,7 @@
             android:id="@+id/dateNotes"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="12sp"
+            android:textSize="8sp"
             android:textStyle="italic"
             android:textColor="@color/purple_200"
             android:padding="8dp"

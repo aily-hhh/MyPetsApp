@@ -7,6 +7,9 @@
     <string name="userSignedOut">Вы вышли</string>
     <string name="title_activity_settings">SettingsActivity</string>
     <string name="title">Title: </string>
+    <string name="delete">Are you sure you want to delete this notes?</string>
+    <string name="yes">Yes</string>
+    <string name="no">no</string>
 
     <!-- Preference Titles -->
     <string name="messages_header">Messages</string>

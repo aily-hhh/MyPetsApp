@@ -27,6 +27,7 @@ import com.hhh.mypetsapp.ui.notes.NotesFragment;
 
 import java.sql.Date;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 public class NotesTakerActivity extends AppCompatActivity {
 
@@ -38,7 +39,10 @@ public class NotesTakerActivity extends AppCompatActivity {
 
     EditText titleNotesAdd, descriptionNotesAdd;
     ImageView saveNote;
+    ImageView backNote;
     String noteTitle;
+    Calendar calendar = Calendar.getInstance();
+    SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy ',' HH:mm");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +55,7 @@ public class NotesTakerActivity extends AppCompatActivity {
         titleNotesAdd = (EditText) findViewById(R.id.titleNotesAdd);
         descriptionNotesAdd = (EditText) findViewById(R.id.descriptionNotesAdd);
         saveNote = (ImageView) findViewById(R.id.saveNote);
+        backNote = (ImageView) findViewById(R.id.backNote);
 
         noteTitle = getIntent().getStringExtra("oldNote");
         if (noteTitle != null) {
@@ -86,6 +91,17 @@ public class NotesTakerActivity extends AppCompatActivity {
                 addingToDataBase();
             }
         });
+
+        backNote.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                backToTheNotes();
+            }
+        });
+    }
+
+    private void backToTheNotes() {
+        finish();
     }
 
     private void addingToDataBase() {
@@ -94,22 +110,26 @@ public class NotesTakerActivity extends AppCompatActivity {
 
             if (!titleNotesAdd.getText().toString().isEmpty())
                 newNote.setTitle(titleNotesAdd.getText().toString());
-            else
+            else {
                 Toast.makeText(this, "Enter the title", Toast.LENGTH_SHORT).show();
+                return;
+            }
 
             newNote.setDescription(descriptionNotesAdd.getText().toString());
-            SimpleDateFormat date = new SimpleDateFormat("dd.MM.yyyy ',' HH:mm:ss");
-            newNote.setDate(date.toString());
+            String date = dateFormat.format(calendar.getTime());
+            newNote.setDate(date);
 
             db.collection("users").document(uID)
                     .collection("pets").document(name)
                     .collection("notes").document(newNote.getTitle()).set(newNote);
         }
         else {
-            db.collection("users").document(uID)
+            String date = dateFormat.format(calendar.getTime());
+            DocumentReference docRef = db.collection("users").document(uID)
                     .collection("pets").document(name)
-                    .collection("notes").document(noteTitle)
-                    .update("description", descriptionNotesAdd.getText().toString());
+                    .collection("notes").document(noteTitle);
+            docRef.update("description", descriptionNotesAdd.getText().toString());
+            docRef.update("date", date);
         }
 
 
