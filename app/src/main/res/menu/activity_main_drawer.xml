@@ -6,23 +6,23 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_notes"
-            android:icon="@android:drawable/ic_menu_edit"
+            android:icon="@drawable/nav_notes"
             android:title="@string/menu_home" />
         <item
             android:id="@+id/nav_gallery"
-            android:icon="@android:drawable/ic_menu_gallery"
+            android:icon="@drawable/nav_gallery"
             android:title="@string/menu_gallery" />
         <item
             android:id="@+id/nav_vaccines"
-            android:icon="@android:drawable/ic_menu_today"
+            android:icon="@drawable/nav_vaccines"
             android:title="@string/menu_slideshow" />
         <item
             android:id="@+id/nav_procedures"
-            android:icon="?android:attr/actionModeFindDrawable"
+            android:icon="@drawable/nav_procedures"
             android:title="@string/menu_procedures" />
         <item
             android:id="@+id/nav_treatment"
-            android:icon="?attr/actionModeSelectAllDrawable"
+            android:icon="@drawable/nav_treatment"
             android:title="@string/treatment_from_external_parasites" />
     </group>
 </menu>

@@ -33,7 +33,6 @@ public class NotesTakerActivity extends AppCompatActivity {
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     String uID = FirebaseAuth.getInstance().getCurrentUser().getUid();
-    private ItemViewModel viewModel;
     private String name;
     boolean isOld = false;
 

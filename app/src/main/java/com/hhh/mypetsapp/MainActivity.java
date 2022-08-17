@@ -129,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
         alertDialog.setAdapter(adapter, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                Intent intent = new Intent(MainActivity.this, PetProfileActivity.class);
+                Intent intent = new Intent(MainActivity.this, VetPassportActivity.class);
                 intent.putExtra("petName", adapter.getItem(i).toString());
                 startActivity(intent);
             }

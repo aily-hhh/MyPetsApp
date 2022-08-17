@@ -1,17 +1,28 @@
 package com.hhh.mypetsapp;
 
+import static android.content.ContentValues.TAG;
+
+import android.app.ActionBar;
 import android.app.Fragment;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Layout;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.widget.ActionBarContextView;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.app.ShareCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
@@ -21,7 +32,20 @@ import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.annotations.Nullable;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.hhh.mypetsapp.databinding.ActivityVetPassportBinding;
+import com.hhh.mypetsapp.databinding.AppBarVetPassportBinding;
+import com.hhh.mypetsapp.ui.notes.Notes;
+
+import java.time.LocalDate;
+import java.time.Period;
 
 public class VetPassportActivity extends AppCompatActivity {
 
@@ -29,6 +53,12 @@ public class VetPassportActivity extends AppCompatActivity {
     private ActivityVetPassportBinding binding;
     private ItemViewModel viewModel;
     private String name;
+
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    String uID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+    TextView namePetProfile;
+    TextView agePetProfile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +72,6 @@ public class VetPassportActivity extends AppCompatActivity {
 
         binding = ActivityVetPassportBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
         setSupportActionBar(binding.appBarVetPassport.toolbar);
 
         DrawerLayout drawer = binding.drawerLayout;
@@ -56,6 +85,47 @@ public class VetPassportActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_vet_passport);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
+        View header = navigationView.getHeaderView(0);
+        namePetProfile = (TextView) header.findViewById(R.id.namePetProfile);
+        agePetProfile = (TextView) header.findViewById(R.id.agePetProfile);
+
+        infoFromDB();
+    }
+
+    private void infoFromDB() {
+        db.collection("users").document(uID)
+                .collection("pets").document(name)
+                .addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                    @RequiresApi(api = Build.VERSION_CODES.O)
+                    @Override
+                    public void onEvent(@Nullable DocumentSnapshot snapshot,
+                                        @Nullable FirebaseFirestoreException e) {
+                        if (e != null) {
+                            Log.w(TAG, "Listen failed.", e);
+                            return;
+                        }
+
+                        if (snapshot != null && snapshot.exists()) {
+                            Log.d(TAG, "Current data: " + snapshot.getData());
+                            namePetProfile.setText(snapshot.get("name").toString());
+                            if (snapshot.get("birthday").equals(null) ||
+                                    snapshot.get("birthday").equals("")) {
+                                agePetProfile.setText("");
+                            }
+                            else {
+                                /*String birthdayStr = snapshot.get("birthday").toString();
+                                LocalDate date = LocalDate.parse(birthdayStr);
+                                Period period = Period.between(LocalDate.now(), date);
+                                int age = period.getYears();
+                                agePetProfile.setText(age);*/
+                            }
+
+                        } else {
+                            Log.d(TAG, "Current data: null");
+                        }
+                    }
+                });
     }
 
     @Override

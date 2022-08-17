@@ -114,7 +114,6 @@ public class PetProfileActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         petName.setText(intent.getStringExtra("petName"));
-        System.out.println("ppp " + petName.getText().toString());
 
         infoFromDatabase();
     }
