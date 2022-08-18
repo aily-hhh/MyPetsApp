@@ -24,7 +24,5 @@ public class NotesViewHolder extends RecyclerView.ViewHolder {
         descriptionNotes = itemView.findViewById(R.id.descriptionNotes);
         dateNotes = itemView.findViewById(R.id.dateNotes);
         pinnedNotes = itemView.findViewById(R.id.pinnedNotes);
-
-
     }
 }

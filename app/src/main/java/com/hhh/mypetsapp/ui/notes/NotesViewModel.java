@@ -12,10 +12,6 @@ import java.util.List;
 
 public class NotesViewModel extends ViewModel {
     private final MutableLiveData<List<Notes>> mText;
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
-    String uID = FirebaseAuth.getInstance().getCurrentUser().getUid();
-    private ItemViewModel viewModel;
-    private String name;
 
     public NotesViewModel() {
         mText = new MutableLiveData<>();

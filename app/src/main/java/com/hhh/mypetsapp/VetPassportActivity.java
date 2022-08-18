@@ -5,6 +5,7 @@ import static android.content.ContentValues.TAG;
 import android.app.ActionBar;
 import android.app.Fragment;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Layout;
@@ -14,7 +15,9 @@ import android.view.Menu;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
@@ -40,6 +43,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
 import com.hhh.mypetsapp.databinding.ActivityVetPassportBinding;
 import com.hhh.mypetsapp.databinding.AppBarVetPassportBinding;
 import com.hhh.mypetsapp.ui.notes.Notes;
@@ -59,6 +63,7 @@ public class VetPassportActivity extends AppCompatActivity {
 
     TextView namePetProfile;
     TextView agePetProfile;
+    ImageView iconPetProfile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,6 +94,7 @@ public class VetPassportActivity extends AppCompatActivity {
         View header = navigationView.getHeaderView(0);
         namePetProfile = (TextView) header.findViewById(R.id.namePetProfile);
         agePetProfile = (TextView) header.findViewById(R.id.agePetProfile);
+        iconPetProfile = (ImageView) header.findViewById(R.id.iconPetProfile);
 
         infoFromDB();
     }
@@ -114,11 +120,49 @@ public class VetPassportActivity extends AppCompatActivity {
                                 agePetProfile.setText("");
                             }
                             else {
-                                /*String birthdayStr = snapshot.get("birthday").toString();
-                                LocalDate date = LocalDate.parse(birthdayStr);
-                                Period period = Period.between(LocalDate.now(), date);
-                                int age = period.getYears();
-                                agePetProfile.setText(age);*/
+                                String birthdayStr = snapshot.get("birthday").toString();
+                                String[] date = birthdayStr.split("\\.");
+                                int birthdayDay = Integer.parseInt(date[0]);
+                                int birthdayMonth = Integer.parseInt(date[1]);
+                                int birthdayYear = Integer.parseInt(date[2]);
+                                LocalDate dateNow = LocalDate.now();
+                                int currentDay = dateNow.getDayOfMonth();
+                                int currentMonth = dateNow.getMonthValue();
+                                int currentYear = dateNow.getYear();
+                                int difDay = currentDay - birthdayDay;
+                                int difMonth = currentMonth - birthdayMonth;
+                                int difYear = currentYear - birthdayYear;
+                                if (difMonth == 0 && difDay < 0) {
+                                    String age = String.valueOf(difYear) + " y.o";
+                                    agePetProfile.setText(age);
+                                }
+                                else if (difMonth == 0) {
+                                    difYear++;
+                                    String age = String.valueOf(difYear) + " y.o";
+                                    agePetProfile.setText(age);
+                                }
+                                else if (difMonth > 0) {
+                                    difYear++;
+                                    String age = String.valueOf(difYear) + " y.o";
+                                    agePetProfile.setText(age);
+                                }
+                                else {
+                                    String age = String.valueOf(difYear) + " y.o";
+                                    agePetProfile.setText(age);
+                                }
+                            }
+
+                            if (snapshot.get("photoUri") != null){
+                                Task<Uri> storageReference = FirebaseStorage.getInstance().getReference()
+                                        .child("images/"+snapshot.get("photoUri").toString()).getDownloadUrl()
+                                        .addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                            @Override
+                                            public void onSuccess(Uri uri) {
+                                                Glide.with(getApplicationContext())
+                                                        .load(uri)
+                                                        .into(iconPetProfile);
+                                            }
+                                        });
                             }
 
                         } else {

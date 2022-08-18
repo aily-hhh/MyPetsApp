@@ -27,8 +27,10 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.annotations.Nullable;
@@ -56,8 +58,8 @@ public class PetProfileActivity extends AppCompatActivity {
 
     ImageView petPhoto;
     private Uri filePath;
-    StorageReference storageReference;
     FirebaseStorage storage;
+    StorageReference storageReference;
     private final int GALLERY_REQUEST = 1;
     private final int PERMISSION_REQUEST = 0;
 
@@ -96,6 +98,8 @@ public class PetProfileActivity extends AppCompatActivity {
                 updatePetPhoto();
             }
         });
+        storage = FirebaseStorage.getInstance();
+        storageReference = storage.getReference();
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -145,6 +149,19 @@ public class PetProfileActivity extends AppCompatActivity {
                     if(snapshot.get("sex") != null){
                         int pos = adapterSex.getPosition(snapshot.get("sex").toString());
                         spinnerSex.setSelection(pos);
+                    }
+
+                    if (snapshot.get("photoUri") != null){
+                        Task<Uri> storageReference = FirebaseStorage.getInstance().getReference()
+                                .child("images/"+snapshot.get("photoUri").toString()).getDownloadUrl()
+                                .addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                    @Override
+                                    public void onSuccess(Uri uri) {
+                                        Glide.with(getApplicationContext())
+                                                .load(uri)
+                                                .into(petPhoto);
+                                    }
+                                });
                     }
 
                 } else {
@@ -240,7 +257,7 @@ public class PetProfileActivity extends AppCompatActivity {
         if (filePath != null) {
             String photoStr = UUID.randomUUID().toString();
             StorageReference ref
-                    = storageReference.child("images/");
+                    = storageReference.child("images/"+photoStr);
             DocumentReference updatePhoto = db.collection("users").document(uID)
                     .collection("pets").document(petName.getText().toString());
             updatePhoto.addSnapshotListener(new EventListener<DocumentSnapshot>() {

@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    style="@style/Theme.MyPetsApp.NoActionBar"
+    android:background="#99C3C8F1"
+    tools:context=".ui.vaccines.VaccinesTakerActivity">
+
+    <Toolbar
+        android:id="@+id/toolbarVaccines"
+        android:title="vaccine"
+        android:titleTextColor="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/saveVaccine"
+                android:layout_margin="8dp"
+                android:src="@drawable/ic_baseline_save_24"
+                android:layout_alignParentEnd="true"
+                android:background="@color/fui_transparent"
+                android:layout_width="?actionBarSize"
+                android:layout_height="?actionBarSize"/>
+
+            <ImageView
+                android:id="@+id/backVaccines"
+                android:layout_width="?actionBarSize"
+                android:layout_height="?actionBarSize"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:layout_toStartOf="@+id/saveVaccine"
+                android:background="@color/fui_transparent"
+                android:rotation="180"
+                android:src="@drawable/back" />
+        </RelativeLayout>
+    </Toolbar>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="false"
+                android:paddingLeft="4dp"
+                android:textSize="12dp"
+                android:fontFamily="monospace"
+                android:text="Type of vaccine"
+                android:textColor="@color/hint" />
+
+            <Spinner
+                android:id="@+id/spinnerTypeVaccine"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/purple_500"
+                android:layout_marginBottom="12dp"/>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="7dp"
+                android:hint="Name of product">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/nameVaccine"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="monospace"
+                    android:textColor="@color/purple_500"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="7dp"
+                android:hint="Manufacturer">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/manufacturerVaccine"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/purple_500"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="7dp"
+                android:hint="Date of vaccination">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/dateVaccine"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/purple_500"
+                    android:focusable="false"
+                    android:onClick="onClickDate"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="7dp"
+                android:hint="Valid until">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/validUntilVaccine"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/purple_500"
+                    android:focusable="false"
+                    android:onClick="onClickValidUntil"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="7dp"
+                android:hint="Veterinarian">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/veterinarianVaccine"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/purple_500"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

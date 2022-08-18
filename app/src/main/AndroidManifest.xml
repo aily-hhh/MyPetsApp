@@ -16,7 +16,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyPetsApp">
         <activity
-            android:name=".NotesTakerActivity"
+            android:name=".ui.notes.NotesTakerActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.vaccines.VaccinesTakerActivity"
             android:exported="false" />
         <activity
             android:name=".NewPetActivity"

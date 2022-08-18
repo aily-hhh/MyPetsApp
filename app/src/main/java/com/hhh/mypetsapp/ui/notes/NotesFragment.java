@@ -2,21 +2,16 @@ package com.hhh.mypetsapp.ui.notes;
 
 import static android.content.ContentValues.TAG;
 
-import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.PopupMenu;
-import android.widget.SearchView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -33,24 +28,15 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.hhh.mypetsapp.ItemViewModel;
-import com.hhh.mypetsapp.MainActivity;
-import com.hhh.mypetsapp.NewPetActivity;
-import com.hhh.mypetsapp.NotesTakerActivity;
 import com.hhh.mypetsapp.R;
 import com.hhh.mypetsapp.databinding.FragmentNotesBinding;
 
-import java.io.Serializable;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 public class NotesFragment extends Fragment implements PopupMenu.OnMenuItemClickListener{
 
@@ -114,7 +100,7 @@ public class NotesFragment extends Fragment implements PopupMenu.OnMenuItemClick
         @Override
         public void onClick(Notes currentNote) {
             Intent intent = new Intent(NotesFragment.this.getActivity(), NotesTakerActivity.class);
-            intent.putExtra("oldNote", currentNote.title);
+            intent.putExtra("oldNote", currentNote.id);
             intent.putExtra("petName", name.toString());
             startActivity(intent);
         }
@@ -162,14 +148,14 @@ public class NotesFragment extends Fragment implements PopupMenu.OnMenuItemClick
                 if (selectedNote.isPinned()){
                     DocumentReference docRef = db.collection("users").document(uID)
                             .collection("pets").document(name)
-                            .collection("notes").document(selectedNote.getTitle());
+                            .collection("notes").document(selectedNote.getId());
                     docRef.update("pinned", false);
                     Toast.makeText(NotesFragment.this.getContext(), "Unpinned", Toast.LENGTH_SHORT).show();
                 }
                 else{
                     DocumentReference docRef = db.collection("users").document(uID)
                             .collection("pets").document(name)
-                            .collection("notes").document(selectedNote.getTitle());
+                            .collection("notes").document(selectedNote.getId());
                     docRef.update("pinned", true);
                     Toast.makeText(NotesFragment.this.getContext(), "Pinned", Toast.LENGTH_SHORT).show();
                 }
@@ -186,7 +172,7 @@ public class NotesFragment extends Fragment implements PopupMenu.OnMenuItemClick
                     public void onClick(DialogInterface dialogInterface, int i) {
                         db.collection("users").document(uID)
                                 .collection("pets").document(name)
-                                .collection("notes").document(selectedNote.getTitle()).delete();
+                                .collection("notes").document(selectedNote.getId()).delete();
                         Toast.makeText(NotesFragment.this.getContext(), "Deleted", Toast.LENGTH_SHORT).show();
                         dialogInterface.dismiss();
                         notes.clear();
@@ -205,5 +191,11 @@ public class NotesFragment extends Fragment implements PopupMenu.OnMenuItemClick
 
             default: return false;
         }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
 }

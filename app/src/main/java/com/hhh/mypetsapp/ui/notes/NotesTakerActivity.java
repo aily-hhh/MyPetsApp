@@ -1,11 +1,9 @@
-package com.hhh.mypetsapp;
+package com.hhh.mypetsapp.ui.notes;
 
 import static android.content.ContentValues.TAG;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -22,12 +20,11 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.hhh.mypetsapp.ui.notes.Notes;
-import com.hhh.mypetsapp.ui.notes.NotesFragment;
+import com.hhh.mypetsapp.R;
 
-import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.UUID;
 
 public class NotesTakerActivity extends AppCompatActivity {
 
@@ -39,7 +36,8 @@ public class NotesTakerActivity extends AppCompatActivity {
     EditText titleNotesAdd, descriptionNotesAdd;
     ImageView saveNote;
     ImageView backNote;
-    String noteTitle;
+    String noteId;
+
     Calendar calendar = Calendar.getInstance();
     SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy ',' HH:mm");
 
@@ -56,11 +54,11 @@ public class NotesTakerActivity extends AppCompatActivity {
         saveNote = (ImageView) findViewById(R.id.saveNote);
         backNote = (ImageView) findViewById(R.id.backNote);
 
-        noteTitle = getIntent().getStringExtra("oldNote");
-        if (noteTitle != null) {
+        noteId = getIntent().getStringExtra("oldNote");
+        if (noteId != null) {
             DocumentReference docRef = db.collection("users").document(uID)
                     .collection("pets").document(name)
-                    .collection("notes").document(noteTitle);
+                    .collection("notes").document(noteId);
             docRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
                 @Override
                 public void onEvent(@Nullable DocumentSnapshot snapshot,
@@ -73,7 +71,6 @@ public class NotesTakerActivity extends AppCompatActivity {
                     if (snapshot != null && snapshot.exists()) {
                         Log.d(TAG, "Current data: " + snapshot.getData());
                         titleNotesAdd.setText(snapshot.get("title").toString());
-                        titleNotesAdd.setEnabled(false);
                         if(snapshot.get("description") != null)
                             descriptionNotesAdd.setText(snapshot.get("description").toString());
                     } else {
@@ -108,26 +105,29 @@ public class NotesTakerActivity extends AppCompatActivity {
             Notes newNote = new Notes();
 
             if (!titleNotesAdd.getText().toString().isEmpty())
-                newNote.setTitle(titleNotesAdd.getText().toString());
+                newNote.setTitle(titleNotesAdd.getText().toString().trim());
             else {
                 Toast.makeText(this, "Enter the title", Toast.LENGTH_SHORT).show();
                 return;
             }
 
-            newNote.setDescription(descriptionNotesAdd.getText().toString());
+            newNote.setDescription(descriptionNotesAdd.getText().toString().trim());
             String date = dateFormat.format(calendar.getTime());
             newNote.setDate(date);
 
+            newNote.setId(UUID.randomUUID().toString());
+
             db.collection("users").document(uID)
                     .collection("pets").document(name)
-                    .collection("notes").document(newNote.getTitle()).set(newNote);
+                    .collection("notes").document(newNote.getId()).set(newNote);
         }
         else {
             String date = dateFormat.format(calendar.getTime());
             DocumentReference docRef = db.collection("users").document(uID)
                     .collection("pets").document(name)
-                    .collection("notes").document(noteTitle);
-            docRef.update("description", descriptionNotesAdd.getText().toString());
+                    .collection("notes").document(noteId);
+            docRef.update("title", titleNotesAdd.getText().toString().trim());
+            docRef.update("description", descriptionNotesAdd.getText().toString().trim());
             docRef.update("date", date);
         }
 
