@@ -23,6 +23,18 @@
         <item
             android:id="@+id/nav_treatment"
             android:icon="@drawable/nav_treatment"
-            android:title="@string/treatment_from_external_parasites" />
+            android:title="@string/from_external_parasites" />
+        <item
+            android:id="@+id/nav_dehelmintization"
+            android:icon="@drawable/nav_dehelmintization"
+            android:title="@string/dehelmintization" />
+        <item
+            android:id="@+id/nav_reproduction"
+            android:icon="@drawable/nav_reproduction"
+            android:title="@string/reproduction" />
+        <item
+            android:id="@+id/nav_identification"
+            android:icon="@drawable/nav_identification"
+            android:title="@string/identification" />
     </group>
 </menu>

@@ -19,6 +19,9 @@
             android:name=".ui.notes.NotesTakerActivity"
             android:exported="false" />
         <activity
+            android:name=".ui.treatment.TreatmentsTakerActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.vaccines.VaccinesTakerActivity"
             android:exported="false" />
         <activity

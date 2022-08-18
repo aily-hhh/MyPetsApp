@@ -41,7 +41,7 @@ public class VaccinesListAdapter extends RecyclerView.Adapter<VaccinesViewHolder
         holder.typeVaccine.setText(list.get(position).getType());
         holder.typeVaccine.setSelected(true);
         holder.nameVaccine.setText(list.get(position).getName());
-        holder.typeVaccine.setSelected(true);
+        holder.nameVaccine.setSelected(true);
         holder.manufacturerVaccine.setText(list.get(position).getManufacturer());
         holder.manufacturerVaccine.setSelected(true);
         holder.dateVaccine.setText(list.get(position).getDateOfVaccination() + "/" + list.get(position).getValidUntil());

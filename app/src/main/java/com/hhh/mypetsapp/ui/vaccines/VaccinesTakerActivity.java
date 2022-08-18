@@ -6,7 +6,6 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -16,7 +15,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -26,11 +24,8 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.hhh.mypetsapp.NewPetActivity;
-import com.hhh.mypetsapp.PetProfileActivity;
 import com.hhh.mypetsapp.R;
 
-import java.time.LocalDate;
 import java.util.UUID;
 
 public class VaccinesTakerActivity extends AppCompatActivity {
@@ -55,7 +50,7 @@ public class VaccinesTakerActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.vaccines_taker);
+        setContentView(R.layout.activity_vaccines_taker);
 
         Intent intent = getIntent();
         name = intent.getStringExtra("petName");

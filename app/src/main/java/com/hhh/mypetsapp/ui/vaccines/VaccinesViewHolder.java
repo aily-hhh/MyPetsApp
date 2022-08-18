@@ -12,7 +12,7 @@ import com.hhh.mypetsapp.R;
 public class VaccinesViewHolder extends RecyclerView.ViewHolder{
 
     CardView vaccinesContainer;
-    TextView typeVaccine, nameVaccine, manufacturerVaccine, dateVaccine, veterinarian;
+    TextView typeVaccine, nameVaccine, manufacturerVaccine, dateVaccine, veterinarian, treatmentHeader;
 
     public VaccinesViewHolder(@NonNull View itemView) {
         super(itemView);

@@ -38,6 +38,10 @@
     <string name="menu_slideshow">Vaccines</string>
     <string name="menu_procedures">Procedures</string>
     <string name="menu_treatment">Treatment</string>
+    <string name="dehelmintization">Dehelmintization</string>
+    <string name="reproduction">Reproduction</string>
+    <string name="identification">Identification</string>
+    <string name="from_external_parasites">From external parasites</string>
     <string name="treatment_from_external_parasites">Treatment from external parasites</string>
     <string name="title_activity_pet_profile">PetProfileActivity</string>
     <string name="back">Back</string>
