@@ -22,6 +22,6 @@ public class VaccinesViewHolder extends RecyclerView.ViewHolder{
         nameVaccine = itemView.findViewById(R.id.nameVaccine);
         manufacturerVaccine = itemView.findViewById(R.id.manufacturerVaccine);
         dateVaccine = itemView.findViewById(R.id.dateVaccine);
-        veterinarian = itemView.findViewById(R.id.veterinarian);
+        veterinarian = itemView.findViewById(R.id.veterinarianVaccine);
     }
 }

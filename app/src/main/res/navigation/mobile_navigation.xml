@@ -25,9 +25,9 @@
 
     <fragment
         android:id="@+id/nav_procedures"
-        android:name="com.hhh.mypetsapp.ui.procedures.ProceduresFragment"
+        android:name="com.hhh.mypetsapp.ui.surgical.SurgicalProceduresFragment"
         android:label="@string/menu_procedures"
-        tools:layout="@layout/procedures_fragment" />
+        tools:layout="@layout/fragment_surgical_procedures" />
 
     <fragment
         android:id="@+id/nav_treatment"

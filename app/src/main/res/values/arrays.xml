@@ -20,4 +20,14 @@
         <item>From rabies</item>
         <item>Other</item>
     </string-array>
+
+    <string-array name="typeSurgicalArray">
+        <item>Sterilization/Castration</item>
+        <item>Dental surgery</item>
+        <item>Surgical oncology</item>
+        <item>Ophthalmic surgery</item>
+        <item>Orthopedic surgery</item>
+        <item>Cardiac surgery</item>
+        <item>Other</item>
+    </string-array>
 </resources>
