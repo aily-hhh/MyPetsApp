@@ -119,7 +119,7 @@ public class SurgicalProceduresFragment extends Fragment implements PopupMenu.On
         @Override
         public void onClick(SurgicalProcedures currentSurgicalProcedure) {
             Intent intent = new Intent(SurgicalProceduresFragment.this.getActivity(), SurgicalProceduresTakerActivity.class);
-            intent.putExtra("oldSurgical", currentSurgicalProcedure.getId());
+            intent.putExtra("oldSurgical", currentSurgicalProcedure.id);
             intent.putExtra("petName", name);
             startActivity(intent);
         }
