@@ -22,6 +22,9 @@
             android:name=".ui.surgical.SurgicalProceduresTakerActivity"
             android:exported="false" />
         <activity
+            android:name=".ui.dehelmintization.DehelmintizationTakerActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.treatment.TreatmentsTakerActivity"
             android:exported="false" />
         <activity

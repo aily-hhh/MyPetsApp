@@ -1,5 +1,7 @@
 package com.hhh.mypetsapp.ui.dehelmintization;
 
+import static android.content.ContentValues.TAG;
+
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -7,6 +9,7 @@ import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.media.Image;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -17,7 +20,10 @@ import androidx.annotation.Nullable;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.hhh.mypetsapp.R;
 
 import java.text.SimpleDateFormat;
@@ -65,6 +71,9 @@ public class DehelmintizationTakerActivity extends Activity {
         Intent intent = getIntent();
         name = intent.getStringExtra("petName");
 
+        idDehelmintization = getIntent().getStringExtra("oldDehelmintization");
+        infoFromOld();
+
         saveDehelmintization.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -92,6 +101,51 @@ public class DehelmintizationTakerActivity extends Activity {
                 onClickTime();
             }
         });
+    }
+
+    private void infoFromOld() {
+        if (idDehelmintization != null){
+            DocumentReference documentReference = db.collection("users").document(uID)
+                    .collection("pets").document(name)
+                    .collection("dehelmintization").document(idDehelmintization);
+            documentReference.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                @Override
+                public void onEvent(@Nullable DocumentSnapshot snapshot, @Nullable FirebaseFirestoreException e) {
+                    if (e != null) {
+                        Log.w(TAG, "Listen failed.", e);
+                        return;
+                    }
+
+                    if (snapshot != null && snapshot.exists()) {
+                        Log.d(TAG, "Current data: " + snapshot.getData());
+                        if(snapshot.get("name") != null){
+                            nameDehelmintizationTaker.setText(snapshot.get("name").toString());
+                        }
+                        if(snapshot.get("description") != null){
+                            descriptionDehelmintizationTaker.setText(snapshot.get("description").toString());
+                        }
+                        if(snapshot.get("date") != null){
+                            dateDehelmintizationTaker.setText(snapshot.get("date").toString());
+                        }
+                        if(snapshot.get("veterinarian") != null){
+                            veterinarianDehelmintizationTaker.setText(snapshot.get("veterinarian").toString());
+                        }
+                        if(snapshot.get("manufacturer") != null){
+                            manufacturerDehelmintizationTaker.setText(snapshot.get("manufacturer").toString());
+                        }
+                        if(snapshot.get("dose") != null){
+                            doseDehelmintizationTaker.setText(snapshot.get("dose").toString());
+                        }
+                        if(snapshot.get("time") != null){
+                            timeDehelmintizationTaker.setText(snapshot.get("time").toString());
+                        }
+                    } else {
+                        Log.d(TAG, "Current data: null");
+                    }
+                }
+            });
+            isOld = true;
+        }
     }
 
     private void onClickTime() {
@@ -128,7 +182,7 @@ public class DehelmintizationTakerActivity extends Activity {
         public void onDateSet(DatePicker view, int year, int monthOfYear,
                               int dayOfMonth) {
             myYear = year;
-            myMonth = monthOfYear;
+            myMonth = monthOfYear + 1;
             myDay = dayOfMonth;
             dateDehelmintizationTaker.setText(myDay + "." + myMonth + "." + myYear);
         }

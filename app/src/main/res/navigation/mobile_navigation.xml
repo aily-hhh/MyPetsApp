@@ -34,4 +34,10 @@
         android:name="com.hhh.mypetsapp.ui.treatment.TreatmentFragment"
         android:label="@string/menu_treatment"
         tools:layout="@layout/treatment_fragment" />
+
+    <fragment
+        android:id="@+id/nav_dehelmintization"
+        android:name="com.hhh.mypetsapp.ui.dehelmintization.DehelmintizationFragment"
+        android:label="@string/dehelmintization"
+        tools:layout="@layout/fragment_dehelmintization" />
 </navigation>

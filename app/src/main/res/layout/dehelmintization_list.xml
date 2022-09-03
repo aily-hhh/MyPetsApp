@@ -43,13 +43,33 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/nameDehelmintizationList"
-                android:layout_width="230dp"
+                android:id="@+id/nameDescript"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_toStartOf="@+id/timeDescript"
                 android:ellipsize="marquee"
                 android:fontFamily="monospace"
                 android:marqueeRepeatLimit="marquee_forever"
-                android:padding="8dp"
+                android:paddingTop="2dp"
+                android:layout_marginStart="6dp"
+                android:scrollHorizontally="true"
+                android:singleLine="true"
+                android:text="Name: "
+                android:textColor="@color/purple_200"
+                android:textSize="10sp"
+                android:textStyle="normal" />
+
+            <TextView
+                android:id="@+id/nameDehelmintizationList"
+                android:layout_width="190dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/nameDescript"
+                android:ellipsize="marquee"
+                android:fontFamily="monospace"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:paddingBottom="6dp"
+                android:paddingLeft="6dp"
+                android:paddingRight="6dp"
                 android:scrollHorizontally="true"
                 android:singleLine="true"
                 android:text="Name"
@@ -100,11 +120,31 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/manufacturerDehelmintizationList"
-                android:layout_width="230dp"
+                android:id="@+id/manufacturerDescript"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_toStartOf="@+id/doseDescript"
+                android:ellipsize="marquee"
                 android:fontFamily="monospace"
-                android:padding="8dp"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:paddingTop="2dp"
+                android:layout_marginStart="6dp"
+                android:scrollHorizontally="true"
+                android:singleLine="true"
+                android:text="Manufacturer: "
+                android:textColor="@color/purple_200"
+                android:textSize="10sp"
+                android:textStyle="normal" />
+
+            <TextView
+                android:id="@+id/manufacturerDehelmintizationList"
+                android:layout_width="190dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/manufacturerDescript"
+                android:fontFamily="monospace"
+                android:paddingLeft="6dp"
+                android:paddingRight="6dp"
+                android:paddingBottom="6dp"
                 android:text="Manufacturer"
                 android:textColor="@color/purple_500"
                 android:textSize="14sp"
@@ -153,7 +193,7 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/veterinarianSurgicalDescriptL"
+                android:id="@+id/veterinarianDescript"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="monospace"
@@ -164,11 +204,11 @@
                 android:textStyle="normal" />
 
             <TextView
-                android:id="@+id/veterinarianSurgicalProcedureL"
+                android:id="@+id/veterinarianDehelmintizationList"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
-                android:layout_toEndOf="@+id/veterinarianSurgicalDescriptL"
+                android:layout_toEndOf="@+id/veterinarianDescript"
                 android:ellipsize="marquee"
                 android:fontFamily="monospace"
                 android:marqueeRepeatLimit="marquee_forever"
