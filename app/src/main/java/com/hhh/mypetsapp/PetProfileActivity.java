@@ -201,7 +201,7 @@ public class PetProfileActivity extends AppCompatActivity {
                               int dayOfMonth) {
             myYear = year;
             myMonth = monthOfYear;
-            myDay = dayOfMonth;
+            myDay = dayOfMonth+1;
             petBirthday.setText(myDay + "." + myMonth + "." + myYear);
         }
     };
@@ -313,5 +313,14 @@ public class PetProfileActivity extends AppCompatActivity {
                 }
             });
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(PetProfileActivity.this, VetPassportActivity.class);
+        intent.putExtra("petName", petName.getText().toString());
+        startActivity(intent);
+        finish();
     }
 }

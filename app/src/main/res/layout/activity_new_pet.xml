@@ -37,7 +37,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="7dp"
-            android:hint="Name">
+            android:hint="@string/name">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/petNewName"
@@ -49,7 +49,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="7dp"
-            android:hint="Species">
+            android:hint="@string/species">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/petNewSpecies"
@@ -60,7 +60,7 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Breed">
+            android:hint="@string/breed">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/petNewBreed"
@@ -75,7 +75,7 @@
             android:paddingLeft="4dp"
             android:textSize="12dp"
             android:fontFamily="monospace"
-            android:text="Sex"
+            android:text="@string/sex"
             android:textColor="@color/hint" />
 
         <Spinner
@@ -88,7 +88,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="7dp"
-            android:hint="Birthday">
+            android:hint="@string/birthday">
 
             <EditText
                 android:id="@+id/petNewBirthday"
@@ -102,7 +102,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="7dp"
-            android:hint="Hair">
+            android:hint="@string/hair">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/petNewHair"
@@ -115,7 +115,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="@style/buttonStyle"
-            android:text="Create"
+            android:text="@string/create"
             android:onClick="createInformationForPet" />
 
     </LinearLayout>

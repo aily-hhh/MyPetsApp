@@ -57,7 +57,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="7dp"
-                android:hint="Name of product">
+                android:hint="@string/nameProduct">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/nameDehelmintizationTaker"
@@ -71,7 +71,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="7dp"
-                android:hint="Manufacturer">
+                android:hint="@string/manufacturer">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/manufacturerDehelmintizationTaker"
@@ -84,7 +84,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="7dp"
-                android:hint="Dose">
+                android:hint="@string/dose">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/doseDehelmintizationTaker"
@@ -97,7 +97,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="7dp"
-                android:hint="Date of dehelmintization">
+                android:hint="@string/dateDehelmintization">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/dateDehelmintizationTaker"
@@ -111,7 +111,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="7dp"
-                android:hint="Time of dehelmintization">
+                android:hint="@string/timeDehelmintization">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/timeDehelmintizationTaker"
@@ -125,7 +125,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="7dp"
-                android:hint="Veterinarian">
+                android:hint="@string/veterinarian">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/veterinarianDehelmintizationTaker"
@@ -138,7 +138,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="7dp"
-                android:hint="Description">
+                android:hint="@string/description">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/descriptionDehelmintizationTaker"

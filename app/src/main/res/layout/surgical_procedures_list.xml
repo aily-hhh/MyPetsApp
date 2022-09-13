@@ -87,7 +87,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="monospace"
                 android:padding="8dp"
-                android:text="Anesthesia:"
+                android:text="@string/anesthesiaList"
                 android:textColor="@color/purple_200"
                 android:textSize="14sp"
                 android:textStyle="normal" />
@@ -121,7 +121,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="monospace"
                 android:padding="8dp"
-                android:text="Veterinarian:"
+                android:text="@string/veterinarianList"
                 android:textColor="@color/purple_200"
                 android:textSize="14sp"
                 android:textStyle="normal" />

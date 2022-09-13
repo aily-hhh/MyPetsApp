@@ -7,10 +7,10 @@
     android:orientation="vertical"
     style="@style/Theme.MyPetsApp.NoActionBar"
     android:background="#99C3C8F1"
-    tools:context=".ui.treatment.TreatmentsTakerActivity">
+    tools:context=".ui.identification.IdentificationFragment">
 
     <Toolbar
-        android:id="@+id/toolbarTreatment"
+        android:id="@+id/toolbarIdentification"
         android:title="vaccine"
         android:titleTextColor="@color/white"
         android:layout_width="match_parent"
@@ -21,25 +21,16 @@
             android:layout_height="wrap_content">
 
             <ImageView
-                android:id="@+id/saveTreatment"
-                android:layout_margin="8dp"
-                android:src="@drawable/ic_baseline_save_24"
-                android:layout_alignParentEnd="true"
-                android:background="@color/fui_transparent"
-                android:layout_width="?actionBarSize"
-                android:layout_height="?actionBarSize"/>
-
-            <ImageView
-                android:id="@+id/backTreatment"
+                android:id="@+id/saveIdentification"
                 android:layout_width="?actionBarSize"
                 android:layout_height="?actionBarSize"
+                android:layout_alignParentEnd="true"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="8dp"
-                android:layout_toStartOf="@+id/saveTreatment"
                 android:background="@color/fui_transparent"
-                android:src="@drawable/back" />
+                android:src="@drawable/ic_baseline_save_24" />
         </RelativeLayout>
     </Toolbar>
 
@@ -57,10 +48,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="7dp"
-                android:hint="@string/nameProduct">
+                android:hint="@string/microchipNumber">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/nameTreatment"
+                    android:id="@+id/microchipNumber"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="monospace"
@@ -71,41 +62,54 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="7dp"
-                android:hint="@string/manufacturer">
+                android:hint="@string/dateOfMicrochipping">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/manufacturerTreatment"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/purple_500"/>
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="7dp"
-                android:hint="@string/dateTreatment">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/dateTreatment"
+                    android:id="@+id/dateOfMicrochipping"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/purple_500"
-                    android:focusable="false"
-                    android:onClick="onClickDate"/>
+                    android:focusable="false"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="7dp"
-                android:hint="@string/veterinarian">
+                android:hint="@string/microchipLocation">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/veterinarianTreatment"
+                    android:id="@+id/microchipLocation"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/purple_500"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="7dp"
+                android:hint="@string/tattooNumber">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/tattooNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/purple_500"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="7dp"
+                android:hint="@string/dateOfTattooing">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/dateOfTattooing"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/purple_500"
+                    android:focusable="false"/>
             </com.google.android.material.textfield.TextInputLayout>
 
         </LinearLayout>

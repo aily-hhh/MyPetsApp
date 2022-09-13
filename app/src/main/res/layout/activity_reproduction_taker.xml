@@ -7,11 +7,11 @@
     android:orientation="vertical"
     style="@style/Theme.MyPetsApp.NoActionBar"
     android:background="#99C3C8F1"
-    tools:context=".ui.treatment.TreatmentsTakerActivity">
+    tools:context=".ui.reproduction.ReproductionTakerActivity">
 
     <Toolbar
-        android:id="@+id/toolbarTreatment"
-        android:title="vaccine"
+        android:id="@+id/toolbarReproduction"
+        android:title="@string/reproduction"
         android:titleTextColor="@color/white"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize">
@@ -21,7 +21,7 @@
             android:layout_height="wrap_content">
 
             <ImageView
-                android:id="@+id/saveTreatment"
+                android:id="@+id/saveReproduction"
                 android:layout_margin="8dp"
                 android:src="@drawable/ic_baseline_save_24"
                 android:layout_alignParentEnd="true"
@@ -30,14 +30,14 @@
                 android:layout_height="?actionBarSize"/>
 
             <ImageView
-                android:id="@+id/backTreatment"
+                android:id="@+id/backReproduction"
                 android:layout_width="?actionBarSize"
                 android:layout_height="?actionBarSize"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="8dp"
-                android:layout_toStartOf="@+id/saveTreatment"
+                android:layout_toStartOf="@+id/saveReproduction"
                 android:background="@color/fui_transparent"
                 android:src="@drawable/back" />
         </RelativeLayout>
@@ -57,52 +57,53 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="7dp"
-                android:hint="@string/nameProduct">
+                android:hint="@string/dateHeat">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/nameTreatment"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="monospace"
-                    android:textColor="@color/purple_500"/>
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="7dp"
-                android:hint="@string/manufacturer">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/manufacturerTreatment"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/purple_500"/>
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="7dp"
-                android:hint="@string/dateTreatment">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/dateTreatment"
+                    android:id="@+id/dateOfHeatTaker"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/purple_500"
-                    android:focusable="false"
-                    android:onClick="onClickDate"/>
+                    android:focusable="false"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="7dp"
-                android:hint="@string/veterinarian">
+                android:hint="@string/dateMating">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/veterinarianTreatment"
+                    android:id="@+id/dateOfMatingTaker"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/purple_500"
+                    android:focusable="false"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="7dp"
+                android:hint="@string/dateBirth">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/dateOfBirthTaker"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/purple_500"
+                    android:focusable="false"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="7dp"
+                android:hint="@string/numberOfTheLitter">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/numberOfTheLitterTaker"
+                    android:singleLine="false"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/purple_500"/>

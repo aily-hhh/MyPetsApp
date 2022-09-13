@@ -31,7 +31,7 @@
                 android:padding="8dp"
                 android:scrollHorizontally="true"
                 android:singleLine="true"
-                android:text="Title"
+                android:text="@string/title_notes"
                 android:textColor="@color/purple_700"
                 android:textSize="18sp"
                 android:textStyle="bold" />
@@ -57,7 +57,7 @@
             android:textColor="@color/purple_500"
             android:padding="8dp"
             android:fontFamily="monospace"
-            android:text="Description"
+            android:text="@string/description"
             android:maxLines="5"/>
 
         <TextView
@@ -69,7 +69,6 @@
             android:textColor="@color/purple_200"
             android:padding="8dp"
             android:fontFamily="monospace"
-            android:text="Date"
             android:singleLine="true"
             android:ellipsize="marquee"
             android:marqueeRepeatLimit="marquee_forever"

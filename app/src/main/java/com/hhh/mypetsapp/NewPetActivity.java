@@ -21,8 +21,6 @@ import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -36,13 +34,11 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.IOException;
-import java.util.Date;
 import java.util.UUID;
 
 public class NewPetActivity extends AppCompatActivity {
@@ -92,6 +88,8 @@ public class NewPetActivity extends AppCompatActivity {
                 updatePetNewPhoto();
             }
         });
+        storage = FirebaseStorage.getInstance();
+        storageReference = storage.getReference();
 
         adapterNewSex = ArrayAdapter.createFromResource(this,
                 R.array.sexArray, android.R.layout.simple_spinner_item);
@@ -103,6 +101,8 @@ public class NewPetActivity extends AppCompatActivity {
     }
 
     public void createInformationForPet(View view){
+        Toast.makeText(this, R.string.imageWarning, Toast.LENGTH_LONG).show();
+
         Pet pet = new Pet();
         pet.setName(petNewName.getText().toString().trim());
         pet.setSpecies(petNewSpecies.getText().toString().trim());
@@ -114,8 +114,11 @@ public class NewPetActivity extends AppCompatActivity {
         db.collection("users").document(uID)
                 .collection("pets").document(pet.getName()).set(pet);
 
-        Intent intent = new Intent(NewPetActivity.this, PetProfileActivity.class);
-        intent.putExtra("petName", petNewName.getText().toString());
+        recreate();
+        uploadImage();
+
+        Intent intent = new Intent(NewPetActivity.this, VetPassportActivity.class);
+        intent.putExtra("petName", petNewName.getText().toString().trim());
         startActivity(intent);
         finish();
     }
@@ -137,7 +140,7 @@ public class NewPetActivity extends AppCompatActivity {
         public void onDateSet(DatePicker view, int year, int monthOfYear,
                               int dayOfMonth) {
             myYear = year;
-            myMonth = monthOfYear;
+            myMonth = monthOfYear+1;
             myDay = dayOfMonth;
             petNewBirthday.setText(myDay + "." + myMonth + "." + myYear);
         }
@@ -189,7 +192,7 @@ public class NewPetActivity extends AppCompatActivity {
             StorageReference ref
                     = storageReference.child("images/" + photoStr);
             DocumentReference updatePhoto = db.collection("users").document(uID)
-                    .collection("pets").document(petNewName.getText().toString());
+                    .collection("pets").document(petNewName.getText().toString().trim());
             updatePhoto.addSnapshotListener(new EventListener<DocumentSnapshot>() {
                 @Override
                 public void onEvent(@Nullable DocumentSnapshot snapshot,
@@ -231,7 +234,7 @@ public class NewPetActivity extends AppCompatActivity {
                         public void onSuccess(
                                 UploadTask.TaskSnapshot taskSnapshot)
                         {
-                            Toast.makeText(NewPetActivity.this, "Image Uploaded!!",
+                            Toast.makeText(NewPetActivity.this, R.string.imageUploaded,
                                     Toast.LENGTH_SHORT).show();
                         }
                     }).addOnFailureListener(new OnFailureListener() {

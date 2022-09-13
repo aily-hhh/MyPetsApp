@@ -40,4 +40,16 @@
         android:name="com.hhh.mypetsapp.ui.dehelmintization.DehelmintizationFragment"
         android:label="@string/dehelmintization"
         tools:layout="@layout/fragment_dehelmintization" />
+
+    <fragment
+        android:id="@+id/nav_reproduction"
+        android:name="com.hhh.mypetsapp.ui.reproduction.ReproductionFragment"
+        android:label="@string/reproduction"
+        tools:layout="@layout/fragment_reproduction" />
+
+    <fragment
+        android:id="@+id/nav_identification"
+        android:name="com.hhh.mypetsapp.ui.identification.IdentificationFragment"
+        android:label="@string/identification"
+        tools:layout="@layout/fragment_identification" />
 </navigation>

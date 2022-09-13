@@ -60,7 +60,7 @@
                 android:paddingLeft="4dp"
                 android:textSize="12dp"
                 android:fontFamily="monospace"
-                android:text="Type of surgical procedure"
+                android:text="@string/type_of_surgical_procedure"
                 android:textColor="@color/hint" />
 
             <Spinner
@@ -74,7 +74,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="7dp"
-                android:hint="Name">
+                android:hint="@string/name">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/nameSurgicalProcedure"
@@ -88,7 +88,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="7dp"
-                android:hint="Anesthesia">
+                android:hint="@string/anesthesia">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/anesthesiaSurgicalProcedure"
@@ -101,7 +101,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="7dp"
-                android:hint="Date of surgical procedure">
+                android:hint="@string/date_of_surgical_procedure">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/dateSurgicalProcedure"
@@ -116,7 +116,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="7dp"
-                android:hint="Veterinarian">
+                android:hint="@string/veterinarian">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/veterinarianSurgicalProcedure"
@@ -129,7 +129,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="7dp"
-                android:hint="Description">
+                android:hint="@string/description">
 
                 <EditText
                     android:id="@+id/descriptionSurgicalProcedure"

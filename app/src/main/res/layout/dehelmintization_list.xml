@@ -54,7 +54,7 @@
                 android:layout_marginStart="6dp"
                 android:scrollHorizontally="true"
                 android:singleLine="true"
-                android:text="Name: "
+                android:text="@string/nameList"
                 android:textColor="@color/purple_200"
                 android:textSize="10sp"
                 android:textStyle="normal" />
@@ -72,7 +72,7 @@
                 android:paddingRight="6dp"
                 android:scrollHorizontally="true"
                 android:singleLine="true"
-                android:text="Name"
+                android:text="@string/name"
                 android:textColor="@color/purple_500"
                 android:textSize="14sp"
                 android:textStyle="normal" />
@@ -89,7 +89,7 @@
                 android:paddingTop="2dp"
                 android:scrollHorizontally="true"
                 android:singleLine="true"
-                android:text="Time: "
+                android:text="@string/timeList"
                 android:textColor="@color/purple_200"
                 android:textSize="10sp"
                 android:textStyle="normal" />
@@ -123,15 +123,15 @@
                 android:id="@+id/manufacturerDescript"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
                 android:layout_toStartOf="@+id/doseDescript"
                 android:ellipsize="marquee"
                 android:fontFamily="monospace"
                 android:marqueeRepeatLimit="marquee_forever"
                 android:paddingTop="2dp"
-                android:layout_marginStart="6dp"
                 android:scrollHorizontally="true"
                 android:singleLine="true"
-                android:text="Manufacturer: "
+                android:text="@string/manufacturerList"
                 android:textColor="@color/purple_200"
                 android:textSize="10sp"
                 android:textStyle="normal" />
@@ -162,7 +162,7 @@
                 android:paddingTop="2dp"
                 android:scrollHorizontally="true"
                 android:singleLine="true"
-                android:text="Dose: "
+                android:text="@string/doseList"
                 android:textColor="@color/purple_200"
                 android:textSize="10sp"
                 android:textStyle="normal" />
@@ -198,7 +198,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="monospace"
                 android:padding="8dp"
-                android:text="Veterinarian:"
+                android:text="@string/veterinarianList"
                 android:textColor="@color/purple_200"
                 android:textSize="14sp"
                 android:textStyle="normal" />

@@ -84,7 +84,7 @@ public class DehelmintizationTakerActivity extends Activity {
         backDehelmintization.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                backToDataBase();
+                finish();
             }
         });
 
@@ -187,10 +187,6 @@ public class DehelmintizationTakerActivity extends Activity {
             dateDehelmintizationTaker.setText(myDay + "." + myMonth + "." + myYear);
         }
     };
-
-    private void backToDataBase() {
-        finish();
-    }
 
     private void addingToDataBase() {
         if (!isOld){

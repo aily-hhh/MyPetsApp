@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/vaccinesContainer"
+    android:id="@+id/reproductionContainer"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:cardBackgroundColor="@color/forNotes"
@@ -21,7 +22,7 @@
             android:background="#C3C8F1">
 
             <TextView
-                android:id="@+id/typeVaccine"
+                android:id="@+id/dateOfBirthList"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
@@ -31,64 +32,81 @@
                 android:padding="8dp"
                 android:scrollHorizontally="true"
                 android:singleLine="true"
-                android:text="Type"
+                android:text="Date of birth"
                 android:textColor="@color/purple_700"
                 android:textSize="18sp"
                 android:textStyle="bold" />
         </RelativeLayout>
 
-        <TextView
-            android:id="@+id/nameVaccine"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ellipsize="marquee"
-            android:fontFamily="monospace"
-            android:marqueeRepeatLimit="marquee_forever"
-            android:paddingTop="8dp"
-            android:paddingLeft="8dp"
-            android:scrollHorizontally="true"
-            android:singleLine="true"
-            android:text="Name"
-            android:textColor="@color/purple_500"
-            android:textSize="14sp"
-            android:textStyle="normal" />
-
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/manufacturerVaccine"
-                android:layout_width="190dp"
+                android:id="@+id/dateOfHeatDescript"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:layout_toStartOf="@+id/dateOfMatingDescript"
                 android:ellipsize="marquee"
                 android:fontFamily="monospace"
                 android:marqueeRepeatLimit="marquee_forever"
-                android:paddingLeft="8dp"
                 android:paddingTop="2dp"
-                android:paddingBottom="8dp"
                 android:scrollHorizontally="true"
                 android:singleLine="true"
-                android:text="Manufacturer"
+                android:text="@string/dateOfHeatList"
+                android:textColor="@color/purple_200"
+                android:textSize="10sp"
+                android:textStyle="normal" />
+
+            <TextView
+                android:id="@+id/dateOfHeatList"
+                android:layout_width="190dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/dateOfHeatDescript"
+                android:fontFamily="monospace"
+                android:paddingLeft="6dp"
+                android:paddingRight="6dp"
+                android:paddingBottom="6dp"
+                android:text="Date of heat"
                 android:textColor="@color/purple_500"
                 android:textSize="14sp"
                 android:textStyle="normal" />
 
             <TextView
-                android:id="@+id/dateVaccine"
+                android:id="@+id/dateOfMatingDescript"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
-                android:layout_toEndOf="@+id/manufacturerVaccine"
+                android:layout_toEndOf="@+id/dateOfHeatList"
                 android:ellipsize="marquee"
                 android:fontFamily="monospace"
                 android:marqueeRepeatLimit="marquee_forever"
-                android:padding="8dp"
+                android:paddingTop="2dp"
                 android:scrollHorizontally="true"
                 android:singleLine="true"
-                android:text="Date"
-                android:textColor="@color/purple_500"
+                android:text="@string/dateOfMatingList"
+                android:textColor="@color/purple_200"
                 android:textSize="10sp"
+                android:textStyle="normal" />
+
+            <TextView
+                android:id="@+id/dateOfMatingList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/dateOfMatingDescript"
+                android:layout_toEndOf="@+id/dateOfHeatList"
+                android:ellipsize="marquee"
+                android:fontFamily="monospace"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:paddingLeft="5dp"
+                android:paddingRight="6dp"
+                android:paddingBottom="6dp"
+                android:scrollHorizontally="true"
+                android:singleLine="true"
+                android:text="Date of mating"
+                android:textColor="@color/purple_500"
+                android:textSize="14sp"
                 android:textStyle="normal" />
 
         </RelativeLayout>
@@ -98,29 +116,29 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/veterinarianVaccineDescript"
+                android:id="@+id/numberOfTheLitterDescript"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="monospace"
                 android:padding="8dp"
-                android:text="@string/veterinarianList"
+                android:text="@string/numberOfTheLitterList"
                 android:textColor="@color/purple_200"
                 android:textSize="14sp"
                 android:textStyle="normal" />
 
             <TextView
-                android:id="@+id/veterinarianVaccine"
+                android:id="@+id/numberOfTheLitterList"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
-                android:layout_toEndOf="@+id/veterinarianVaccineDescript"
+                android:layout_toEndOf="@+id/numberOfTheLitterDescript"
                 android:ellipsize="marquee"
                 android:fontFamily="monospace"
                 android:marqueeRepeatLimit="marquee_forever"
                 android:padding="8dp"
                 android:scrollHorizontally="true"
                 android:singleLine="true"
-                android:text="Veterinarian"
+                android:text="Number of the litter"
                 android:textColor="@color/purple_500"
                 android:textSize="14sp"
                 android:textStyle="normal" />

@@ -46,12 +46,14 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.hhh.mypetsapp.databinding.ActivityVetPassportBinding;
 import com.hhh.mypetsapp.databinding.AppBarVetPassportBinding;
+import com.hhh.mypetsapp.ui.identification.DatePickerFragment;
+import com.hhh.mypetsapp.ui.identification.IdentificationFragment;
 import com.hhh.mypetsapp.ui.notes.Notes;
 
 import java.time.LocalDate;
 import java.time.Period;
 
-public class VetPassportActivity extends AppCompatActivity {
+public class VetPassportActivity extends AppCompatActivity implements DatePickerFragment.OnDateReceiveCallBack{
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityVetPassportBinding binding;
@@ -191,5 +193,13 @@ public class VetPassportActivity extends AppCompatActivity {
         Intent intent = new Intent(VetPassportActivity.this, PetProfileActivity.class);
         intent.putExtra("petName", name);
         startActivity(intent);
+    }
+
+    public void onDateReceive(int dd ,int mm, int yy){
+        IdentificationFragment.onClickMicro(dd,mm,yy);
+    }
+
+    public void onDateReceive2(int dd ,int mm, int yy){
+        IdentificationFragment.onClickTattoo(dd,mm,yy);
     }
 }

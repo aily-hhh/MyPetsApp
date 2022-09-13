@@ -157,7 +157,7 @@ public class NotesFragment extends Fragment implements PopupMenu.OnMenuItemClick
                             .collection("pets").document(name)
                             .collection("notes").document(selectedNote.getId());
                     docRef.update("pinned", true);
-                    Toast.makeText(NotesFragment.this.getContext(), "Pinned", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(NotesFragment.this.getContext(), R.string.pinned, Toast.LENGTH_SHORT).show();
                 }
                 notes.clear();
                 infoFromDataBase();
@@ -173,7 +173,7 @@ public class NotesFragment extends Fragment implements PopupMenu.OnMenuItemClick
                         db.collection("users").document(uID)
                                 .collection("pets").document(name)
                                 .collection("notes").document(selectedNote.getId()).delete();
-                        Toast.makeText(NotesFragment.this.getContext(), "Deleted", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(NotesFragment.this.getContext(), R.string.deleted, Toast.LENGTH_SHORT).show();
                         dialogInterface.dismiss();
                         notes.clear();
                         infoFromDataBase();

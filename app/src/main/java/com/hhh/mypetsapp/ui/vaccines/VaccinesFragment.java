@@ -116,7 +116,7 @@ public class VaccinesFragment extends Fragment implements PopupMenu.OnMenuItemCl
     private void showPopUp(CardView cardView) {
         PopupMenu popupMenu = new PopupMenu(this.getContext(), cardView);
         popupMenu.setOnMenuItemClickListener(this);
-        popupMenu.inflate(R.menu.vaccines_menu);
+        popupMenu.inflate(R.menu.delete_menu);
         popupMenu.show();
     }
 
@@ -150,7 +150,7 @@ public class VaccinesFragment extends Fragment implements PopupMenu.OnMenuItemCl
     @Override
     public boolean onMenuItemClick(MenuItem menuItem) {
         switch (menuItem.getItemId()){
-            case R.id.deleteMenuVaccines:
+            case R.id.deleteMenu:
                 AlertDialog.Builder alertDialog = new AlertDialog.Builder(this.getContext());
                 alertDialog.setIcon(R.drawable.icon);
                 alertDialog.setTitle(R.string.delete);
@@ -160,7 +160,7 @@ public class VaccinesFragment extends Fragment implements PopupMenu.OnMenuItemCl
                         db.collection("users").document(uID)
                                 .collection("pets").document(name)
                                 .collection("vaccines").document(selectedVaccine.getId()).delete();
-                        Toast.makeText(VaccinesFragment.this.getContext(), "Deleted", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(VaccinesFragment.this.getContext(), R.string.deleted, Toast.LENGTH_SHORT).show();
                         dialogInterface.dismiss();
                         vaccines.clear();
                         infoFromDataBase();

@@ -120,7 +120,7 @@ public class TreatmentFragment extends Fragment implements PopupMenu.OnMenuItemC
     private void showPopUp(CardView cardView) {
         PopupMenu popupMenu = new PopupMenu(this.getContext(), cardView);
         popupMenu.setOnMenuItemClickListener(this);
-        popupMenu.inflate(R.menu.treatment_menu);
+        popupMenu.inflate(R.menu.delete_menu);
         popupMenu.show();
     }
 
@@ -156,7 +156,7 @@ public class TreatmentFragment extends Fragment implements PopupMenu.OnMenuItemC
     @Override
     public boolean onMenuItemClick(MenuItem menuItem) {
         switch (menuItem.getItemId()){
-            case R.id.deleteMenuTreatment:
+            case R.id.deleteMenu:
                 AlertDialog.Builder alertDialog = new AlertDialog.Builder(this.getContext());
                 alertDialog.setIcon(R.drawable.icon);
                 alertDialog.setTitle(R.string.delete);
@@ -166,7 +166,7 @@ public class TreatmentFragment extends Fragment implements PopupMenu.OnMenuItemC
                         db.collection("users").document(uID)
                                 .collection("pets").document(name)
                                 .collection("treatments").document(selectedTreatment.getId()).delete();
-                        Toast.makeText(TreatmentFragment.this.getContext(), "Deleted", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(TreatmentFragment.this.getContext(), R.string.deleted, Toast.LENGTH_SHORT).show();
                         dialogInterface.dismiss();
                         treatments.clear();
                         infoFromDataBase();

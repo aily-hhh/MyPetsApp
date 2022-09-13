@@ -33,11 +33,6 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.hhh.mypetsapp.ItemViewModel;
 import com.hhh.mypetsapp.R;
 import com.hhh.mypetsapp.databinding.FragmentDehelmintizationBinding;
-import com.hhh.mypetsapp.ui.gallery.GalleryViewModel;
-import com.hhh.mypetsapp.ui.surgical.SurgicalProcedures;
-import com.hhh.mypetsapp.ui.surgical.SurgicalProceduresFragment;
-import com.hhh.mypetsapp.ui.surgical.SurgicalProceduresListAdapter;
-import com.hhh.mypetsapp.ui.surgical.SurgicalProceduresTakerActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -143,14 +138,14 @@ public class DehelmintizationFragment extends Fragment implements PopupMenu.OnMe
     private void showPopUp(CardView cardView) {
         PopupMenu popupMenu = new PopupMenu(this.getContext(), cardView);
         popupMenu.setOnMenuItemClickListener(this);
-        popupMenu.inflate(R.menu.surgical_menu);
+        popupMenu.inflate(R.menu.delete_menu);
         popupMenu.show();
     }
 
     @Override
     public boolean onMenuItemClick(MenuItem menuItem) {
         switch (menuItem.getItemId()){
-            case R.id.deleteMenuSurgical:
+            case R.id.deleteMenu:
                 AlertDialog.Builder alertDialog = new AlertDialog.Builder(this.getContext());
                 alertDialog.setIcon(R.drawable.icon);
                 alertDialog.setTitle(R.string.delete);
@@ -160,7 +155,7 @@ public class DehelmintizationFragment extends Fragment implements PopupMenu.OnMe
                         db.collection("users").document(uID)
                                 .collection("pets").document(name)
                                 .collection("dehelmintization").document(selectedDehelmintization.getId()).delete();
-                        Toast.makeText(DehelmintizationFragment.this.getContext(), "Deleted", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(DehelmintizationFragment.this.getContext(), R.string.deleted, Toast.LENGTH_SHORT).show();
                         dialogInterface.dismiss();
                         dehelmintizations.clear();
                         infoFromDataBase();

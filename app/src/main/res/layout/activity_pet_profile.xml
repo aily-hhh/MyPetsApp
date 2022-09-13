@@ -36,7 +36,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="7dp"
-            android:hint="Name">
+            android:hint="@string/name">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/petName"
@@ -49,7 +49,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="7dp"
-            android:hint="Species">
+            android:hint="@string/species">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/petSpecies"
@@ -61,7 +61,7 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Breed">
+            android:hint="@string/breed">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/petBreed"
@@ -78,7 +78,7 @@
             android:paddingLeft="4dp"
             android:textSize="12dp"
             android:fontFamily="monospace"
-            android:text="Sex"
+            android:text="@string/sex"
             android:textColor="@color/hint" />
 
         <Spinner
@@ -91,7 +91,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="7dp"
-            android:hint="Birthday">
+            android:hint="@string/birthday">
 
             <EditText
                 android:id="@+id/petBirthday"
@@ -106,7 +106,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="7dp"
-            android:hint="Hair">
+            android:hint="@string/hair">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/petHair"
@@ -120,7 +120,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="@style/buttonStyle"
-            android:text="Update"
+            android:text="@string/update"
             android:onClick="updateInformationForPet" />
 
         <Button
@@ -129,7 +129,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="7dp"
-            android:text="Back" />
+            android:text="@string/back" />
 
     </LinearLayout>
     </ScrollView>

@@ -1,8 +1,94 @@
 <resources>
     <string name="app_name">My Pets</string>
-    <string name="vetPassport">Вет паспорт</string>
+    <string name="vetPassport">Ветеринарный паспорт</string>
+    <string name="name">Имя</string>
+    <string name="nameList">Имя:</string>
+    <string name="timeList">Время:</string>
+    <string name="manufacturerList">Производитель:</string>
+    <string name="doseList">Доза:</string>
+    <string name="veterinarianList">Ветеринар:</string>
+    <string name="anesthesiaList">Анестезия:</string>
+    <string name="google">Google аккаунт</string>
+    <string name="phone">Номер телефона</string>
+    <string name="update">Обновить</string>
+    <string name="nameProduct">Название</string>
+    <string name="manufacturer">Производитель</string>
+    <string name="dose">Доза</string>
+    <string name="dateDehelmintization">Дата дегельминтизации</string>
+    <string name="timeDehelmintization">Время дегельминтизации</string>
+    <string name="veterinarian">Ветеринар</string>
+    <string name="description">Описание</string>
+    <string name="breed">Порода</string>
+    <string name="sex">Пол</string>
+    <string name="birthday">День рождения</string>
+    <string name="hair">Шерсть</string>
+    <string name="create">Создать</string>
+    <string name="species">Вид</string>
     <string name="aboutMe">Обо мне</string>
     <string name="settings">Настройки</string>
     <string name="signOut">Выйти</string>
+    <string name="anesthesia">Анестезия</string>
+    <string name="dateTreatment">Дата обработки</string>
+    <string name="date_of_surgical_procedure">Дата операции</string>
     <string name="userSignedOut">Вы вышли</string>
+    <string name="typeVaccine">Вид вакцинации</string>
+    <string name="dateVaccine">Дата вакцинации</string>
+    <string name="validUntil">Действительно до</string>
+    <string name="title_activity_settings">SettingsActivity</string>
+    <string name="title_notes">Заголовок</string>
+    <string name="type_of_surgical_procedure">Вид операции</string>
+    <string name="title">Заголовок: </string>
+    <string name="delete">Вы уверены, что хотите удалить эту запись?</string>
+    <string name="yes">Да</string>
+    <string name="no">Нет</string>
+
+    <!-- Preference Titles -->
+    <string name="messages_header">Messages</string>
+    <string name="sync_header">Sync</string>
+
+    <!-- Messages Preferences -->
+    <string name="signature_title">Your signature</string>
+    <string name="reply_title">Default reply action</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">Sync email periodically</string>
+    <string name="attachment_title">Download incoming attachments</string>
+    <string name="attachment_summary_on">Automatically download attachments for incoming emails
+    </string>
+    <string name="attachment_summary_off">Only download attachments when manually requested</string>
+    <string name="title_activity_vet_passport">VetPassportActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Pets name</string>
+    <string name="nav_header_subtitle">Pets age</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_home">Заметки</string>
+    <string name="menu_gallery">Галерея</string>
+    <string name="menu_slideshow">Вакцинирование</string>
+    <string name="menu_procedures">Операции</string>
+    <string name="menu_treatment">Обработка</string>
+    <string name="dehelmintization">Дегельминтизация</string>
+    <string name="reproduction">Репродукция</string>
+    <string name="identification">Идентификация</string>
+    <string name="from_external_parasites">От внешних паразитов</string>
+    <string name="treatment_from_external_parasites">Обработка от внешних паразитов</string>
+    <string name="title_activity_pet_profile">PetProfileActivity</string>
+    <string name="back">Назад</string>
+    <string name="dateHeat">Date of heat</string>
+    <string name="dateMating">Date of mating</string>
+    <string name="dateBirth">Date of birth</string>
+    <string name="numberOfTheLitter">Number of the litter</string>
+    <string name="dateOfHeatList">Date od heat:</string>
+    <string name="dateOfMatingList">Date of mating:</string>
+    <string name="numberOfTheLitterList">Number of the litter:</string>
+    <string name="pinned">Pinned</string>
+    <string name="microchipNumber">Microchip number</string>
+    <string name="dateOfMicrochipping">Date of microchipping</string>
+    <string name="microchipLocation">Microchip location</string>
+    <string name="tattooNumber">Tattoo number</string>
+    <string name="dateOfTattooing">Date of tattooing</string>
+    <string name="imageUploaded">Image Uploaded!!</string>
+    <string name="imageWarning">It takes time to load the image</string>
 </resources>
