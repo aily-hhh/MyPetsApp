@@ -62,7 +62,7 @@
     <string name="nav_header_title">Pets name</string>
     <string name="nav_header_subtitle">Pets age</string>
     <string name="nav_header_desc">Navigation header</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">Настройки</string>
 
     <string name="menu_home">Заметки</string>
     <string name="menu_gallery">Галерея</string>
@@ -78,17 +78,18 @@
     <string name="back">Назад</string>
     <string name="dateHeat">Date of heat</string>
     <string name="dateMating">Date of mating</string>
-    <string name="dateBirth">Date of birth</string>
-    <string name="numberOfTheLitter">Number of the litter</string>
+    <string name="dateBirth">Дата родов</string>
+    <string name="numberOfTheLitter">Кол-во в помете</string>
     <string name="dateOfHeatList">Date od heat:</string>
     <string name="dateOfMatingList">Date of mating:</string>
     <string name="numberOfTheLitterList">Number of the litter:</string>
-    <string name="pinned">Pinned</string>
-    <string name="microchipNumber">Microchip number</string>
-    <string name="dateOfMicrochipping">Date of microchipping</string>
+    <string name="pinned">Закреплено</string>
+    <string name="microchipNumber">Номер микрочипа</string>
+    <string name="dateOfMicrochipping">Дата чипирования</string>
     <string name="microchipLocation">Microchip location</string>
     <string name="tattooNumber">Tattoo number</string>
     <string name="dateOfTattooing">Date of tattooing</string>
-    <string name="imageUploaded">Image Uploaded!!</string>
-    <string name="imageWarning">It takes time to load the image</string>
+    <string name="imageUploaded">Изображение загружено!!</string>
+    <string name="imageWarning">Для загрузки изображения требуется время</string>
+    <string name="saved">Saved</string>
 </resources>

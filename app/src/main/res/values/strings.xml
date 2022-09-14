@@ -92,4 +92,5 @@
     <string name="dateOfTattooing">Date of tattooing</string>
     <string name="imageUploaded">Image Uploaded!!</string>
     <string name="imageWarning">It takes time to load the image</string>
+    <string name="saved">Saved</string>
 </resources>

@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -31,6 +32,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.hhh.mypetsapp.ItemViewModel;
+import com.hhh.mypetsapp.R;
 import com.hhh.mypetsapp.databinding.FragmentIdentificationBinding;
 
 public class IdentificationFragment extends Fragment {
@@ -44,9 +46,6 @@ public class IdentificationFragment extends Fragment {
 
     static int DIALOG_DATE_MICRO = 1;
     static int DIALOG_DATE_TATTOO = 2;
-    int myYear = 2022;
-    int myMonth = 1;
-    int myDay = 1;
 
     ImageView saveIdentification;
     EditText microchipNumber;
@@ -145,6 +144,8 @@ public class IdentificationFragment extends Fragment {
     }
 
     private void updatingToDataBase() {
+        Toast.makeText(this.getContext(), R.string.saved, Toast.LENGTH_SHORT).show();
+
         db.collection("users").document(uID)
                 .collection("pets").document(name)
                 .collection("identification").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {

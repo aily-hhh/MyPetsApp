@@ -32,20 +32,34 @@
 
     <TextView
         android:id="@+id/namePetProfile"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="6dp"
-        android:paddingTop="@dimen/nav_header_vertical_spacing"
-        android:elevation="10dp"
-        android:text="@string/nav_header_title"
-        android:textSize="20sp" />
-
-    <TextView
-        android:id="@+id/agePetProfile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingLeft="6dp"
         android:elevation="10dp"
-        android:textSize="15sp"
-        android:text="@string/nav_header_subtitle" />
+        android:paddingLeft="6dp"
+        android:paddingTop="@dimen/nav_header_vertical_spacing"
+        android:text="@string/nav_header_title"
+        android:textSize="16sp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/agePetProfile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:elevation="10dp"
+            android:paddingLeft="6dp"
+            android:text="@string/nav_header_subtitle"
+            android:textSize="10sp" />
+
+        <ImageView
+            android:id="@+id/oldPets"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:elevation="10dp"
+            android:src="@drawable/header_arrow_bottom" />
+    </RelativeLayout>
 </LinearLayout>

@@ -3,7 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-    <group android:checkableBehavior="single">
+    <group
+        android:id="@+id/nav_baseGroup"
+        android:checkableBehavior="single">
         <item
             android:id="@+id/nav_notes"
             android:icon="@drawable/nav_notes"
@@ -36,5 +38,19 @@
             android:id="@+id/nav_identification"
             android:icon="@drawable/nav_identification"
             android:title="@string/identification" />
+    </group>
+
+    <group
+        android:id="@+id/nav_lowerGroup"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_settings"
+            android:title="settings"/>
+        <item
+            android:id="@+id/nav_aboutMe"
+            android:title="about me"/>
+        <item
+            android:id="@+id/nav_signOut"
+            android:title="sign out"/>
     </group>
 </menu>
