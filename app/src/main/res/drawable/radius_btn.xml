@@ -8,7 +8,11 @@
         <item>
             <shape android:shape="rectangle"
                 android:tint="@color/forButtons">
-                <corners android:radius="8dp"/>
+                <corners
+                    android:bottomLeftRadius="64dp"
+                    android:topRightRadius="64dp"
+                    android:topLeftRadius="16dp"
+                    android:bottomRightRadius="32dp"/>
                 <solid android:color="@color/purple_500"/>
             </shape>
         </item>

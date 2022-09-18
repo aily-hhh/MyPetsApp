@@ -6,11 +6,13 @@ import android.os.PersistableBundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.view.menu.MenuView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -19,6 +21,7 @@ import com.hhh.mypetsapp.databinding.FragmentNotesBinding;
 public class HeaderFragment extends Fragment {
 
     TextView namePetProfile, agePetProfile;
+    ImageView addedPets;
     private ItemViewModel viewModel;
 
     @Nullable
@@ -28,6 +31,7 @@ public class HeaderFragment extends Fragment {
         View view = inflater.inflate(R.layout.nav_header_vet_passport, null);
         namePetProfile = (TextView) view.findViewById(R.id.namePetProfile);
         agePetProfile = (TextView) view.findViewById(R.id.agePetProfile);
+        addedPets = (ImageView) view.findViewById(R.id.addedPets);
 
         viewModel = new ViewModelProvider(requireActivity()).get(ItemViewModel.class);
         namePetProfile.setText(viewModel.namePet.toString());

@@ -166,7 +166,7 @@ public class NotesFragment extends Fragment implements PopupMenu.OnMenuItemClick
             case R.id.deleteMenuNotes:
                 AlertDialog.Builder alertDialog = new AlertDialog.Builder(this.getContext());
                 alertDialog.setIcon(R.drawable.icon);
-                alertDialog.setTitle(R.string.delete);
+                alertDialog.setTitle(R.string.deleteQuestion);
                 alertDialog.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {

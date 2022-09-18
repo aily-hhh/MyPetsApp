@@ -116,6 +116,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
+            android:id="@+id/buttonUpdate"
             android:layout_marginTop="7dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -130,6 +131,20 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="7dp"
             android:text="@string/back" />
+
+        <View
+            android:layout_marginTop="7dp"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/purple_200" />
+
+        <Button
+            style="@style/buttonStyle"
+            android:id="@+id/buttonDelete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="7dp"
+            android:text="@string/deleteButton" />
 
     </LinearLayout>
     </ScrollView>

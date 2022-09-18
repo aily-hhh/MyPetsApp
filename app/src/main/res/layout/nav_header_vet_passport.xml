@@ -51,10 +51,10 @@
             android:elevation="10dp"
             android:paddingLeft="6dp"
             android:text="@string/nav_header_subtitle"
-            android:textSize="10sp" />
+            android:textSize="12sp" />
 
         <ImageView
-            android:id="@+id/oldPets"
+            android:id="@+id/addedPets"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"

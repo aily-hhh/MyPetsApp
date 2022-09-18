@@ -12,10 +12,14 @@ import android.text.Layout;
 import android.util.Log;
 import android.view.View;
 import android.view.Menu;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -60,13 +64,14 @@ public class VetPassportActivity extends AppCompatActivity implements DatePicker
     private ActivityVetPassportBinding binding;
     private ItemViewModel viewModel;
     private String name;
+    private boolean rotate = true;
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     String uID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
     TextView namePetProfile;
     TextView agePetProfile;
-    ImageView iconPetProfile;
+    ImageView iconPetProfile, addedPets;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,9 +93,10 @@ public class VetPassportActivity extends AppCompatActivity implements DatePicker
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_notes, R.id.nav_gallery, R.id.nav_vaccines, R.id.nav_procedures, R.id.nav_treatment,
-                R.id.nav_dehelmintization, R.id.nav_reproduction, R.id.nav_identification)
+                R.id.nav_dehelmintization, R.id.nav_reproduction, R.id.nav_identification, R.id.nav_settings,
+                R.id.nav_aboutMe, R.id.nav_signOut)
                 .setOpenableLayout(drawer)
-                .build();
+                .build();           
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_vet_passport);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
@@ -99,8 +105,40 @@ public class VetPassportActivity extends AppCompatActivity implements DatePicker
         namePetProfile = (TextView) header.findViewById(R.id.namePetProfile);
         agePetProfile = (TextView) header.findViewById(R.id.agePetProfile);
         iconPetProfile = (ImageView) header.findViewById(R.id.iconPetProfile);
+        addedPets = (ImageView) header.findViewById(R.id.addedPets);
+
+        addedPets.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showListOfPets();
+            }
+        });
 
         infoFromDB();
+    }
+
+    private void showListOfPets() {
+        if (rotate) {
+            addedPets.animate().rotationBy(180).start();
+            rotate = false;
+        }
+        else {
+            addedPets.animate().rotationBy(-180).start();
+            rotate = true;
+        }
+    }
+
+    private void signOut(){
+        AuthUI.getInstance()
+                .signOut(VetPassportActivity.this)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        Toast.makeText(VetPassportActivity.this, R.string.userSignedOut, Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(VetPassportActivity.this, AuthActivity.class);
+                        startActivity(intent);
+                    }
+                });
     }
 
     private void infoFromDB() {
@@ -131,26 +169,26 @@ public class VetPassportActivity extends AppCompatActivity implements DatePicker
                                 int birthdayYear = Integer.parseInt(date[2]);
                                 LocalDate dateNow = LocalDate.now();
                                 int currentDay = dateNow.getDayOfMonth();
-                                int currentMonth = dateNow.getMonthValue();
+                                int currentMonth = dateNow.getMonthValue()+1;
                                 int currentYear = dateNow.getYear();
                                 int difDay = currentDay - birthdayDay;
                                 int difMonth = currentMonth - birthdayMonth;
                                 int difYear = currentYear - birthdayYear;
                                 if (difMonth == 0 && difDay < 0) {
+                                    difYear = difYear - 1;
                                     String age = String.valueOf(difYear) + " y.o";
                                     agePetProfile.setText(age);
                                 }
                                 else if (difMonth == 0) {
-                                    difYear++;
                                     String age = String.valueOf(difYear) + " y.o";
                                     agePetProfile.setText(age);
                                 }
                                 else if (difMonth > 0) {
-                                    difYear++;
                                     String age = String.valueOf(difYear) + " y.o";
                                     agePetProfile.setText(age);
                                 }
                                 else {
+                                    difYear = difYear - 1;
                                     String age = String.valueOf(difYear) + " y.o";
                                     agePetProfile.setText(age);
                                 }
@@ -174,14 +212,6 @@ public class VetPassportActivity extends AppCompatActivity implements DatePicker
                         }
                     }
                 });
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.vet_passport, menu);
-        MenuCompat.setGroupDividerEnabled(menu, true);
-        return true;
     }
 
     @Override

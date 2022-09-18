@@ -6,8 +6,10 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -44,6 +46,7 @@ import com.google.firebase.firestore.Source;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.hhh.mypetsapp.ui.dehelmintization.DehelmintizationFragment;
 
 import java.io.Console;
 import java.io.IOException;
@@ -54,7 +57,7 @@ public class PetProfileActivity extends AppCompatActivity {
     TextInputEditText petName, petSpecies, petBreed, petHair;
     EditText petBirthday;
     Spinner spinnerSex;
-    Button buttonBack;
+    Button buttonBack, buttonUpdate, buttonDelete;
 
     ImageView petPhoto;
     private Uri filePath;
@@ -85,6 +88,8 @@ public class PetProfileActivity extends AppCompatActivity {
         petBirthday = (EditText) findViewById(R.id.petBirthday);
         spinnerSex = (Spinner) findViewById(R.id.spinnerSex);
         buttonBack = (Button) findViewById(R.id.buttonBack);
+        buttonUpdate = (Button) findViewById(R.id.buttonUpdate);
+        buttonDelete = (Button) findViewById(R.id.buttonDelete);
         petPhoto = (ImageView) findViewById(R.id.petPhoto);
 
         adapterSex = ArrayAdapter.createFromResource(this,
@@ -116,10 +121,42 @@ public class PetProfileActivity extends AppCompatActivity {
             }
         });
 
+        buttonDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                deletePetProfile();
+            }
+        });
+
         Intent intent = getIntent();
         petName.setText(intent.getStringExtra("petName"));
 
         infoFromDatabase();
+    }
+
+    private void deletePetProfile() {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+        alertDialog.setIcon(R.drawable.icon);
+        alertDialog.setTitle(R.string.deletePetProfile);
+        alertDialog.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                DocumentReference deletePet = db.collection("users").document(uID)
+                        .collection("pets").document(petName.getText().toString());
+                Toast.makeText(PetProfileActivity.this, R.string.deleted, Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(PetProfileActivity.this, MainActivity.class);
+                startActivity(intent);
+                deletePet.delete();
+                finish();
+            }
+        });
+        alertDialog.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+        alertDialog.show();
     }
 
     private void infoFromDatabase() {
@@ -200,8 +237,8 @@ public class PetProfileActivity extends AppCompatActivity {
         public void onDateSet(DatePicker view, int year, int monthOfYear,
                               int dayOfMonth) {
             myYear = year;
-            myMonth = monthOfYear;
-            myDay = dayOfMonth+1;
+            myMonth = monthOfYear+1;
+            myDay = dayOfMonth;
             petBirthday.setText(myDay + "." + myMonth + "." + myYear);
         }
     };
