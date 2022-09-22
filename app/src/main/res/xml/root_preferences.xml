@@ -4,8 +4,8 @@
     <PreferenceCategory app:title="@string/theme">
 
         <SwitchPreferenceCompat
-            app:key="sound"
-            app:title="@string/themeChoise" />
+            app:key="theme"
+            app:title="@string/themeChoose" />
 
     </PreferenceCategory>
 
@@ -26,12 +26,6 @@
         <SwitchPreferenceCompat
             app:key="sound"
             app:title="@string/sound_title" />
-
-    </PreferenceCategory>
-
-    <PreferenceCategory app:title="@string/userInf_header">
-
-        <!--Удалить профиль пользователя-->
 
     </PreferenceCategory>
 

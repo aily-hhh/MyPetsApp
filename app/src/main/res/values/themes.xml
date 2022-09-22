@@ -7,6 +7,19 @@
         <item name="colorAccent">@color/forButtons</item>
         <item name="android:textColor">@color/purple_500</item>
         <item name="fontFamily">monospace</item>
+        <item name="backgroundColor">@drawable/background_notes</item>
+        <item name="buttonStyle">@style/buttonStyle</item>
+        <!-- Customize your theme here. -->
+    </style>
+
+    <style name="Theme.MyPetsApp.Dark" parent="Theme.AppCompat.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">#7433D1</item>
+        <item name="colorAccent">@color/forButtons</item>
+        <item name="android:textColor">@color/forButtons</item>
+        <item name="background">@drawable/side_nav_bar_dark</item>
+        <item name="fontFamily">monospace</item>
+        <item name="buttonStyle">@style/buttonStyleDark</item>
         <!-- Customize your theme here. -->
     </style>
 

@@ -97,5 +97,5 @@
     <string name="userInf_header">User profile</string>
     <string name="userInf_title">Delete a user profile</string>
     <string name="theme">Theme</string>
-    <string name="themeChoise">Light/Dark</string>
+    <string name="themeChoose">Dark theme</string>
 </resources>

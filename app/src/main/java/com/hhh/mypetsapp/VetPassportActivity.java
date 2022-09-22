@@ -5,6 +5,7 @@ import static android.content.ContentValues.TAG;
 import android.app.ActionBar;
 import android.app.Fragment;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -15,6 +16,7 @@ import android.view.Menu;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,6 +41,7 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.preference.PreferenceManager;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.annotations.Nullable;
@@ -65,6 +68,7 @@ public class VetPassportActivity extends AppCompatActivity implements DatePicker
     private ItemViewModel viewModel;
     private String name;
     private boolean rotate = true;
+    private SharedPreferences defPref;
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     String uID = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -72,9 +76,20 @@ public class VetPassportActivity extends AppCompatActivity implements DatePicker
     TextView namePetProfile;
     TextView agePetProfile;
     ImageView iconPetProfile, addedPets;
+    LinearLayout layoutHeader;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        defPref = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean key = defPref.getBoolean("theme", false);
+        if (key == true){
+            //dark
+            setTheme(R.style.Theme_MyPetsApp_Dark);
+        }
+        else {
+            //light
+            setTheme(R.style.Theme_MyPetsApp);
+        }
         super.onCreate(savedInstanceState);
 
         Intent intent = getIntent();
@@ -106,6 +121,12 @@ public class VetPassportActivity extends AppCompatActivity implements DatePicker
         agePetProfile = (TextView) header.findViewById(R.id.agePetProfile);
         iconPetProfile = (ImageView) header.findViewById(R.id.iconPetProfile);
         addedPets = (ImageView) header.findViewById(R.id.addedPets);
+        layoutHeader = (LinearLayout) header.findViewById(R.id.layoutHeader);
+        
+        if(key == true)
+            layoutHeader.setBackgroundResource(R.drawable.side_nav_bar_dark);
+        else
+            layoutHeader.setBackgroundResource(R.drawable.side_nav_bar);
 
         addedPets.setOnClickListener(new View.OnClickListener() {
             @Override

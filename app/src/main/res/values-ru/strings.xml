@@ -92,4 +92,16 @@
     <string name="imageUploaded">Изображение загружено!!</string>
     <string name="imageWarning">Для загрузки изображения требуется время</string>
     <string name="saved">Saved</string>
+    <string name="userInf_header">User profile</string>
+    <string name="userInf_title">Delete a user profile</string>
+    <string name="theme">Theme</string>
+    <string name="themeChoose">Dark theme</string>
+    <string name="sound_title">Enable/Disable</string>
+    <string name="language_title">Default language</string>
+    <string name="language_header">Language</string>
+    <string name="sound_header">Sounds</string>
+    <string name="deleteQuestion">Are you sure you want to delete this note?</string>
+    <string name="deletePetProfile">Are you sure you want to delete this pet profile?</string>
+    <string name="deleted">Deleted</string>
+    <string name="deleteButton">Delete this pet profile</string>
 </resources>
