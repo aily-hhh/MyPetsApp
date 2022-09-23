@@ -86,10 +86,12 @@ public class PetProfileActivity extends AppCompatActivity {
         if (key == true){
             //dark
             setTheme(R.style.Theme_MyPetsApp_Dark);
+            recreate();
         }
         else {
             //light
             setTheme(R.style.Theme_MyPetsApp);
+            recreate();
         }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pet_profile);

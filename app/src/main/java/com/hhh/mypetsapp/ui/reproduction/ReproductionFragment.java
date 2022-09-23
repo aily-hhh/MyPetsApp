@@ -5,6 +5,7 @@ import static android.content.ContentValues.TAG;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,6 +20,7 @@ import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
@@ -40,6 +42,7 @@ import java.util.List;
 public class ReproductionFragment extends Fragment implements PopupMenu.OnMenuItemClickListener {
 
     private FragmentReproductionBinding binding;
+    private SharedPreferences defPref;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     String uID = FirebaseAuth.getInstance().getCurrentUser().getUid();
     ReproductionListAdapter reproductionListAdapter;
@@ -73,6 +76,17 @@ public class ReproductionFragment extends Fragment implements PopupMenu.OnMenuIt
                 addingReproduction();
             }
         });
+
+        defPref = PreferenceManager.getDefaultSharedPreferences(this.getContext());
+        boolean key = defPref.getBoolean("theme", false);
+        if (key == true){
+            //dark
+            this.getView().setBackgroundResource(R.drawable.side_nav_bar_dark);
+        }
+        else {
+            //light
+            this.getView().setBackgroundResource(R.drawable.side_nav_bar);
+        }
 
         return  root;
     }

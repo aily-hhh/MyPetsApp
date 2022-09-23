@@ -5,6 +5,7 @@ import static android.content.ContentValues.TAG;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,6 +20,7 @@ import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
@@ -40,6 +42,7 @@ import java.util.List;
 public class DehelmintizationFragment extends Fragment implements PopupMenu.OnMenuItemClickListener {
 
     private FragmentDehelmintizationBinding binding;
+    private SharedPreferences defPref;
     RecyclerView recyclerDehelmintization;
     FloatingActionButton addDehelmintization;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -71,6 +74,17 @@ public class DehelmintizationFragment extends Fragment implements PopupMenu.OnMe
                 addingDehelmintization();
             }
         });
+
+        defPref = PreferenceManager.getDefaultSharedPreferences(this.getContext());
+        boolean key = defPref.getBoolean("theme", false);
+        if (key == true){
+            //dark
+            this.getView().setBackgroundResource(R.drawable.side_nav_bar_dark);
+        }
+        else {
+            //light
+            this.getView().setBackgroundResource(R.drawable.side_nav_bar);
+        }
 
         return root;
     }

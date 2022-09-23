@@ -4,9 +4,11 @@ import static android.content.ContentValues.TAG;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.preference.PreferenceManager;
 
 import android.Manifest;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -58,11 +60,24 @@ public class AboutMeActivity extends AppCompatActivity {
     private Uri filePath;
     FirebaseStorage storage;
     StorageReference storageReference;
+    private SharedPreferences defPref;
     private final int GALLERY_REQUEST = 1;
     private final int PERMISSION_REQUEST = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        defPref = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean key = defPref.getBoolean("theme", false);
+        if (key == true){
+            //dark
+            setTheme(R.style.Theme_MyPetsApp_Dark);
+            recreate();
+        }
+        else {
+            //light
+            setTheme(R.style.Theme_MyPetsApp);
+            recreate();
+        }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about_me);
 

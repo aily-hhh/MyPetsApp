@@ -43,6 +43,7 @@ import java.util.List;
 public class NotesFragment extends Fragment implements PopupMenu.OnMenuItemClickListener{
 
     private FragmentNotesBinding binding;
+    private SharedPreferences defPref;
 
     RecyclerView recyclerNotes;
     FloatingActionButton addNotesButton;
@@ -73,6 +74,17 @@ public class NotesFragment extends Fragment implements PopupMenu.OnMenuItemClick
                 addNotes();
             }
         });
+
+        defPref = PreferenceManager.getDefaultSharedPreferences(this.getContext());
+        boolean key = defPref.getBoolean("theme", false);
+        if (key == true){
+            //dark
+            this.getView().setBackgroundResource(R.drawable.side_nav_bar_dark);
+        }
+        else {
+            //light
+            this.getView().setBackgroundResource(R.drawable.side_nav_bar);
+        }
 
         return root;
     }

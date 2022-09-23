@@ -4,11 +4,13 @@ import static android.content.ContentValues.TAG;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.preference.PreferenceManager;
 
 import android.Manifest;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -56,6 +58,7 @@ public class NewPetActivity extends AppCompatActivity {
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     String uID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+    private SharedPreferences defPref;
 
     ArrayAdapter<CharSequence> adapterNewSex;
 
@@ -66,6 +69,18 @@ public class NewPetActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        defPref = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean key = defPref.getBoolean("theme", false);
+        if (key == true){
+            //dark
+            setTheme(R.style.Theme_MyPetsApp_Dark);
+            recreate();
+        }
+        else {
+            //light
+            setTheme(R.style.Theme_MyPetsApp);
+            recreate();
+        }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_pet);
 

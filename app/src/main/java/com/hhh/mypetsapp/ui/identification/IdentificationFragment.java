@@ -4,6 +4,7 @@ import static android.content.ContentValues.TAG;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,6 +20,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.preference.PreferenceManager;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -38,6 +40,7 @@ import com.hhh.mypetsapp.databinding.FragmentIdentificationBinding;
 public class IdentificationFragment extends Fragment {
 
     private FragmentIdentificationBinding binding;
+    private SharedPreferences defPref;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     String uID = FirebaseAuth.getInstance().getCurrentUser().getUid();
     private ItemViewModel viewModel;
@@ -93,6 +96,17 @@ public class IdentificationFragment extends Fragment {
         });
 
         infoFromDataBase();
+
+        defPref = PreferenceManager.getDefaultSharedPreferences(this.getContext());
+        boolean key = defPref.getBoolean("theme", false);
+        if (key == true){
+            //dark
+            this.getView().setBackgroundResource(R.drawable.side_nav_bar_dark);
+        }
+        else {
+            //light
+            this.getView().setBackgroundResource(R.drawable.side_nav_bar);
+        }
 
         return root;
     }

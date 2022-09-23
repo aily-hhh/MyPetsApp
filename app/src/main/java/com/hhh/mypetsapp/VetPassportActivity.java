@@ -85,10 +85,12 @@ public class VetPassportActivity extends AppCompatActivity implements DatePicker
         if (key == true){
             //dark
             setTheme(R.style.Theme_MyPetsApp_Dark);
+            recreate();
         }
         else {
             //light
             setTheme(R.style.Theme_MyPetsApp);
+            recreate();
         }
         super.onCreate(savedInstanceState);
 
