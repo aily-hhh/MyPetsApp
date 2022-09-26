@@ -6,6 +6,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,7 +14,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.PopupMenu;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -35,11 +35,6 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.hhh.mypetsapp.ItemViewModel;
 import com.hhh.mypetsapp.R;
 import com.hhh.mypetsapp.databinding.TreatmentFragmentBinding;
-import com.hhh.mypetsapp.ui.vaccines.Vaccine;
-import com.hhh.mypetsapp.ui.vaccines.VaccinesClickListener;
-import com.hhh.mypetsapp.ui.vaccines.VaccinesFragment;
-import com.hhh.mypetsapp.ui.vaccines.VaccinesListAdapter;
-import com.hhh.mypetsapp.ui.vaccines.VaccinesTakerActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,6 +43,8 @@ public class TreatmentFragment extends Fragment implements PopupMenu.OnMenuItemC
 
     private TreatmentFragmentBinding binding;
     private SharedPreferences defPref;
+    MediaPlayer mClick;
+    MediaPlayer mDelete;
     RecyclerView recyclerTreatments;
     FloatingActionButton addTreatmentButton;
     TreatmentsListAdapter treatmentsListAdapter;
@@ -103,9 +100,22 @@ public class TreatmentFragment extends Fragment implements PopupMenu.OnMenuItemC
             //light
             this.getView().setBackgroundResource(R.drawable.background_notes);
         }
+
+        boolean keySound = defPref.getBoolean("sound", false);;
+        if (!keySound){
+            //enable
+            mClick = MediaPlayer.create(this.getContext(), R.raw.click);
+            mDelete = MediaPlayer.create(this.getContext(), R.raw.delete);
+        }
+        else {
+            mClick = null;
+            mDelete = null;
+        }
     }
 
     private void addTreatment() {
+        if (mClick != null)
+            mClick.start();
         Intent intent = new Intent(TreatmentFragment.this.getActivity(), TreatmentsTakerActivity.class);
         intent.putExtra("petName", name.toString());
         startActivity(intent);
@@ -121,6 +131,8 @@ public class TreatmentFragment extends Fragment implements PopupMenu.OnMenuItemC
     private final TreatmentsClickListener treatmentsClickListener = new TreatmentsClickListener() {
         @Override
         public void onClick(Treatment currentTreatment) {
+            if (mClick != null)
+                mClick.start();
             Intent intent = new Intent(TreatmentFragment.this.getActivity(), TreatmentsTakerActivity.class);
             intent.putExtra("oldTreatment", currentTreatment.getId());
             intent.putExtra("petName", name.toString());
@@ -175,12 +187,16 @@ public class TreatmentFragment extends Fragment implements PopupMenu.OnMenuItemC
     public boolean onMenuItemClick(MenuItem menuItem) {
         switch (menuItem.getItemId()){
             case R.id.deleteMenu:
+                if (mClick != null)
+                    mClick.start();
                 AlertDialog.Builder alertDialog = new AlertDialog.Builder(this.getContext());
                 alertDialog.setIcon(R.drawable.icon);
                 alertDialog.setTitle(R.string.deleteQuestion);
                 alertDialog.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
+                        if (mDelete != null)
+                            mDelete.start();
                         db.collection("users").document(uID)
                                 .collection("pets").document(name)
                                 .collection("treatments").document(selectedTreatment.getId()).delete();
@@ -194,6 +210,8 @@ public class TreatmentFragment extends Fragment implements PopupMenu.OnMenuItemC
                 alertDialog.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
+                        if (mClick != null)
+                            mClick.start();
                         dialogInterface.dismiss();
                     }
                 });

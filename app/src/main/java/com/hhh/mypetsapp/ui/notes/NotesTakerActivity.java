@@ -3,14 +3,18 @@ package com.hhh.mypetsapp.ui.notes;
 import static android.content.ContentValues.TAG;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.preference.PreferenceManager;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -32,7 +36,11 @@ public class NotesTakerActivity extends AppCompatActivity {
     String uID = FirebaseAuth.getInstance().getCurrentUser().getUid();
     private String name;
     boolean isOld = false;
+    private SharedPreferences defPref;
+    MediaPlayer mClick;
+    MediaPlayer mAdd;
 
+    LinearLayout notesTakerLayout;
     EditText titleNotesAdd, descriptionNotesAdd;
     ImageView saveNote;
     ImageView backNote;
@@ -43,6 +51,16 @@ public class NotesTakerActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        defPref = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean key = defPref.getBoolean("theme", false);
+        if (key){
+            //dark
+            setTheme(R.style.Theme_MyPetsApp_Dark);
+        }
+        else {
+            //light
+            setTheme(R.style.Theme_MyPetsApp);
+        }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notes_taker);
 
@@ -53,6 +71,18 @@ public class NotesTakerActivity extends AppCompatActivity {
         descriptionNotesAdd = (EditText) findViewById(R.id.descriptionNotesAdd);
         saveNote = (ImageView) findViewById(R.id.saveNote);
         backNote = (ImageView) findViewById(R.id.backNote);
+        notesTakerLayout = (LinearLayout) findViewById(R.id.notesTakerLayout);
+
+        if (key){
+            //dark
+            saveNote.setColorFilter(R.color.forButtons);
+            backNote.setColorFilter(R.color.forButtons);
+            notesTakerLayout.setBackgroundResource(R.color.takerDark);
+        }
+        else {
+            //light
+            setTheme(R.style.Theme_MyPetsApp);
+        }
 
         noteId = getIntent().getStringExtra("oldNote");
         if (noteId != null) {
@@ -96,11 +126,31 @@ public class NotesTakerActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        boolean keySound = defPref.getBoolean("sound", false);;
+        if (!keySound){
+            //enable
+            mClick = MediaPlayer.create(this, R.raw.click);
+            mAdd = MediaPlayer.create(this, R.raw.add);
+        }
+        else {
+            mClick = null;
+            mAdd = null;
+        }
+    }
+
     private void backToTheNotes() {
+        if (mClick != null)
+            mClick.start();
         finish();
     }
 
     private void addingToDataBase() {
+        if (mAdd != null)
+            mAdd.start();
+
         if (!isOld) {
             Notes newNote = new Notes();
 

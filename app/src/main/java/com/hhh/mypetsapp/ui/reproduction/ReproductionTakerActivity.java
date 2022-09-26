@@ -6,14 +6,18 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import androidx.annotation.Nullable;
+import androidx.preference.PreferenceManager;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
@@ -29,6 +33,7 @@ public class ReproductionTakerActivity extends Activity {
 
     ImageView saveReproduction, backReproduction;
     EditText dateOfHeatTaker, dateOfMatingTaker, dateOfBirthTaker, numberOfTheLitterTaker;
+    LinearLayout reproductionTakerLayout;
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     String uID = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -36,6 +41,9 @@ public class ReproductionTakerActivity extends Activity {
     private String name;
     private boolean isOld = false;
     String idReproduction;
+    private SharedPreferences defPref;
+    MediaPlayer mClick;
+    MediaPlayer mAdd;
 
     int DIALOG_DATE_HEAT = 1;
     int DIALOG_DATE_MATING = 2;
@@ -46,6 +54,16 @@ public class ReproductionTakerActivity extends Activity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        defPref = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean key = defPref.getBoolean("theme", false);
+        if (key){
+            //dark
+            setTheme(R.style.Theme_MyPetsApp_Dark);
+        }
+        else {
+            //light
+            setTheme(R.style.Theme_MyPetsApp);
+        }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reproduction_taker);
 
@@ -55,6 +73,18 @@ public class ReproductionTakerActivity extends Activity {
         dateOfMatingTaker = (EditText) findViewById(R.id.dateOfMatingTaker);
         dateOfBirthTaker = (EditText) findViewById(R.id.dateOfBirthTaker);
         numberOfTheLitterTaker = (EditText) findViewById(R.id.numberOfTheLitterTaker);
+        reproductionTakerLayout = (LinearLayout) findViewById(R.id.reproductionTakerLayout);
+
+        if (key){
+            //dark
+            saveReproduction.setColorFilter(R.color.forButtons);
+            backReproduction.setColorFilter(R.color.forButtons);
+            reproductionTakerLayout.setBackgroundResource(R.color.takerDark);
+        }
+        else {
+            //light
+            setTheme(R.style.Theme_MyPetsApp);
+        }
 
         Intent intent = getIntent();
         name = intent.getStringExtra("petName");
@@ -72,6 +102,8 @@ public class ReproductionTakerActivity extends Activity {
         backReproduction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (mClick != null)
+                    mClick.start();
                 finish();
             }
         });
@@ -96,6 +128,21 @@ public class ReproductionTakerActivity extends Activity {
                 onClickDateBirth();
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        boolean keySound = defPref.getBoolean("sound", false);;
+        if (!keySound){
+            //enable
+            mClick = MediaPlayer.create(this, R.raw.click);
+            mAdd = MediaPlayer.create(this, R.raw.add);
+        }
+        else {
+            mClick = null;
+            mAdd = null;
+        }
     }
 
     private void infoFromOld() {
@@ -197,6 +244,8 @@ public class ReproductionTakerActivity extends Activity {
 
     private void addingToDataBase() {
         if (!isOld){
+            if (mAdd != null)
+                mAdd.start();
             Reproduction newReproduction = new Reproduction();
 
             newReproduction.setId(UUID.randomUUID().toString().trim());

@@ -6,6 +6,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -52,6 +53,8 @@ public class DehelmintizationFragment extends Fragment implements PopupMenu.OnMe
     private ItemViewModel viewModel;
     private String name;
     Dehelmintization selectedDehelmintization;
+    MediaPlayer mClick;
+    MediaPlayer mDelete;
 
     @Nullable
     @Override
@@ -90,13 +93,24 @@ public class DehelmintizationFragment extends Fragment implements PopupMenu.OnMe
         super.onResume();
         defPref = PreferenceManager.getDefaultSharedPreferences(this.getContext());
         boolean key = defPref.getBoolean("theme", false);
-        if (key == true){
+        if (key){
             //dark
             this.getView().setBackgroundResource(R.drawable.side_nav_bar_dark);
         }
         else {
             //light
             this.getView().setBackgroundResource(R.drawable.background_notes);
+        }
+
+        boolean keySound = defPref.getBoolean("sound", false);;
+        if (!keySound){
+            //enable
+            mClick = MediaPlayer.create(this.getContext(), R.raw.click);
+            mDelete = MediaPlayer.create(this.getContext(), R.raw.delete);
+        }
+        else {
+            mClick = null;
+            mDelete = null;
         }
     }
 
@@ -125,6 +139,8 @@ public class DehelmintizationFragment extends Fragment implements PopupMenu.OnMe
         Intent intent= new Intent(DehelmintizationFragment.this.getActivity(), DehelmintizationTakerActivity.class);
         intent.putExtra("petName", name);
         startActivity(intent);
+        if (mClick != null)
+            mClick.start();
     }
 
     private void updateRecycler(){
@@ -142,6 +158,8 @@ public class DehelmintizationFragment extends Fragment implements PopupMenu.OnMe
             intent.putExtra("oldDehelmintization", currentDehelmintization.getId());
             intent.putExtra("petName", name);
             startActivity(intent);
+            if (mClick != null)
+                mClick.start();
         }
 
         @Override
@@ -163,12 +181,16 @@ public class DehelmintizationFragment extends Fragment implements PopupMenu.OnMe
     public boolean onMenuItemClick(MenuItem menuItem) {
         switch (menuItem.getItemId()){
             case R.id.deleteMenu:
+                if (mClick != null)
+                    mClick.start();
                 AlertDialog.Builder alertDialog = new AlertDialog.Builder(this.getContext());
                 alertDialog.setIcon(R.drawable.icon);
                 alertDialog.setTitle(R.string.deleteQuestion);
                 alertDialog.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
+                        if (mDelete != null)
+                            mDelete.start();
                         db.collection("users").document(uID)
                                 .collection("pets").document(name)
                                 .collection("dehelmintization").document(selectedDehelmintization.getId()).delete();
@@ -183,6 +205,8 @@ public class DehelmintizationFragment extends Fragment implements PopupMenu.OnMe
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         dialogInterface.dismiss();
+                        if (mClick != null)
+                            mClick.start();
                     }
                 });
                 alertDialog.show();

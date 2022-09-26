@@ -95,8 +95,8 @@
     <string name="userInf_header">User profile</string>
     <string name="userInf_title">Delete a user profile</string>
     <string name="theme">Theme</string>
-    <string name="themeChoose">Dark theme</string>
-    <string name="sound_title">Enable/Disable</string>
+    <string name="themeChoose">Темная тема</string>
+    <string name="sound_title">Выключить</string>
     <string name="language_title">Default language</string>
     <string name="language_header">Language</string>
     <string name="sound_header">Sounds</string>

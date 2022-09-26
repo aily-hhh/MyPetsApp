@@ -6,6 +6,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -42,6 +43,8 @@ public class SurgicalProceduresFragment extends Fragment implements PopupMenu.On
 
     private FragmentSurgicalProceduresBinding binding;
     private SharedPreferences defPref;
+    MediaPlayer mClick;
+    MediaPlayer mDelete;
     RecyclerView recyclerSurgicalProcedures;
     FloatingActionButton addSurgicalProceduresButton;
     SurgicalProceduresListAdapter surgicalProceduresListAdapter;
@@ -97,6 +100,17 @@ public class SurgicalProceduresFragment extends Fragment implements PopupMenu.On
             //light
             this.getView().setBackgroundResource(R.drawable.background_notes);
         }
+
+        boolean keySound = defPref.getBoolean("sound", false);;
+        if (!keySound){
+            //enable
+            mClick = MediaPlayer.create(this.getContext(), R.raw.click);
+            mDelete = MediaPlayer.create(this.getContext(), R.raw.delete);
+        }
+        else {
+            mClick = null;
+            mDelete = null;
+        }
     }
 
     private void infoFromDataBase() {
@@ -124,6 +138,8 @@ public class SurgicalProceduresFragment extends Fragment implements PopupMenu.On
         Intent intent = new Intent(SurgicalProceduresFragment.this.getActivity(), SurgicalProceduresTakerActivity.class);
         intent.putExtra("petName", name.toString());
         startActivity(intent);
+        if (mClick != null)
+            mClick.start();
     }
 
     private void updateRecycler(){
@@ -140,6 +156,8 @@ public class SurgicalProceduresFragment extends Fragment implements PopupMenu.On
             intent.putExtra("oldSurgical", currentSurgicalProcedure.id);
             intent.putExtra("petName", name);
             startActivity(intent);
+            if (mClick != null)
+                mClick.start();
         }
 
         @Override
@@ -167,12 +185,16 @@ public class SurgicalProceduresFragment extends Fragment implements PopupMenu.On
     public boolean onMenuItemClick(MenuItem menuItem) {
         switch (menuItem.getItemId()){
             case R.id.deleteMenu:
+                if (mClick != null)
+                    mClick.start();
                 AlertDialog.Builder alertDialog = new AlertDialog.Builder(this.getContext());
                 alertDialog.setIcon(R.drawable.icon);
                 alertDialog.setTitle(R.string.deleteQuestion);
                 alertDialog.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
+                        if (mDelete != null)
+                            mDelete.start();
                         db.collection("users").document(uID)
                                 .collection("pets").document(name)
                                 .collection("surgical").document(selectedSurgicalProcedure.getId()).delete();
@@ -187,6 +209,8 @@ public class SurgicalProceduresFragment extends Fragment implements PopupMenu.On
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         dialogInterface.dismiss();
+                        if (mClick != null)
+                            mClick.start();
                     }
                 });
                 alertDialog.show();

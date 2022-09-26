@@ -6,6 +6,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -44,7 +45,9 @@ public class NotesFragment extends Fragment implements PopupMenu.OnMenuItemClick
 
     private FragmentNotesBinding binding;
     private SharedPreferences defPref;
-
+    MediaPlayer mClick;
+    MediaPlayer mDelete;
+    MediaPlayer mPin;
     RecyclerView recyclerNotes;
     FloatingActionButton addNotesButton;
     NotesListAdapter notesListAdapter;
@@ -91,6 +94,19 @@ public class NotesFragment extends Fragment implements PopupMenu.OnMenuItemClick
             //light
             this.getView().setBackgroundResource(R.drawable.background_notes);
         }
+
+        boolean keySound = defPref.getBoolean("sound", false);;
+        if (!keySound){
+            //enable
+            mClick = MediaPlayer.create(this.getContext(), R.raw.click);
+            mDelete = MediaPlayer.create(this.getContext(), R.raw.delete);
+            mPin = MediaPlayer.create(this.getContext(), R.raw.pin_unpin);
+        }
+        else {
+            mClick = null;
+            mDelete = null;
+            mPin = null;
+        }
     }
 
     @Override
@@ -105,6 +121,8 @@ public class NotesFragment extends Fragment implements PopupMenu.OnMenuItemClick
         Intent intent = new Intent(NotesFragment.this.getActivity(), NotesTakerActivity.class);
         intent.putExtra("petName", name.toString());
         startActivity(intent);
+        if (mClick != null)
+            mClick.start();
     }
 
     private void updateRecycler() {
@@ -121,6 +139,8 @@ public class NotesFragment extends Fragment implements PopupMenu.OnMenuItemClick
             intent.putExtra("oldNote", currentNote.id);
             intent.putExtra("petName", name.toString());
             startActivity(intent);
+            if (mClick != null)
+                mClick.start();
         }
 
         @Override
@@ -164,30 +184,42 @@ public class NotesFragment extends Fragment implements PopupMenu.OnMenuItemClick
         switch (menuItem.getItemId()){
             case R.id.pinMenuNotes:
                 if (selectedNote.isPinned()){
+                    if (mClick != null)
+                        mClick.start();
                     DocumentReference docRef = db.collection("users").document(uID)
                             .collection("pets").document(name)
                             .collection("notes").document(selectedNote.getId());
                     docRef.update("pinned", false);
                     Toast.makeText(NotesFragment.this.getContext(), "Unpinned", Toast.LENGTH_SHORT).show();
+                    if (mPin != null)
+                        mPin.start();
                 }
                 else{
+                    if (mClick != null)
+                        mClick.start();
                     DocumentReference docRef = db.collection("users").document(uID)
                             .collection("pets").document(name)
                             .collection("notes").document(selectedNote.getId());
                     docRef.update("pinned", true);
                     Toast.makeText(NotesFragment.this.getContext(), R.string.pinned, Toast.LENGTH_SHORT).show();
+                    if (mPin != null)
+                        mPin.start();
                 }
                 notes.clear();
                 infoFromDataBase();
                 return true;
 
             case R.id.deleteMenuNotes:
+                if (mClick != null)
+                    mClick.start();
                 AlertDialog.Builder alertDialog = new AlertDialog.Builder(this.getContext());
                 alertDialog.setIcon(R.drawable.icon);
                 alertDialog.setTitle(R.string.deleteQuestion);
                 alertDialog.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
+                        if (mDelete != null)
+                            mDelete.start();
                         db.collection("users").document(uID)
                                 .collection("pets").document(name)
                                 .collection("notes").document(selectedNote.getId()).delete();
@@ -201,6 +233,8 @@ public class NotesFragment extends Fragment implements PopupMenu.OnMenuItemClick
                 alertDialog.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
+                        if (mClick != null)
+                            mClick.start();
                         dialogInterface.dismiss();
                     }
                 });

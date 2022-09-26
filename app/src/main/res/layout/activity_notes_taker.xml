@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.notes.NotesTakerActivity"
+    android:id="@+id/notesTakerLayout"
     android:background="#99C3C8F1"
     android:orientation="vertical">
 
@@ -49,8 +50,6 @@
         android:hint="@string/title_notes"
         android:padding="8dp"
         android:singleLine="true"
-        android:textColor="@color/purple_500"
-        android:textColorHint="@color/white"
         android:textSize="20sp"
         android:textStyle="bold" />
 
@@ -60,10 +59,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:hint="@string/description"
-        android:textColorHint="@color/white"
         android:textStyle="bold"
         android:lineSpacingMultiplier="1.5"
         android:textSize="14sp"
-        android:padding="8dp"
-        android:textColor="@color/purple_500" />
+        android:padding="8dp"/>
 </LinearLayout>

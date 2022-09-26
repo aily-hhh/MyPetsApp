@@ -6,6 +6,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -43,6 +44,8 @@ public class ReproductionFragment extends Fragment implements PopupMenu.OnMenuIt
 
     private FragmentReproductionBinding binding;
     private SharedPreferences defPref;
+    MediaPlayer mClick;
+    MediaPlayer mDelete;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     String uID = FirebaseAuth.getInstance().getCurrentUser().getUid();
     ReproductionListAdapter reproductionListAdapter;
@@ -102,6 +105,16 @@ public class ReproductionFragment extends Fragment implements PopupMenu.OnMenuIt
             this.getView().setBackgroundResource(R.drawable.background_notes);
         }
 
+        boolean keySound = defPref.getBoolean("sound", false);;
+        if (!keySound){
+            //enable
+            mClick = MediaPlayer.create(this.getContext(), R.raw.click);
+            mDelete = MediaPlayer.create(this.getContext(), R.raw.delete);
+        }
+        else {
+            mClick = null;
+            mDelete = null;
+        }
     }
 
     private void infoFromDataBase() {
@@ -140,6 +153,8 @@ public class ReproductionFragment extends Fragment implements PopupMenu.OnMenuIt
             intent.putExtra("oldReproduction", currentReproduction.getId());
             intent.putExtra("petName", name);
             startActivity(intent);
+            if (mClick != null)
+                mClick.start();
         }
 
         @Override
@@ -173,6 +188,8 @@ public class ReproductionFragment extends Fragment implements PopupMenu.OnMenuIt
                 alertDialog.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
+                        if (mDelete != null)
+                            mDelete.start();
                         db.collection("users").document(uID)
                                 .collection("pets").document(name)
                                 .collection("reproduction").document(selectedReproduction.getId()).delete();
@@ -187,6 +204,8 @@ public class ReproductionFragment extends Fragment implements PopupMenu.OnMenuIt
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         dialogInterface.dismiss();
+                        if (mClick != null)
+                            mClick.start();
                     }
                 });
                 alertDialog.show();
@@ -200,5 +219,7 @@ public class ReproductionFragment extends Fragment implements PopupMenu.OnMenuIt
         Intent intent = new Intent(ReproductionFragment.this.getActivity(), ReproductionTakerActivity.class);
         intent.putExtra("petName", name);
         startActivity(intent);
+        if (mClick != null)
+            mClick.start();
     }
 }

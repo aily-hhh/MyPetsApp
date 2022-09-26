@@ -4,6 +4,9 @@ import static android.content.ContentValues.TAG;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
+import android.graphics.Shader;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.content.Intent;
 import android.util.Log;
@@ -15,6 +18,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.preference.PreferenceManager;
 
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -35,6 +39,8 @@ public class MainActivity extends AppCompatActivity {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     String uID = FirebaseAuth.getInstance().getCurrentUser().getUid();
     ArrayAdapter<String> adapter;
+    private SharedPreferences defPref;
+    private MediaPlayer mClick;;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +78,30 @@ public class MainActivity extends AppCompatActivity {
                 goToUserProfile();
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        defPref = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean key = defPref.getBoolean("theme", false);
+        if (key){
+            //dark
+            setTheme(R.style.Theme_MyPetsApp_Dark);
+        }
+        else {
+            //light
+            setTheme(R.style.Theme_MyPetsApp);
+        }
+
+        boolean keySound = defPref.getBoolean("sound", false);;
+        if (!keySound){
+            //enable
+            mClick = MediaPlayer.create(this, R.raw.click);
+        }
+        else {
+            mClick = null;
+        }
+        super.onResume();
     }
 
     @Override
@@ -117,12 +147,15 @@ public class MainActivity extends AppCompatActivity {
                         Toast.makeText(MainActivity.this, R.string.userSignedOut, Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(MainActivity.this, AuthActivity.class);
                         startActivity(intent);
+                        if (mClick != null)
+                            mClick.start();
                     }
                 });
     }
 
     private void goToVetPass(ArrayAdapter adapter){
-
+        if (mClick != null)
+            mClick.start();
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
         alertDialog.setIcon(R.drawable.icon);
         alertDialog.setTitle("Choose your pet");
@@ -132,12 +165,16 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(MainActivity.this, VetPassportActivity.class);
                 intent.putExtra("petName", adapter.getItem(i).toString());
                 startActivity(intent);
+                if (mClick != null)
+                    mClick.start();
             }
         });
         alertDialog.setPositiveButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 dialogInterface.dismiss();
+                if (mClick != null)
+                    mClick.start();
             }
         });
         alertDialog.setNeutralButton("Add a new pet", new DialogInterface.OnClickListener() {
@@ -146,6 +183,8 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(MainActivity.this, NewPetActivity.class);
                 startActivity(intent);
                 adapter.clear();
+                if (mClick != null)
+                    mClick.start();
             }
         });
         alertDialog.show();
@@ -154,10 +193,14 @@ public class MainActivity extends AppCompatActivity {
     private void goToSettings(){
         Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
         startActivity(intent);
+        if (mClick != null)
+            mClick.start();
     }
 
     private void goToUserProfile(){
         Intent intent = new Intent(MainActivity.this, AboutMeActivity.class);
         startActivity(intent);
+        if (mClick != null)
+            mClick.start();
     }
 }

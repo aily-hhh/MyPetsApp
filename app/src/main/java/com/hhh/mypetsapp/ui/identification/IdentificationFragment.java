@@ -2,15 +2,13 @@ package com.hhh.mypetsapp.ui.identification;
 
 import static android.content.ContentValues.TAG;
 
-import android.app.DatePickerDialog;
-import android.app.Dialog;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -24,9 +22,7 @@ import androidx.preference.PreferenceManager;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.gms.tasks.TaskCompletionSource;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -56,6 +52,9 @@ public class IdentificationFragment extends Fragment {
     EditText microchipLocation;
     EditText tattooNumber;
     static EditText dateOfTattooing;
+
+    MediaPlayer mClick;
+    MediaPlayer mAdd;
 
     @Nullable
     @Override
@@ -108,10 +107,22 @@ public class IdentificationFragment extends Fragment {
         if (key){
             //dark
             this.getView().setBackgroundResource(R.drawable.side_nav_bar_dark);
+            saveIdentification.setColorFilter(R.color.forButtons);
         }
         else {
             //light
             this.getView().setBackgroundResource(R.drawable.background_notes);
+        }
+
+        boolean keySound = defPref.getBoolean("sound", false);;
+        if (!keySound){
+            //enable
+            mClick = MediaPlayer.create(this.getContext(), R.raw.click);
+            mAdd = MediaPlayer.create(this.getContext(), R.raw.add);
+        }
+        else {
+            mClick = null;
+            mAdd = null;
         }
     }
 
@@ -162,6 +173,8 @@ public class IdentificationFragment extends Fragment {
     }
 
     private void updatingToDataBase() {
+        if (mAdd != null)
+            mAdd.start();
         Toast.makeText(this.getContext(), R.string.saved, Toast.LENGTH_SHORT).show();
 
         db.collection("users").document(uID)

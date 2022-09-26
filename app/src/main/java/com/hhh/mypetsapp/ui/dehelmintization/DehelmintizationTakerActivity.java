@@ -7,16 +7,20 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.Image;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TimePicker;
 
 import androidx.annotation.Nullable;
+import androidx.preference.PreferenceManager;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
@@ -36,6 +40,7 @@ public class DehelmintizationTakerActivity extends Activity {
     EditText nameDehelmintizationTaker, manufacturerDehelmintizationTaker, doseDehelmintizationTaker,
             dateDehelmintizationTaker, timeDehelmintizationTaker, veterinarianDehelmintizationTaker,
             descriptionDehelmintizationTaker;
+    LinearLayout dehelmintizationTakerLayout;
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     String uID = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -43,6 +48,9 @@ public class DehelmintizationTakerActivity extends Activity {
     private String name;
     private boolean isOld = false;
     String idDehelmintization;
+    private SharedPreferences defPref;
+    MediaPlayer mClick;
+    MediaPlayer mAdd;
 
     int DIALOG_DATE = 1;
     int DIALOG_TIME = 2;
@@ -55,6 +63,16 @@ public class DehelmintizationTakerActivity extends Activity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        defPref = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean key = defPref.getBoolean("theme", false);
+        if (key){
+            //dark
+            setTheme(R.style.Theme_MyPetsApp_Dark);
+        }
+        else {
+            //light
+            setTheme(R.style.Theme_MyPetsApp);
+        }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dehelmintization_taker);
 
@@ -67,6 +85,18 @@ public class DehelmintizationTakerActivity extends Activity {
         timeDehelmintizationTaker = (EditText) findViewById(R.id.timeDehelmintizationTaker);
         veterinarianDehelmintizationTaker = (EditText) findViewById(R.id.veterinarianDehelmintizationTaker);
         descriptionDehelmintizationTaker = (EditText) findViewById(R.id.descriptionDehelmintizationTaker);
+        dehelmintizationTakerLayout = (LinearLayout) findViewById(R.id.dehelmintizationTakerLayout);
+
+        if (key){
+            //dark
+            saveDehelmintization.setColorFilter(R.color.forButtons);
+            backDehelmintization.setColorFilter(R.color.forButtons);
+            dehelmintizationTakerLayout.setBackgroundResource(R.color.takerDark);
+        }
+        else {
+            //light
+            setTheme(R.style.Theme_MyPetsApp);
+        }
 
         Intent intent = getIntent();
         name = intent.getStringExtra("petName");
@@ -84,6 +114,8 @@ public class DehelmintizationTakerActivity extends Activity {
         backDehelmintization.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (mClick != null)
+                    mClick.start();
                 finish();
             }
         });
@@ -101,6 +133,21 @@ public class DehelmintizationTakerActivity extends Activity {
                 onClickTime();
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        boolean keySound = defPref.getBoolean("sound", false);;
+        if (!keySound){
+            //enable
+            mClick = MediaPlayer.create(this, R.raw.click);
+            mAdd = MediaPlayer.create(this, R.raw.add);
+        }
+        else {
+            mClick = null;
+            mAdd = null;
+        }
     }
 
     private void infoFromOld() {
@@ -221,6 +268,8 @@ public class DehelmintizationTakerActivity extends Activity {
 
         Intent intent = new Intent(DehelmintizationTakerActivity.this, DehelmintizationFragment.class);
         setResult(Activity.RESULT_OK, intent);
+        if (mAdd != null)
+            mAdd.start();
         finish();
     }
 }

@@ -13,6 +13,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -61,6 +62,7 @@ public class NewPetActivity extends AppCompatActivity {
     private SharedPreferences defPref;
 
     ArrayAdapter<CharSequence> adapterNewSex;
+    MediaPlayer mNewPet;
 
     int DIALOG_DATE = 1;
     int myYear = 2020;
@@ -113,6 +115,19 @@ public class NewPetActivity extends AppCompatActivity {
         spinnerNewSex.setSelection(pos);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        boolean keySound = defPref.getBoolean("sound", false);;
+        if (!keySound){
+            //enable
+            mNewPet = MediaPlayer.create(this, R.raw.new_pet);
+        }
+        else {
+            mNewPet = null;
+        }
+    }
+
     public void createInformationForPet(View view){
         Toast.makeText(this, R.string.imageWarning, Toast.LENGTH_LONG).show();
 
@@ -127,12 +142,13 @@ public class NewPetActivity extends AppCompatActivity {
         db.collection("users").document(uID)
                 .collection("pets").document(pet.getName()).set(pet);
 
-        recreate();
         uploadImage();
 
         Intent intent = new Intent(NewPetActivity.this, VetPassportActivity.class);
         intent.putExtra("petName", petNewName.getText().toString().trim());
         startActivity(intent);
+        if (mNewPet != null)
+            mNewPet.start();
         finish();
     }
 

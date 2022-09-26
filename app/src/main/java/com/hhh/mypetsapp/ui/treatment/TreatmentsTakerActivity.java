@@ -6,14 +6,19 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.preference.PreferenceManager;
+import androidx.room.SharedSQLiteStatement;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.annotations.Nullable;
@@ -34,6 +39,10 @@ public class TreatmentsTakerActivity extends AppCompatActivity {
     boolean isOld = false;
     String idTreatment;
 
+    private SharedPreferences defPref;
+    MediaPlayer mClick;
+    MediaPlayer mAdd;
+
     int DIALOG_DATE = 1;
     int myYear = 2020;
     int myMonth = 1;
@@ -41,9 +50,20 @@ public class TreatmentsTakerActivity extends AppCompatActivity {
 
     EditText nameTreatment, manufacturerTreatment, dateTreatment, veterinarianTreatment;
     ImageView saveTreatment, backTreatment;
+    LinearLayout treatmentTakerLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        defPref = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean key = defPref.getBoolean("theme", false);
+        if (key){
+            //dark
+            setTheme(R.style.Theme_MyPetsApp_Dark);
+        }
+        else {
+            //light
+            setTheme(R.style.Theme_MyPetsApp);
+        }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_treatments_taker);
 
@@ -56,6 +76,18 @@ public class TreatmentsTakerActivity extends AppCompatActivity {
         veterinarianTreatment = (EditText) findViewById(R.id.veterinarianTreatment);
         backTreatment = (ImageView) findViewById(R.id.backTreatment);
         saveTreatment = (ImageView) findViewById(R.id.saveTreatment);
+        treatmentTakerLayout = (LinearLayout) findViewById(R.id.treatmentTakerLayout);
+
+        if (key){
+            //dark
+            saveTreatment.setColorFilter(R.color.forButtons);
+            backTreatment.setColorFilter(R.color.forButtons);
+            treatmentTakerLayout.setBackgroundResource(R.color.takerDark);
+        }
+        else {
+            //light
+            setTheme(R.style.Theme_MyPetsApp);
+        }
 
         idTreatment = getIntent().getStringExtra("oldTreatment");
         infoFromOld();
@@ -73,6 +105,21 @@ public class TreatmentsTakerActivity extends AppCompatActivity {
                 addingToDataBase();
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        boolean keySound = defPref.getBoolean("sound", false);;
+        if (!keySound){
+            //enable
+            mClick = MediaPlayer.create(this, R.raw.click);
+            mAdd = MediaPlayer.create(this, R.raw.add);
+        }
+        else {
+            mClick = null;
+            mAdd = null;
+        }
     }
 
     private void infoFromOld() {
@@ -136,6 +183,8 @@ public class TreatmentsTakerActivity extends AppCompatActivity {
     };
 
     private void addingToDataBase() {
+        if (mAdd != null)
+            mAdd.start();
         if (!isOld) {
             Treatment newTreatment = new Treatment();
 
@@ -166,6 +215,8 @@ public class TreatmentsTakerActivity extends AppCompatActivity {
     }
 
     private void backToTheTreatments() {
+        if (mClick != null)
+            mClick.start();
         finish();
     }
 }

@@ -6,6 +6,8 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -13,10 +15,12 @@ import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.preference.PreferenceManager;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
@@ -40,6 +44,10 @@ public class SurgicalProceduresTakerActivity extends AppCompatActivity {
     String idSurgical;
     ArrayAdapter<CharSequence> adapterType;
 
+    private SharedPreferences defPref;
+    MediaPlayer mClick;
+    MediaPlayer mAdd;
+
     int DIALOG_DATE = 1;
     int myYear = 2020;
     int myMonth = 1;
@@ -49,9 +57,20 @@ public class SurgicalProceduresTakerActivity extends AppCompatActivity {
     EditText nameSurgicalProcedure, anesthesiaSurgicalProcedure, dateSurgicalProcedure,
             veterinarianSurgicalProcedure, descriptionSurgicalProcedure;
     ImageView saveSurgicalProcedures, backSurgicalProcedures;
+    LinearLayout surgicalProceduresTakerLayout;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        defPref = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean key = defPref.getBoolean("theme", false);
+        if (key){
+            //dark
+            setTheme(R.style.Theme_MyPetsApp_Dark);
+        }
+        else {
+            //light
+            setTheme(R.style.Theme_MyPetsApp);
+        }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_surgical_procedures_taker);
 
@@ -66,6 +85,18 @@ public class SurgicalProceduresTakerActivity extends AppCompatActivity {
         descriptionSurgicalProcedure = (EditText) findViewById(R.id.descriptionSurgicalProcedure);
         saveSurgicalProcedures = (ImageView) findViewById(R.id.saveSurgicalProcedures);
         backSurgicalProcedures = (ImageView) findViewById(R.id.backSurgicalProcedures);
+        surgicalProceduresTakerLayout = (LinearLayout) findViewById(R.id.surgicalProceduresTakerLayout);
+
+        if (key){
+            //dark
+            saveSurgicalProcedures.setColorFilter(R.color.forButtons);
+            backSurgicalProcedures.setColorFilter(R.color.forButtons);
+            surgicalProceduresTakerLayout.setBackgroundResource(R.color.takerDark);
+        }
+        else {
+            //light
+            setTheme(R.style.Theme_MyPetsApp);
+        }
 
         idSurgical = getIntent().getStringExtra("oldSurgical");
         infoFromOld();
@@ -90,6 +121,21 @@ public class SurgicalProceduresTakerActivity extends AppCompatActivity {
                 addingToDataBase();
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        boolean keySound = defPref.getBoolean("sound", false);;
+        if (!keySound){
+            //enable
+            mClick = MediaPlayer.create(this, R.raw.click);
+            mAdd = MediaPlayer.create(this, R.raw.add);
+        }
+        else {
+            mClick = null;
+            mAdd = null;
+        }
     }
 
     private void infoFromOld() {
@@ -160,6 +206,8 @@ public class SurgicalProceduresTakerActivity extends AppCompatActivity {
     };
 
     private void addingToDataBase() {
+        if (mAdd != null)
+            mAdd.start();
         if (!isOld) {
             SurgicalProcedures newSurgicalProcedures = new SurgicalProcedures();
 
@@ -195,6 +243,8 @@ public class SurgicalProceduresTakerActivity extends AppCompatActivity {
     }
 
     private void backToTheSurgical(){
+        if (mClick != null)
+            mClick.start();
         finish();
     }
 

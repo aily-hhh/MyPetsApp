@@ -43,7 +43,6 @@ public class SettingsActivity extends AppCompatActivity{
     @Override
     protected void onPause() {
         super.onPause();
-        finish();
     }
 
 
@@ -55,7 +54,7 @@ public class SettingsActivity extends AppCompatActivity{
             setPreferencesFromResource(R.xml.root_preferences, rootKey);
             listener = new SharedPreferences.OnSharedPreferenceChangeListener() {
                 @Override
-                public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
+                public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
                     getActivity().recreate();
                 }
             };

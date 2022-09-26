@@ -2,21 +2,16 @@ package com.hhh.mypetsapp;
 
 import static android.content.ContentValues.TAG;
 
-import android.annotation.SuppressLint;
-import android.app.ActionBar;
-import android.app.Fragment;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.text.Layout;
 import android.util.Log;
 import android.view.View;
-import android.view.Menu;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -27,15 +22,10 @@ import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.widget.ActionBarContextView;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
-import androidx.core.app.ShareCompat;
-import androidx.core.view.MenuCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -51,17 +41,11 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.hhh.mypetsapp.databinding.ActivityVetPassportBinding;
-import com.hhh.mypetsapp.databinding.AppBarVetPassportBinding;
-import com.hhh.mypetsapp.ui.identification.DatePickerFragment;
 import com.hhh.mypetsapp.ui.identification.IdentificationFragment;
-import com.hhh.mypetsapp.ui.notes.Notes;
 
 import java.time.LocalDate;
-import java.time.Period;
 
 public class VetPassportActivity extends AppCompatActivity{
 
@@ -71,9 +55,11 @@ public class VetPassportActivity extends AppCompatActivity{
     private String name;
     private boolean rotate = true;
     private SharedPreferences defPref;
+    private MediaPlayer mClick;
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     String uID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+    ArrayAdapter<String> adapter;
 
     TextView namePetProfile;
     TextView agePetProfile;
@@ -130,7 +116,7 @@ public class VetPassportActivity extends AppCompatActivity{
             layoutHeader.setBackgroundResource(R.drawable.side_nav_bar_dark);
             namePetProfile.setTextColor(Color.WHITE);
             agePetProfile.setTextColor(Color.WHITE);
-            addedPets.setColorFilter(R.color.forButtons);
+            //addedPets.setColorFilter(R.color.forButtons);
         }
         else {
             //light
@@ -144,17 +130,41 @@ public class VetPassportActivity extends AppCompatActivity{
             }
         });
 
+        layoutHeader.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showListOfPets();
+            }
+        });
+
         infoFromDB();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        boolean keySound = defPref.getBoolean("sound", false);;
+        if (!keySound){
+            //enable
+            mClick = MediaPlayer.create(this, R.raw.click);
+        }
+        else {
+            mClick = null;
+        }
     }
 
     private void showListOfPets() {
         if (rotate) {
             addedPets.animate().rotationBy(180).start();
             rotate = false;
+            if (mClick != null)
+                mClick.start();
         }
         else {
             addedPets.animate().rotationBy(-180).start();
             rotate = true;
+            if (mClick != null)
+                mClick.start();
         }
     }
 
@@ -255,6 +265,8 @@ public class VetPassportActivity extends AppCompatActivity{
         Intent intent = new Intent(VetPassportActivity.this, PetProfileActivity.class);
         intent.putExtra("petName", name);
         startActivity(intent);
+        if (mClick != null)
+            mClick.start();
     }
 
     public void onDateReceive(int dd ,int mm, int yy){

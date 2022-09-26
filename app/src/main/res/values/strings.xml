@@ -53,7 +53,7 @@
     <string name="language_title">Default language</string>
 
     <!-- Sync Preferences -->
-    <string name="sound_title">Enable/Disable</string>
+    <string name="sound_title">Disable</string>
     <string name="attachment_title">Download incoming attachments</string>
     <string name="attachment_summary_on">Automatically download attachments for incoming emails
     </string>

@@ -6,7 +6,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Build;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,7 +17,6 @@ import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -44,6 +43,8 @@ public class VaccinesFragment extends Fragment implements PopupMenu.OnMenuItemCl
 
     private FragmentVaccinesBinding binding;
     private SharedPreferences defPref;
+    MediaPlayer mClick;
+    MediaPlayer mDelete;
     RecyclerView recyclerVaccines;
     FloatingActionButton addVaccineButton;
     VaccinesListAdapter vaccinesListAdapter;
@@ -99,9 +100,22 @@ public class VaccinesFragment extends Fragment implements PopupMenu.OnMenuItemCl
             //light
             this.getView().setBackgroundResource(R.drawable.background_notes);
         }
+
+        boolean keySound = defPref.getBoolean("sound", false);;
+        if (!keySound){
+            //enable
+            mClick = MediaPlayer.create(this.getContext(), R.raw.click);
+            mDelete = MediaPlayer.create(this.getContext(), R.raw.delete);
+        }
+        else {
+            mClick = null;
+            mDelete = null;
+        }
     }
 
     private void addVaccine() {
+        if (mClick != null)
+            mClick.start();
         Intent intent = new Intent(VaccinesFragment.this.getActivity(), VaccinesTakerActivity.class);
         intent.putExtra("petName", name.toString());
         startActivity(intent);
@@ -117,6 +131,8 @@ public class VaccinesFragment extends Fragment implements PopupMenu.OnMenuItemCl
     private final VaccinesClickListener vaccinesClickListener = new VaccinesClickListener() {
         @Override
         public void onClick(Vaccine currentVaccine) {
+            if (mClick != null)
+                mClick.start();
             Intent intent = new Intent(VaccinesFragment.this.getActivity(), VaccinesTakerActivity.class);
             intent.putExtra("oldVaccine", currentVaccine.getId());
             intent.putExtra("petName", name.toString());
@@ -169,12 +185,16 @@ public class VaccinesFragment extends Fragment implements PopupMenu.OnMenuItemCl
     public boolean onMenuItemClick(MenuItem menuItem) {
         switch (menuItem.getItemId()){
             case R.id.deleteMenu:
+                if (mClick != null)
+                    mClick.start();
                 AlertDialog.Builder alertDialog = new AlertDialog.Builder(this.getContext());
                 alertDialog.setIcon(R.drawable.icon);
                 alertDialog.setTitle(R.string.deleteQuestion);
                 alertDialog.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
+                        if (mDelete != null)
+                            mDelete.start();
                         db.collection("users").document(uID)
                                 .collection("pets").document(name)
                                 .collection("vaccines").document(selectedVaccine.getId()).delete();
@@ -188,6 +208,8 @@ public class VaccinesFragment extends Fragment implements PopupMenu.OnMenuItemCl
                 alertDialog.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
+                        if (mClick != null)
+                            mClick.start();
                         dialogInterface.dismiss();
                     }
                 });

@@ -15,6 +15,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -26,8 +27,6 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -43,14 +42,10 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.Source;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.hhh.mypetsapp.ui.dehelmintization.DehelmintizationFragment;
 
-import java.io.Console;
 import java.io.IOException;
 import java.util.UUID;
 
@@ -73,6 +68,8 @@ public class PetProfileActivity extends AppCompatActivity {
     String uID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
     ArrayAdapter<CharSequence> adapterSex;
+    MediaPlayer mClick;
+    MediaPlayer mDelete;
 
     int DIALOG_DATE = 1;
     int myYear = 2020;
@@ -147,6 +144,21 @@ public class PetProfileActivity extends AppCompatActivity {
         infoFromDatabase();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        boolean keySound = defPref.getBoolean("sound", false);;
+        if (!keySound){
+            //enable
+            mClick = MediaPlayer.create(this, R.raw.click);
+            mDelete = MediaPlayer.create(this, R.raw.delete);
+        }
+        else {
+            mClick = null;
+            mDelete = null;
+        }
+    }
+
     private void deletePetProfile() {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
         alertDialog.setIcon(R.drawable.icon);
@@ -160,6 +172,8 @@ public class PetProfileActivity extends AppCompatActivity {
                 Intent intent = new Intent(PetProfileActivity.this, MainActivity.class);
                 startActivity(intent);
                 deletePet.delete();
+                if (mDelete != null)
+                    mDelete.start();
                 finish();
             }
         });
@@ -167,6 +181,8 @@ public class PetProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 dialogInterface.dismiss();
+                if (mClick != null)
+                    mClick.start();
             }
         });
         alertDialog.show();
@@ -231,6 +247,9 @@ public class PetProfileActivity extends AppCompatActivity {
         updatePet.update("sex", spinnerSex.getSelectedItem().toString().trim());
 
         uploadImage();
+
+        if (mClick != null)
+            mClick.start();
     }
 
     public void onClickBirthday(View view){
@@ -260,6 +279,8 @@ public class PetProfileActivity extends AppCompatActivity {
         Intent intent = new Intent(PetProfileActivity.this, VetPassportActivity.class);
         intent.putExtra("petName", petName.getText().toString());
         startActivity(intent);
+        if (mClick != null)
+            mClick.start();
         finish();
     }
 

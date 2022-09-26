@@ -5,8 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:id="@+id/dehelmintizationTakerLayout"
+
     style="@style/Theme.MyPetsApp.NoActionBar"
-    android:background="#99C3C8F1"
+    android:background="@color/taker"
     tools:context=".ui.dehelmintization.DehelmintizationTakerActivity">
 
     <Toolbar
