@@ -75,6 +75,19 @@ public class DehelmintizationFragment extends Fragment implements PopupMenu.OnMe
             }
         });
 
+        return root;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        dehelmintizations.clear();
+        infoFromDataBase();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         defPref = PreferenceManager.getDefaultSharedPreferences(this.getContext());
         boolean key = defPref.getBoolean("theme", false);
         if (key == true){
@@ -83,18 +96,8 @@ public class DehelmintizationFragment extends Fragment implements PopupMenu.OnMe
         }
         else {
             //light
-            this.getView().setBackgroundResource(R.drawable.side_nav_bar);
+            this.getView().setBackgroundResource(R.drawable.background_notes);
         }
-
-        return root;
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-
-        dehelmintizations.clear();
-        infoFromDataBase();
     }
 
     private void infoFromDataBase() {

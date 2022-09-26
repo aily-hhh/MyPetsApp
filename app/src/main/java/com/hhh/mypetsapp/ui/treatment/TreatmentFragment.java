@@ -79,26 +79,30 @@ public class TreatmentFragment extends Fragment implements PopupMenu.OnMenuItemC
             }
         });
 
-        defPref = PreferenceManager.getDefaultSharedPreferences(this.getContext());
-        boolean key = defPref.getBoolean("theme", false);
-        if (key == true){
-            //dark
-            this.getView().setBackgroundResource(R.drawable.side_nav_bar_dark);
-        }
-        else {
-            //light
-            this.getView().setBackgroundResource(R.drawable.side_nav_bar);
-        }
-
         return root;
     }
 
     @Override
     public void onStart() {
         super.onStart();
-
         treatments.clear();
         infoFromDataBase();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        defPref = PreferenceManager.getDefaultSharedPreferences(this.getContext());
+        boolean key = defPref.getBoolean("theme", false);
+        if (key){
+            //dark
+            this.getView().setBackgroundResource(R.drawable.side_nav_bar_dark);
+        }
+        else {
+            //light
+            this.getView().setBackgroundResource(R.drawable.background_notes);
+        }
     }
 
     private void addTreatment() {

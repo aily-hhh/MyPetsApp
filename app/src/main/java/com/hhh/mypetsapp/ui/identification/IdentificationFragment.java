@@ -97,18 +97,22 @@ public class IdentificationFragment extends Fragment {
 
         infoFromDataBase();
 
+        return root;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         defPref = PreferenceManager.getDefaultSharedPreferences(this.getContext());
         boolean key = defPref.getBoolean("theme", false);
-        if (key == true){
+        if (key){
             //dark
             this.getView().setBackgroundResource(R.drawable.side_nav_bar_dark);
         }
         else {
             //light
-            this.getView().setBackgroundResource(R.drawable.side_nav_bar);
+            this.getView().setBackgroundResource(R.drawable.background_notes);
         }
-
-        return root;
     }
 
     public static void onClickMicro(int year, int monthOfYear, int dayOfMonth) {
@@ -200,5 +204,11 @@ public class IdentificationFragment extends Fragment {
                     .collection("pets").document(name)
                     .collection("identification").document(name).set(identification);
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        binding = null;
     }
 }

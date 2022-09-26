@@ -5,7 +5,8 @@
 
         <SwitchPreferenceCompat
             app:key="theme"
-            app:title="@string/themeChoose" />
+            app:title="@string/themeChoose"
+            app:useSimpleSummaryProvider="true"/>
 
     </PreferenceCategory>
 
@@ -25,7 +26,8 @@
 
         <SwitchPreferenceCompat
             app:key="sound"
-            app:title="@string/sound_title" />
+            app:title="@string/sound_title"
+            app:useSimpleSummaryProvider="true"/>
 
     </PreferenceCategory>
 

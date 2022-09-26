@@ -71,15 +71,13 @@ public class NewPetActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         defPref = PreferenceManager.getDefaultSharedPreferences(this);
         boolean key = defPref.getBoolean("theme", false);
-        if (key == true){
+        if (key){
             //dark
             setTheme(R.style.Theme_MyPetsApp_Dark);
-            recreate();
         }
         else {
             //light
             setTheme(R.style.Theme_MyPetsApp);
-            recreate();
         }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_pet);

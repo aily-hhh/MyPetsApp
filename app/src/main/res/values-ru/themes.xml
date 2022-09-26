@@ -2,7 +2,7 @@
     <!-- Base application theme. -->
     <style name="Theme.MyPetsApp" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_500</item>
+        <item name="colorPrimary">#7433D1</item>
         <item name="colorPrimaryDark">#8E74C9</item>
         <item name="colorAccent">@color/forButtons</item>
         <item name="android:textColor">@color/purple_500</item>

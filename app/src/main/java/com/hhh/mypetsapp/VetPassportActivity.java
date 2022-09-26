@@ -2,10 +2,12 @@ package com.hhh.mypetsapp;
 
 import static android.content.ContentValues.TAG;
 
+import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.Fragment;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -61,7 +63,7 @@ import com.hhh.mypetsapp.ui.notes.Notes;
 import java.time.LocalDate;
 import java.time.Period;
 
-public class VetPassportActivity extends AppCompatActivity implements DatePickerFragment.OnDateReceiveCallBack{
+public class VetPassportActivity extends AppCompatActivity{
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityVetPassportBinding binding;
@@ -82,15 +84,13 @@ public class VetPassportActivity extends AppCompatActivity implements DatePicker
     protected void onCreate(Bundle savedInstanceState) {
         defPref = PreferenceManager.getDefaultSharedPreferences(this);
         boolean key = defPref.getBoolean("theme", false);
-        if (key == true){
+        if (key){
             //dark
             setTheme(R.style.Theme_MyPetsApp_Dark);
-            recreate();
         }
         else {
             //light
             setTheme(R.style.Theme_MyPetsApp);
-            recreate();
         }
         super.onCreate(savedInstanceState);
 
@@ -124,11 +124,18 @@ public class VetPassportActivity extends AppCompatActivity implements DatePicker
         iconPetProfile = (ImageView) header.findViewById(R.id.iconPetProfile);
         addedPets = (ImageView) header.findViewById(R.id.addedPets);
         layoutHeader = (LinearLayout) header.findViewById(R.id.layoutHeader);
-        
-        if(key == true)
+
+        if (key){
+            //dark
             layoutHeader.setBackgroundResource(R.drawable.side_nav_bar_dark);
-        else
-            layoutHeader.setBackgroundResource(R.drawable.side_nav_bar);
+            namePetProfile.setTextColor(Color.WHITE);
+            agePetProfile.setTextColor(Color.WHITE);
+            addedPets.setColorFilter(R.color.forButtons);
+        }
+        else {
+            //light
+            layoutHeader.setBackgroundResource(R.drawable.background_notes);
+        }
 
         addedPets.setOnClickListener(new View.OnClickListener() {
             @Override
