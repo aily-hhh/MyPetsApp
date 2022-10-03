@@ -28,6 +28,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.hhh.mypetsapp.BaseActivity;
 import com.hhh.mypetsapp.R;
 import com.hhh.mypetsapp.ui.vaccines.Vaccine;
 import com.hhh.mypetsapp.ui.vaccines.VaccinesFragment;
@@ -35,7 +36,7 @@ import com.hhh.mypetsapp.ui.vaccines.VaccinesTakerActivity;
 
 import java.util.UUID;
 
-public class SurgicalProceduresTakerActivity extends AppCompatActivity {
+public class SurgicalProceduresTakerActivity extends BaseActivity {
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     String uID = FirebaseAuth.getInstance().getCurrentUser().getUid();

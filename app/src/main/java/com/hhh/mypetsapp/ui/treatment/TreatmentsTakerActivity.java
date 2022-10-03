@@ -27,11 +27,12 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.hhh.mypetsapp.BaseActivity;
 import com.hhh.mypetsapp.R;
 
 import java.util.UUID;
 
-public class TreatmentsTakerActivity extends AppCompatActivity {
+public class TreatmentsTakerActivity extends BaseActivity {
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     String uID = FirebaseAuth.getInstance().getCurrentUser().getUid();

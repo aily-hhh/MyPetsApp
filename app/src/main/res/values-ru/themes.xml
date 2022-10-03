@@ -3,10 +3,41 @@
     <style name="Theme.MyPetsApp" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">#7433D1</item>
-        <item name="colorPrimaryDark">#8E74C9</item>
         <item name="colorAccent">@color/forButtons</item>
         <item name="android:textColor">@color/purple_500</item>
+        <item name="textFillColor">@color/purple_500</item>
+        <item name="editTextColor">@color/purple_500</item>
+        <item name="android:textColorHint">@color/hint</item>
+        <item name="android:textColorPrimary">@color/purple_500</item>
         <item name="fontFamily">monospace</item>
+        <item name="backgroundColor">@drawable/background_notes</item>
+        <item name="buttonStyle">@style/buttonStyle</item>
         <!-- Customize your theme here. -->
     </style>
+
+    <style name="Theme.MyPetsApp.Dark" parent="Theme.AppCompat.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">#522495</item>
+        <item name="colorAccent">@color/forButtons</item>
+        <item name="android:textColor">@color/forButtons</item>
+        <item name="backgroundColor">@drawable/side_nav_bar_dark</item>
+        <item name="fontFamily">monospace</item>
+        <item name="textFillColor">@color/forButtons</item>
+        <item name="itemTextColor">@color/forButtons</item>
+        <item name="editTextColor">@color/forButtons</item>
+        <item name="android:textColorPrimary">@color/forButtons</item>
+        <item name="titleTextColor">@color/white</item>
+        <item name="actionMenuTextColor">@color/forButtons</item>
+        <item name="buttonStyle">@style/buttonStyleDark</item>
+        <!-- Customize your theme here. -->
+    </style>
+
+    <style name="Theme.MyPetsApp.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.MyPetsApp.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.MyPetsApp.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

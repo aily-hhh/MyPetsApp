@@ -1,6 +1,7 @@
 package com.hhh.mypetsapp;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -9,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceManager;
 
-public class SettingsActivity extends AppCompatActivity{
+public class SettingsActivity extends BaseActivity{
 
     private SharedPreferences defPref;
 
@@ -55,7 +56,13 @@ public class SettingsActivity extends AppCompatActivity{
             listener = new SharedPreferences.OnSharedPreferenceChangeListener() {
                 @Override
                 public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-                    getActivity().recreate();
+                    if (key.equals("language")) {
+                        Intent i = getContext().getPackageManager().getLaunchIntentForPackage(getContext().getPackageName());
+                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(i);
+                    }
+                    else
+                        getActivity().recreate();
                 }
             };
         }

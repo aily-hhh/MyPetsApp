@@ -26,4 +26,5 @@
         <item name="android:layout_margin">5dp</item>
         <item name="height">55dp</item>
     </style>
+
 </resources>

@@ -41,7 +41,7 @@ import com.google.firebase.storage.UploadTask;
 import java.io.IOException;
 import java.util.UUID;
 
-public class AboutMeActivity extends AppCompatActivity {
+public class AboutMeActivity extends BaseActivity {
 
     TextInputEditText userName, userEmail, userPhone;
     FirebaseFirestore db = FirebaseFirestore.getInstance();

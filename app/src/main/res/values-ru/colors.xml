@@ -7,5 +7,9 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="hint">#a39e9e</color>
     <color name="forButtons">#dbbfff</color>
+    <color name="forNotes">#F1EFE2</color>
+    <color name="taker">#99C3C8F1</color>
+    <color name="takerDark">#995163F4</color>
 </resources>

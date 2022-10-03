@@ -44,7 +44,7 @@ import com.google.firebase.storage.UploadTask;
 import java.io.IOException;
 import java.util.UUID;
 
-public class NewPetActivity extends AppCompatActivity {
+public class NewPetActivity extends BaseActivity {
 
     TextInputEditText petNewName, petNewSpecies, petNewBreed, petNewHair;
     EditText petNewBirthday;

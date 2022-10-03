@@ -9,6 +9,8 @@
     <uses-permission android:name="android.permission.CAMERA" />
 
     <application
+        android:name=".MyApp"
+        android:enabled="true"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -17,44 +19,57 @@
         android:theme="@style/Theme.MyPetsApp">
         <activity
             android:name=".ui.notes.NotesTakerActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:configChanges="locale"/>
         <activity
             android:name=".ui.reproduction.ReproductionTakerActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:configChanges="locale"/>
         <activity
             android:name=".ui.surgical.SurgicalProceduresTakerActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:configChanges="locale"/>
         <activity
             android:name=".ui.dehelmintization.DehelmintizationTakerActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:configChanges="locale"/>
         <activity
             android:name=".ui.treatment.TreatmentsTakerActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:configChanges="locale"/>
         <activity
             android:name=".ui.vaccines.VaccinesTakerActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:configChanges="locale"/>
         <activity
             android:name=".NewPetActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:configChanges="locale"/>
         <activity
             android:name=".AboutMeActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:configChanges="locale"/>
         <activity
             android:name=".PetProfileActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:configChanges="locale"/>
         <activity
             android:name=".VetPassportActivity"
             android:exported="false"
-            android:label="@string/title_activity_vet_passport"/>
+            android:label="@string/title_activity_vet_passport"
+            android:configChanges="locale"/>
         <activity
             android:name=".SettingsActivity"
             android:exported="false"
-            android:label="@string/title_activity_settings" />
+            android:label="@string/title_activity_settings"
+            android:configChanges="locale"/>
         <activity
             android:name=".MainActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:configChanges="locale"/>
         <activity
             android:name=".AuthActivity"
+            android:configChanges="locale"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

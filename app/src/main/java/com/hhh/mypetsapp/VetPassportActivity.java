@@ -47,7 +47,7 @@ import com.hhh.mypetsapp.ui.identification.IdentificationFragment;
 
 import java.time.LocalDate;
 
-public class VetPassportActivity extends AppCompatActivity{
+public class VetPassportActivity extends BaseActivity{
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityVetPassportBinding binding;

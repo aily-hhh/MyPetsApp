@@ -38,7 +38,6 @@
     <string name="title_notes">Заголовок</string>
     <string name="type_of_surgical_procedure">Вид операции</string>
     <string name="title">Заголовок: </string>
-    <string name="delete">Вы уверены, что хотите удалить эту запись?</string>
     <string name="yes">Да</string>
     <string name="no">Нет</string>
 
