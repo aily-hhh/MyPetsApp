@@ -103,4 +103,6 @@
     <string name="deletePetProfile">Are you sure you want to delete this pet profile?</string>
     <string name="deleted">Deleted</string>
     <string name="deleteButton">Delete this pet profile</string>
+    <string name="galleryImage">Gallary image</string>
+    <string name="notElem">there are no elements here yet</string>
 </resources>

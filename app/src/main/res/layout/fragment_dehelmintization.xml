@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     style="@style/Theme.MyPetsApp.NoActionBar"
     android:background="@drawable/background_notes"
-    tools:context=".ui.dehelmintization.DehelmintizationFragment">
+    tools:context=".sideBar.dehelmintization.ui.view.DehelmintizationFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerDehelmintization"
@@ -16,6 +16,14 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp" />
+
+    <TextView
+        android:id="@+id/notElemDehelmintization"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:textIsSelectable="false"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/addDehelmintization"

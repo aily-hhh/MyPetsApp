@@ -98,4 +98,10 @@
     <string name="userInf_title">Delete a user profile</string>
     <string name="theme">Theme</string>
     <string name="themeChoose">Dark theme</string>
+    <string name="galleryImage">Gallary image</string>
+    <string name="notElem">there are no elements here yet</string>
+    <string name="title_activity_detail">DetailActivity</string>
+    <string name="tab_text_1">Tab 1</string>
+    <string name="tab_text_2">Tab 2</string>
+    <string name="title_activity_test">Test</string>
 </resources>

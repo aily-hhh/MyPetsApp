@@ -9,7 +9,7 @@
 
     style="@style/Theme.MyPetsApp.NoActionBar"
     android:background="@color/taker"
-    tools:context=".ui.dehelmintization.DehelmintizationTakerActivity">
+    tools:context=".sideBar.dehelmintization.ui.view.DehelmintizationTakerActivity">
 
     <Toolbar
         android:id="@+id/toolbarDehelmintization"
@@ -65,8 +65,7 @@
                     android:id="@+id/nameDehelmintizationTaker"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="monospace"
-                    android:textColor="@color/purple_500"/>
+                    android:fontFamily="monospace" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -78,8 +77,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/manufacturerDehelmintizationTaker"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/purple_500"/>
+                    android:layout_height="wrap_content" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -91,8 +89,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/doseDehelmintizationTaker"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/purple_500"/>
+                    android:layout_height="wrap_content" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -105,7 +102,6 @@
                     android:id="@+id/dateDehelmintizationTaker"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/purple_500"
                     android:focusable="false"/>
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -119,7 +115,6 @@
                     android:id="@+id/timeDehelmintizationTaker"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/purple_500"
                     android:focusable="false"/>
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -132,8 +127,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/veterinarianDehelmintizationTaker"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/purple_500"/>
+                    android:layout_height="wrap_content" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -146,8 +140,7 @@
                     android:id="@+id/descriptionDehelmintizationTaker"
                     android:singleLine="false"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/purple_500"/>
+                    android:layout_height="wrap_content" />
             </com.google.android.material.textfield.TextInputLayout>
 
         </LinearLayout>

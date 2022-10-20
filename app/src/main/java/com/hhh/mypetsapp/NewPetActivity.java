@@ -146,6 +146,7 @@ public class NewPetActivity extends BaseActivity {
 
         Intent intent = new Intent(NewPetActivity.this, VetPassportActivity.class);
         intent.putExtra("petName", petNewName.getText().toString().trim());
+        intent.addFlags( Intent.FLAG_ACTIVITY_REORDER_TO_FRONT );
         startActivity(intent);
         if (mNewPet != null)
             mNewPet.start();

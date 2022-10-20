@@ -8,7 +8,7 @@
     android:id="@+id/treatmentTakerLayout"
     style="@style/Theme.MyPetsApp.NoActionBar"
     android:background="#99C3C8F1"
-    tools:context=".ui.treatment.TreatmentsTakerActivity">
+    tools:context=".sideBar.treatment.TreatmentsTakerActivity">
 
     <Toolbar
         android:id="@+id/toolbarTreatment"
@@ -64,8 +64,7 @@
                     android:id="@+id/nameTreatment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="monospace"
-                    android:textColor="@color/purple_500"/>
+                    android:fontFamily="monospace" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -77,8 +76,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/manufacturerTreatment"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/purple_500"/>
+                    android:layout_height="wrap_content" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -91,7 +89,6 @@
                     android:id="@+id/dateTreatment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/purple_500"
                     android:focusable="false"
                     android:onClick="onClickDate"/>
             </com.google.android.material.textfield.TextInputLayout>
@@ -105,8 +102,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/veterinarianTreatment"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/purple_500"/>
+                    android:layout_height="wrap_content" />
             </com.google.android.material.textfield.TextInputLayout>
 
         </LinearLayout>

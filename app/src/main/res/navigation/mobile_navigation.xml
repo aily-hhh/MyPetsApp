@@ -7,49 +7,49 @@
 
     <fragment
         android:id="@+id/nav_notes"
-        android:name="com.hhh.mypetsapp.ui.notes.NotesFragment"
+        android:name="com.hhh.mypetsapp.sideBar.notes.NotesFragment"
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_notes" />
 
     <fragment
         android:id="@+id/nav_gallery"
-        android:name="com.hhh.mypetsapp.ui.gallery.GalleryFragment"
+        android:name="com.hhh.mypetsapp.sideBar.gallery.GalleryFragment"
         android:label="@string/menu_gallery"
         tools:layout="@layout/fragment_gallery" />
 
     <fragment
         android:id="@+id/nav_vaccines"
-        android:name="com.hhh.mypetsapp.ui.vaccines.VaccinesFragment"
+        android:name="com.hhh.mypetsapp.sideBar.vaccines.VaccinesFragment"
         android:label="@string/menu_slideshow"
         tools:layout="@layout/fragment_vaccines" />
 
     <fragment
         android:id="@+id/nav_procedures"
-        android:name="com.hhh.mypetsapp.ui.surgical.SurgicalProceduresFragment"
+        android:name="com.hhh.mypetsapp.sideBar.surgical.SurgicalProceduresFragment"
         android:label="@string/menu_procedures"
         tools:layout="@layout/fragment_surgical_procedures" />
 
     <fragment
         android:id="@+id/nav_treatment"
-        android:name="com.hhh.mypetsapp.ui.treatment.TreatmentFragment"
+        android:name="com.hhh.mypetsapp.sideBar.treatment.TreatmentFragment"
         android:label="@string/menu_treatment"
         tools:layout="@layout/treatment_fragment" />
 
     <fragment
         android:id="@+id/nav_dehelmintization"
-        android:name="com.hhh.mypetsapp.ui.dehelmintization.DehelmintizationFragment"
+        android:name="com.hhh.mypetsapp.sideBar.dehelmintization.ui.view.DehelmintizationFragment"
         android:label="@string/dehelmintization"
         tools:layout="@layout/fragment_dehelmintization" />
 
     <fragment
         android:id="@+id/nav_reproduction"
-        android:name="com.hhh.mypetsapp.ui.reproduction.ReproductionFragment"
+        android:name="com.hhh.mypetsapp.sideBar.reproduction.ReproductionFragment"
         android:label="@string/reproduction"
         tools:layout="@layout/fragment_reproduction" />
 
     <fragment
         android:id="@+id/nav_identification"
-        android:name="com.hhh.mypetsapp.ui.identification.IdentificationFragment"
+        android:name="com.hhh.mypetsapp.sideBar.identification.IdentificationFragment"
         android:label="@string/identification"
         tools:layout="@layout/fragment_identification" />
 

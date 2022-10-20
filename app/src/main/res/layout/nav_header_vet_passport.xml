@@ -21,7 +21,7 @@
         android:layout_height="wrap_content"
         android:background="@color/fui_transparent"
         app:cardCornerRadius="15dp"
-        android:paddingTop="@dimen/nav_header_vertical_spacing"
+        android:paddingTop="14dp"
         android:elevation="10dp">
     <ImageView
         android:id="@+id/iconPetProfile"

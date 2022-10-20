@@ -35,17 +35,19 @@ public class AuthActivity extends BaseActivity {
     // display inside our app.
     List<AuthUI.IdpConfig> providers = Arrays.asList(
 
+            new AuthUI.IdpConfig.AnonymousBuilder().build(),
+
             // below is the line for adding
             // email and password authentication.
-            new AuthUI.IdpConfig.EmailBuilder().build(),
+            //new AuthUI.IdpConfig.EmailBuilder().build(),
 
             // below line is used for adding google
             // authentication builder in our app.
-            new AuthUI.IdpConfig.GoogleBuilder().build(),
+            new AuthUI.IdpConfig.GoogleBuilder().build());
 
             // below line is used for adding phone
             // authentication builder in our app.
-            new AuthUI.IdpConfig.PhoneBuilder().build());
+            //new AuthUI.IdpConfig.PhoneBuilder().build());
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

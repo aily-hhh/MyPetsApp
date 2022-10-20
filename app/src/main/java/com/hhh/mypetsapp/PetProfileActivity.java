@@ -170,6 +170,7 @@ public class PetProfileActivity extends BaseActivity {
                         .collection("pets").document(petName.getText().toString());
                 Toast.makeText(PetProfileActivity.this, R.string.deleted, Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(PetProfileActivity.this, MainActivity.class);
+                intent.addFlags( Intent.FLAG_ACTIVITY_REORDER_TO_FRONT );
                 startActivity(intent);
                 deletePet.delete();
                 if (mDelete != null)
@@ -278,6 +279,7 @@ public class PetProfileActivity extends BaseActivity {
     private void backToVetPass(){
         Intent intent = new Intent(PetProfileActivity.this, VetPassportActivity.class);
         intent.putExtra("petName", petName.getText().toString());
+        intent.addFlags( Intent.FLAG_ACTIVITY_REORDER_TO_FRONT );
         startActivity(intent);
         if (mClick != null)
             mClick.start();
@@ -391,6 +393,7 @@ public class PetProfileActivity extends BaseActivity {
         super.onBackPressed();
         Intent intent = new Intent(PetProfileActivity.this, VetPassportActivity.class);
         intent.putExtra("petName", petName.getText().toString());
+        intent.addFlags( Intent.FLAG_ACTIVITY_REORDER_TO_FRONT );
         startActivity(intent);
         finish();
     }

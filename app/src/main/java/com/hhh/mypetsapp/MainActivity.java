@@ -165,6 +165,7 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 Intent intent = new Intent(MainActivity.this, VetPassportActivity.class);
+                intent.addFlags( Intent.FLAG_ACTIVITY_REORDER_TO_FRONT );
                 intent.putExtra("petName", adapter.getItem(i).toString());
                 startActivity(intent);
                 if (mClick != null)
@@ -183,6 +184,7 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 Intent intent = new Intent(MainActivity.this, NewPetActivity.class);
+                intent.addFlags( Intent.FLAG_ACTIVITY_REORDER_TO_FRONT );
                 startActivity(intent);
                 adapter.clear();
                 if (mClick != null)
@@ -194,6 +196,7 @@ public class MainActivity extends BaseActivity {
 
     private void goToSettings(){
         Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+        intent.addFlags( Intent.FLAG_ACTIVITY_REORDER_TO_FRONT );
         startActivity(intent);
         if (mClick != null)
             mClick.start();
@@ -201,6 +204,7 @@ public class MainActivity extends BaseActivity {
 
     private void goToUserProfile(){
         Intent intent = new Intent(MainActivity.this, AboutMeActivity.class);
+        intent.addFlags( Intent.FLAG_ACTIVITY_REORDER_TO_FRONT );
         startActivity(intent);
         if (mClick != null)
             mClick.start();

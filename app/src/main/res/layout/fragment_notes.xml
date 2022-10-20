@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     style="@style/Theme.MyPetsApp.NoActionBar"
     android:background="@drawable/background_notes"
-    tools:context=".ui.notes.NotesFragment">
+    tools:context=".sideBar.notes.NotesFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerNotes"
@@ -28,4 +28,12 @@
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="32dp"
         android:src="@drawable/add_notes" />
+
+    <TextView
+        android:id="@+id/notElemNotes"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:textIsSelectable="false"/>
 </RelativeLayout>

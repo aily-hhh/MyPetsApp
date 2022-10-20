@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.hhh.mypetsapp">
+    package="com.hhh.mypetsapp" >
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -10,67 +10,78 @@
 
     <application
         android:name=".MyApp"
-        android:enabled="true"
         android:allowBackup="true"
+        android:configChanges="locale"
+        android:enabled="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.MyPetsApp">
+        android:theme="@style/Theme.MyPetsApp" >
         <activity
-            android:name=".ui.notes.NotesTakerActivity"
+            android:name=".sideBar.Test"
             android:exported="false"
-            android:configChanges="locale"/>
+            android:label="@string/title_activity_test"
+            android:theme="@style/Theme.MyPetsApp.NoActionBar" />
         <activity
-            android:name=".ui.reproduction.ReproductionTakerActivity"
+            android:name=".sideBar.gallery.DetailActivity"
             android:exported="false"
-            android:configChanges="locale"/>
+            android:label="@string/title_activity_detail"
+            android:theme="@style/Theme.MyPetsApp.NoActionBar" />
         <activity
-            android:name=".ui.surgical.SurgicalProceduresTakerActivity"
-            android:exported="false"
-            android:configChanges="locale"/>
+            android:name=".sideBar.notes.NotesTakerActivity"
+            android:configChanges="locale"
+            android:exported="false" />
         <activity
-            android:name=".ui.dehelmintization.DehelmintizationTakerActivity"
-            android:exported="false"
-            android:configChanges="locale"/>
+            android:name=".sideBar.reproduction.ReproductionTakerActivity"
+            android:configChanges="locale"
+            android:exported="false" />
         <activity
-            android:name=".ui.treatment.TreatmentsTakerActivity"
-            android:exported="false"
-            android:configChanges="locale"/>
+            android:name=".sideBar.surgical.SurgicalProceduresTakerActivity"
+            android:configChanges="locale"
+            android:exported="false" />
         <activity
-            android:name=".ui.vaccines.VaccinesTakerActivity"
-            android:exported="false"
-            android:configChanges="locale"/>
+            android:name=".sideBar.dehelmintization.ui.view.DehelmintizationTakerActivity"
+            android:configChanges="locale"
+            android:exported="false" />
+        <activity
+            android:name=".sideBar.treatment.TreatmentsTakerActivity"
+            android:configChanges="locale"
+            android:exported="false" />
+        <activity
+            android:name=".sideBar.vaccines.VaccinesTakerActivity"
+            android:configChanges="locale"
+            android:exported="false" />
         <activity
             android:name=".NewPetActivity"
-            android:exported="false"
-            android:configChanges="locale"/>
+            android:configChanges="locale"
+            android:exported="false" />
         <activity
             android:name=".AboutMeActivity"
-            android:exported="false"
-            android:configChanges="locale"/>
+            android:configChanges="locale"
+            android:exported="false" />
         <activity
             android:name=".PetProfileActivity"
-            android:exported="false"
-            android:configChanges="locale"/>
+            android:configChanges="locale"
+            android:exported="false" />
         <activity
             android:name=".VetPassportActivity"
+            android:configChanges="locale"
             android:exported="false"
-            android:label="@string/title_activity_vet_passport"
-            android:configChanges="locale"/>
+            android:label="@string/title_activity_vet_passport" />
         <activity
             android:name=".SettingsActivity"
+            android:configChanges="locale"
             android:exported="false"
-            android:label="@string/title_activity_settings"
-            android:configChanges="locale"/>
+            android:label="@string/title_activity_settings" />
         <activity
             android:name=".MainActivity"
-            android:exported="true"
-            android:configChanges="locale"/>
+            android:configChanges="locale"
+            android:exported="true" />
         <activity
             android:name=".AuthActivity"
             android:configChanges="locale"
-            android:exported="true">
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

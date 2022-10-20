@@ -32,7 +32,6 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceManager;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -43,7 +42,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.storage.FirebaseStorage;
 import com.hhh.mypetsapp.databinding.ActivityVetPassportBinding;
-import com.hhh.mypetsapp.ui.identification.IdentificationFragment;
+import com.hhh.mypetsapp.sideBar.identification.IdentificationFragment;
 
 import java.time.LocalDate;
 
@@ -143,6 +142,9 @@ public class VetPassportActivity extends BaseActivity{
     @Override
     protected void onResume() {
         super.onResume();
+
+        infoFromDB();
+
         boolean keySound = defPref.getBoolean("sound", false);;
         if (!keySound){
             //enable
@@ -176,6 +178,7 @@ public class VetPassportActivity extends BaseActivity{
                     public void onComplete(@NonNull Task<Void> task) {
                         Toast.makeText(VetPassportActivity.this, R.string.userSignedOut, Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(VetPassportActivity.this, AuthActivity.class);
+                        intent.addFlags( Intent.FLAG_ACTIVITY_REORDER_TO_FRONT );
                         startActivity(intent);
                     }
                 });
@@ -264,6 +267,7 @@ public class VetPassportActivity extends BaseActivity{
     public void goToPetProfile(View view){
         Intent intent = new Intent(VetPassportActivity.this, PetProfileActivity.class);
         intent.putExtra("petName", name);
+        intent.addFlags( Intent.FLAG_ACTIVITY_REORDER_TO_FRONT );
         startActivity(intent);
         if (mClick != null)
             mClick.start();

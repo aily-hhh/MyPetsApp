@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.notes.NotesTakerActivity"
+    tools:context=".sideBar.notes.NotesTakerActivity"
     android:id="@+id/notesTakerLayout"
     android:background="#99C3C8F1"
     android:orientation="vertical">

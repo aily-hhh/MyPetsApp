@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     style="@style/Theme.MyPetsApp.NoActionBar"
     android:background="@drawable/background_notes"
-    tools:context=".ui.reproduction.ReproductionFragment">
+    tools:context=".sideBar.reproduction.ReproductionFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerReproduction"
@@ -16,6 +16,14 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp" />
+
+    <TextView
+        android:id="@+id/notElemReproduction"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:textIsSelectable="false"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/addReproductionButton"

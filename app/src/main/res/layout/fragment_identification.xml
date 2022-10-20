@@ -7,7 +7,7 @@
     android:orientation="vertical"
     style="@style/Theme.MyPetsApp.NoActionBar"
     android:background="#99C3C8F1"
-    tools:context=".ui.identification.IdentificationFragment">
+    tools:context=".sideBar.identification.IdentificationFragment">
 
     <Toolbar
         android:id="@+id/toolbarIdentification"

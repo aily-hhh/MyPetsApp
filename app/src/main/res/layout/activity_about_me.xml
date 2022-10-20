@@ -54,17 +54,6 @@
                 android:inputType="textEmailAddress" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/phone">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/userPhone"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </com.google.android.material.textfield.TextInputLayout>
-
         <Button
             android:layout_marginTop="7dp"
             android:layout_width="match_parent"

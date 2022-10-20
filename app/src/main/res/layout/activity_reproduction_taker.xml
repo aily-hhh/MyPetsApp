@@ -8,7 +8,7 @@
     android:id="@+id/reproductionTakerLayout"
     style="@style/Theme.MyPetsApp.NoActionBar"
     android:background="#99C3C8F1"
-    tools:context=".ui.reproduction.ReproductionTakerActivity">
+    tools:context=".sideBar.reproduction.ReproductionTakerActivity">
 
     <Toolbar
         android:id="@+id/toolbarReproduction"
@@ -64,7 +64,6 @@
                     android:id="@+id/dateOfHeatTaker"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/purple_500"
                     android:focusable="false"/>
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -78,7 +77,6 @@
                     android:id="@+id/dateOfMatingTaker"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/purple_500"
                     android:focusable="false"/>
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -106,8 +104,7 @@
                     android:id="@+id/numberOfTheLitterTaker"
                     android:singleLine="false"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/purple_500"/>
+                    android:layout_height="wrap_content" />
             </com.google.android.material.textfield.TextInputLayout>
 
         </LinearLayout>

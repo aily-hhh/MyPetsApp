@@ -43,7 +43,7 @@ import java.util.UUID;
 
 public class AboutMeActivity extends BaseActivity {
 
-    TextInputEditText userName, userEmail, userPhone;
+    TextInputEditText userName, userEmail;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     String uID = FirebaseAuth.getInstance().getCurrentUser().getUid();
     ImageView userPhoto;
@@ -72,7 +72,6 @@ public class AboutMeActivity extends BaseActivity {
 
         userName = (TextInputEditText) findViewById(R.id.userName);
         userEmail = (TextInputEditText) findViewById(R.id.userEmail);
-        userPhone = (TextInputEditText) findViewById(R.id.userPhone);
         userPhoto = (ImageView) findViewById(R.id.userPhoto);
 
         infoFromDatabase();
@@ -152,8 +151,6 @@ public class AboutMeActivity extends BaseActivity {
                         db.collection("users").document(uID)
                                 .update("email", FirebaseAuth.getInstance().getCurrentUser().getEmail().toString());
                     }
-                    if (FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber() != null)
-                        userPhone.setText(FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber().toString());
                     if (snapshot.get("userName") != null)
                         userName.setText(snapshot.get("userName").toString());
                 } else {

@@ -15,6 +15,7 @@ public class AboutMeFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         Intent intent = new Intent(AboutMeFragment.this.getContext(), AboutMeActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
         startActivity(intent);
         getActivity().finish();
         return null;
