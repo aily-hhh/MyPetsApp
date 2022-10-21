@@ -47,7 +47,6 @@ public class NotesFragment extends Fragment implements PopupMenu.OnMenuItemClick
 
     private FragmentNotesBinding binding;
     private SharedPreferences defPref;
-    MediaPlayer mClick;
     MediaPlayer mDelete;
     MediaPlayer mPin;
     RecyclerView recyclerNotes;
@@ -106,12 +105,10 @@ public class NotesFragment extends Fragment implements PopupMenu.OnMenuItemClick
         boolean keySound = defPref.getBoolean("sound", false);;
         if (!keySound){
             //enable
-            mClick = MediaPlayer.create(this.getContext(), R.raw.click);
             mDelete = MediaPlayer.create(this.getContext(), R.raw.delete);
             mPin = MediaPlayer.create(this.getContext(), R.raw.pin_unpin);
         }
         else {
-            mClick = null;
             mDelete = null;
             mPin = null;
         }
@@ -122,8 +119,6 @@ public class NotesFragment extends Fragment implements PopupMenu.OnMenuItemClick
         intent.putExtra("petName", name.toString());
         intent.addFlags( Intent.FLAG_ACTIVITY_REORDER_TO_FRONT );
         startActivity(intent);
-        if (mClick != null)
-            mClick.start();
     }
 
     private void updateRecycler() {
@@ -141,8 +136,6 @@ public class NotesFragment extends Fragment implements PopupMenu.OnMenuItemClick
             intent.putExtra("petName", name.toString());
             intent.addFlags( Intent.FLAG_ACTIVITY_REORDER_TO_FRONT );
             startActivity(intent);
-            if (mClick != null)
-                mClick.start();
         }
 
         @Override
@@ -191,8 +184,6 @@ public class NotesFragment extends Fragment implements PopupMenu.OnMenuItemClick
         switch (menuItem.getItemId()){
             case R.id.pinMenuNotes:
                 if (selectedNote.isPinned()){
-                    if (mClick != null)
-                        mClick.start();
                     DocumentReference docRef = db.collection("users").document(uID)
                             .collection("pets").document(name)
                             .collection("notes").document(selectedNote.getId());
@@ -202,8 +193,6 @@ public class NotesFragment extends Fragment implements PopupMenu.OnMenuItemClick
                         mPin.start();
                 }
                 else{
-                    if (mClick != null)
-                        mClick.start();
                     DocumentReference docRef = db.collection("users").document(uID)
                             .collection("pets").document(name)
                             .collection("notes").document(selectedNote.getId());
@@ -217,8 +206,6 @@ public class NotesFragment extends Fragment implements PopupMenu.OnMenuItemClick
                 return true;
 
             case R.id.deleteMenuNotes:
-                if (mClick != null)
-                    mClick.start();
                 AlertDialog.Builder alertDialog = new AlertDialog.Builder(this.getContext());
                 alertDialog.setIcon(R.drawable.icon);
                 alertDialog.setTitle(R.string.deleteQuestion);
@@ -240,8 +227,6 @@ public class NotesFragment extends Fragment implements PopupMenu.OnMenuItemClick
                 alertDialog.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        if (mClick != null)
-                            mClick.start();
                         dialogInterface.dismiss();
                     }
                 });

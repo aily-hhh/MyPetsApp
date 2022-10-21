@@ -42,7 +42,6 @@ public class SurgicalProceduresTakerActivity extends BaseActivity {
     ArrayAdapter<CharSequence> adapterType;
 
     private SharedPreferences defPref;
-    MediaPlayer mClick;
     MediaPlayer mAdd;
 
     int DIALOG_DATE = 1;
@@ -126,11 +125,9 @@ public class SurgicalProceduresTakerActivity extends BaseActivity {
         boolean keySound = defPref.getBoolean("sound", false);;
         if (!keySound){
             //enable
-            mClick = MediaPlayer.create(this, R.raw.click);
             mAdd = MediaPlayer.create(this, R.raw.add);
         }
         else {
-            mClick = null;
             mAdd = null;
         }
     }
@@ -240,8 +237,6 @@ public class SurgicalProceduresTakerActivity extends BaseActivity {
     }
 
     private void backToTheSurgical(){
-        if (mClick != null)
-            mClick.start();
         finish();
     }
 

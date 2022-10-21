@@ -54,7 +54,6 @@ public class VetPassportActivity extends BaseActivity{
     private String name;
     private boolean rotate = true;
     private SharedPreferences defPref;
-    private MediaPlayer mClick;
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     String uID = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -144,29 +143,16 @@ public class VetPassportActivity extends BaseActivity{
         super.onResume();
 
         infoFromDB();
-
-        boolean keySound = defPref.getBoolean("sound", false);;
-        if (!keySound){
-            //enable
-            mClick = MediaPlayer.create(this, R.raw.click);
-        }
-        else {
-            mClick = null;
-        }
     }
 
     private void showListOfPets() {
         if (rotate) {
             addedPets.animate().rotationBy(180).start();
             rotate = false;
-            if (mClick != null)
-                mClick.start();
         }
         else {
             addedPets.animate().rotationBy(-180).start();
             rotate = true;
-            if (mClick != null)
-                mClick.start();
         }
     }
 
@@ -269,8 +255,6 @@ public class VetPassportActivity extends BaseActivity{
         intent.putExtra("petName", name);
         intent.addFlags( Intent.FLAG_ACTIVITY_REORDER_TO_FRONT );
         startActivity(intent);
-        if (mClick != null)
-            mClick.start();
     }
 
     public void onDateReceive(int dd ,int mm, int yy){

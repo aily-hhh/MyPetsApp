@@ -44,7 +44,6 @@ public class VaccinesFragment extends Fragment implements PopupMenu.OnMenuItemCl
 
     private FragmentVaccinesBinding binding;
     private SharedPreferences defPref;
-    MediaPlayer mClick;
     MediaPlayer mDelete;
     RecyclerView recyclerVaccines;
     FloatingActionButton addVaccineButton;
@@ -103,18 +102,14 @@ public class VaccinesFragment extends Fragment implements PopupMenu.OnMenuItemCl
         boolean keySound = defPref.getBoolean("sound", false);;
         if (!keySound){
             //enable
-            mClick = MediaPlayer.create(this.getContext(), R.raw.click);
             mDelete = MediaPlayer.create(this.getContext(), R.raw.delete);
         }
         else {
-            mClick = null;
             mDelete = null;
         }
     }
 
     private void addVaccine() {
-        if (mClick != null)
-            mClick.start();
         Intent intent = new Intent(VaccinesFragment.this.getActivity(), VaccinesTakerActivity.class);
         intent.putExtra("petName", name.toString());
         intent.addFlags( Intent.FLAG_ACTIVITY_REORDER_TO_FRONT );
@@ -131,8 +126,6 @@ public class VaccinesFragment extends Fragment implements PopupMenu.OnMenuItemCl
     private final VaccinesClickListener vaccinesClickListener = new VaccinesClickListener() {
         @Override
         public void onClick(Vaccine currentVaccine) {
-            if (mClick != null)
-                mClick.start();
             Intent intent = new Intent(VaccinesFragment.this.getActivity(), VaccinesTakerActivity.class);
             intent.putExtra("oldVaccine", currentVaccine.getId());
             intent.putExtra("petName", name.toString());
@@ -190,8 +183,6 @@ public class VaccinesFragment extends Fragment implements PopupMenu.OnMenuItemCl
     public boolean onMenuItemClick(MenuItem menuItem) {
         switch (menuItem.getItemId()){
             case R.id.deleteMenu:
-                if (mClick != null)
-                    mClick.start();
                 AlertDialog.Builder alertDialog = new AlertDialog.Builder(this.getContext());
                 alertDialog.setIcon(R.drawable.icon);
                 alertDialog.setTitle(R.string.deleteQuestion);
@@ -213,8 +204,6 @@ public class VaccinesFragment extends Fragment implements PopupMenu.OnMenuItemCl
                 alertDialog.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        if (mClick != null)
-                            mClick.start();
                         dialogInterface.dismiss();
                     }
                 });

@@ -63,7 +63,6 @@ public class GalleryFragment extends Fragment {
     private ItemViewModel viewModel;
     private String name;
     private SharedPreferences defPref;
-    MediaPlayer mClick;
     MediaPlayer mDelete;
     Calendar calendar = Calendar.getInstance();
     SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy ',' HH:mm");
@@ -187,11 +186,9 @@ public class GalleryFragment extends Fragment {
         boolean keySound = defPref.getBoolean("sound", false);;
         if (!keySound){
             //enable
-            mClick = MediaPlayer.create(this.getContext(), R.raw.click);
             mDelete = MediaPlayer.create(this.getContext(), R.raw.delete);
         }
         else {
-            mClick = null;
             mDelete = null;
         }
     }

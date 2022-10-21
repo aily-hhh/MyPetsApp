@@ -59,7 +59,6 @@ public class DehelmintizationFragment extends Fragment implements PopupMenu.OnMe
     private ItemViewModel viewModel;
     private String name;
     Dehelmintization selectedDehelmintization;
-    MediaPlayer mClick;
     MediaPlayer mDelete;
 
     @Nullable
@@ -109,11 +108,9 @@ public class DehelmintizationFragment extends Fragment implements PopupMenu.OnMe
         boolean keySound = defPref.getBoolean("sound", false);;
         if (!keySound){
             //enable
-            mClick = MediaPlayer.create(this.getContext(), R.raw.click);
             mDelete = MediaPlayer.create(this.getContext(), R.raw.delete);
         }
         else {
-            mClick = null;
             mDelete = null;
         }
     }
@@ -148,8 +145,6 @@ public class DehelmintizationFragment extends Fragment implements PopupMenu.OnMe
         intent.addFlags( Intent.FLAG_ACTIVITY_REORDER_TO_FRONT );
         intent.putExtra("petName", name);
         startActivity(intent);
-        if (mClick != null)
-            mClick.start();
     }
 
     private void updateRecycler(){
@@ -168,8 +163,6 @@ public class DehelmintizationFragment extends Fragment implements PopupMenu.OnMe
             intent.putExtra("petName", name);
             intent.addFlags( Intent.FLAG_ACTIVITY_REORDER_TO_FRONT );
             startActivity(intent);
-            if (mClick != null)
-                mClick.start();
         }
 
         @Override
@@ -191,8 +184,6 @@ public class DehelmintizationFragment extends Fragment implements PopupMenu.OnMe
     public boolean onMenuItemClick(MenuItem menuItem) {
         switch (menuItem.getItemId()){
             case R.id.deleteMenu:
-                if (mClick != null)
-                    mClick.start();
                 AlertDialog.Builder alertDialog = new AlertDialog.Builder(this.getContext());
                 alertDialog.setIcon(R.drawable.icon);
                 alertDialog.setTitle(R.string.deleteQuestion);
@@ -215,8 +206,6 @@ public class DehelmintizationFragment extends Fragment implements PopupMenu.OnMe
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         dialogInterface.dismiss();
-                        if (mClick != null)
-                            mClick.start();
                     }
                 });
                 alertDialog.show();

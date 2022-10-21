@@ -45,7 +45,6 @@ public class ReproductionFragment extends Fragment implements PopupMenu.OnMenuIt
 
     private FragmentReproductionBinding binding;
     private SharedPreferences defPref;
-    MediaPlayer mClick;
     MediaPlayer mDelete;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     String uID = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -107,11 +106,9 @@ public class ReproductionFragment extends Fragment implements PopupMenu.OnMenuIt
         boolean keySound = defPref.getBoolean("sound", false);;
         if (!keySound){
             //enable
-            mClick = MediaPlayer.create(this.getContext(), R.raw.click);
             mDelete = MediaPlayer.create(this.getContext(), R.raw.delete);
         }
         else {
-            mClick = null;
             mDelete = null;
         }
     }
@@ -157,8 +154,6 @@ public class ReproductionFragment extends Fragment implements PopupMenu.OnMenuIt
             intent.putExtra("petName", name);
             intent.addFlags( Intent.FLAG_ACTIVITY_REORDER_TO_FRONT );
             startActivity(intent);
-            if (mClick != null)
-                mClick.start();
         }
 
         @Override
@@ -208,8 +203,6 @@ public class ReproductionFragment extends Fragment implements PopupMenu.OnMenuIt
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         dialogInterface.dismiss();
-                        if (mClick != null)
-                            mClick.start();
                     }
                 });
                 alertDialog.show();
@@ -224,7 +217,5 @@ public class ReproductionFragment extends Fragment implements PopupMenu.OnMenuIt
         intent.putExtra("petName", name);
         intent.addFlags( Intent.FLAG_ACTIVITY_REORDER_TO_FRONT );
         startActivity(intent);
-        if (mClick != null)
-            mClick.start();
     }
 }

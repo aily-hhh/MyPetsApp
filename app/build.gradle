@@ -72,6 +72,7 @@ dependencies {
 
     implementation platform('com.google.firebase:firebase-auth:21.0.5')
     implementation platform('com.google.firebase:firebase-database:20.0.5')
+    implementation 'com.firebaseui:firebase-ui-storage:7.2.0'
 
     implementation "androidx.room:room-runtime:2.4.3"
     annotationProcessor "androidx.room:room-compiler:2.4.3"

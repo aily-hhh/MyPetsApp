@@ -1,5 +1,6 @@
 package com.hhh.mypetsapp;
 
+import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -58,8 +59,9 @@ public class SettingsActivity extends BaseActivity{
                 public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
                     if (key.equals("language")) {
                         Intent i = getContext().getPackageManager().getLaunchIntentForPackage(getContext().getPackageName());
-                        i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                        startActivity(i);
+                        //i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                        //startActivity(i);
+                        getActivity().recreate();
                     }
                     else
                         getActivity().recreate();

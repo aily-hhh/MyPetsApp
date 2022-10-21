@@ -53,7 +53,6 @@ public class AboutMeActivity extends BaseActivity {
     private SharedPreferences defPref;
     private final int GALLERY_REQUEST = 1;
     private final int PERMISSION_REQUEST = 0;
-    MediaPlayer mClick;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,19 +87,6 @@ public class AboutMeActivity extends BaseActivity {
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISSION_REQUEST);
-        }
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        boolean keySound = defPref.getBoolean("sound", false);;
-        if (!keySound){
-            //enable
-            mClick = MediaPlayer.create(this, R.raw.click);
-        }
-        else {
-            mClick = null;
         }
     }
 
@@ -164,8 +150,6 @@ public class AboutMeActivity extends BaseActivity {
         DocumentReference updateName = db.collection("users").document(uID);
         updateName.update("userName", userName.getText().toString());
         uploadImage();
-        if (mClick != null)
-            mClick.start();
     }
 
     public void updateUserPhoto(){

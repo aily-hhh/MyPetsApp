@@ -43,7 +43,6 @@ public class ReproductionTakerActivity extends BaseActivity {
     private boolean isOld = false;
     String idReproduction;
     private SharedPreferences defPref;
-    MediaPlayer mClick;
     MediaPlayer mAdd;
 
     int DIALOG_DATE_HEAT = 1;
@@ -103,8 +102,6 @@ public class ReproductionTakerActivity extends BaseActivity {
         backReproduction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (mClick != null)
-                    mClick.start();
                 finish();
             }
         });
@@ -137,11 +134,9 @@ public class ReproductionTakerActivity extends BaseActivity {
         boolean keySound = defPref.getBoolean("sound", false);;
         if (!keySound){
             //enable
-            mClick = MediaPlayer.create(this, R.raw.click);
             mAdd = MediaPlayer.create(this, R.raw.add);
         }
         else {
-            mClick = null;
             mAdd = null;
         }
     }

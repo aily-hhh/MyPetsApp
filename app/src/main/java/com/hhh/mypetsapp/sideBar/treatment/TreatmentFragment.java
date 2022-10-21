@@ -44,7 +44,6 @@ public class TreatmentFragment extends Fragment implements PopupMenu.OnMenuItemC
 
     private TreatmentFragmentBinding binding;
     private SharedPreferences defPref;
-    MediaPlayer mClick;
     MediaPlayer mDelete;
     RecyclerView recyclerTreatments;
     FloatingActionButton addTreatmentButton;
@@ -103,18 +102,14 @@ public class TreatmentFragment extends Fragment implements PopupMenu.OnMenuItemC
         boolean keySound = defPref.getBoolean("sound", false);;
         if (!keySound){
             //enable
-            mClick = MediaPlayer.create(this.getContext(), R.raw.click);
             mDelete = MediaPlayer.create(this.getContext(), R.raw.delete);
         }
         else {
-            mClick = null;
             mDelete = null;
         }
     }
 
     private void addTreatment() {
-        if (mClick != null)
-            mClick.start();
         Intent intent = new Intent(TreatmentFragment.this.getActivity(), TreatmentsTakerActivity.class);
         intent.putExtra("petName", name.toString());
         intent.addFlags( Intent.FLAG_ACTIVITY_REORDER_TO_FRONT );
@@ -131,8 +126,6 @@ public class TreatmentFragment extends Fragment implements PopupMenu.OnMenuItemC
     private final TreatmentsClickListener treatmentsClickListener = new TreatmentsClickListener() {
         @Override
         public void onClick(Treatment currentTreatment) {
-            if (mClick != null)
-                mClick.start();
             Intent intent = new Intent(TreatmentFragment.this.getActivity(), TreatmentsTakerActivity.class);
             intent.putExtra("oldTreatment", currentTreatment.getId());
             intent.putExtra("petName", name.toString());
@@ -192,8 +185,6 @@ public class TreatmentFragment extends Fragment implements PopupMenu.OnMenuItemC
     public boolean onMenuItemClick(MenuItem menuItem) {
         switch (menuItem.getItemId()){
             case R.id.deleteMenu:
-                if (mClick != null)
-                    mClick.start();
                 AlertDialog.Builder alertDialog = new AlertDialog.Builder(this.getContext());
                 alertDialog.setIcon(R.drawable.icon);
                 alertDialog.setTitle(R.string.deleteQuestion);
@@ -215,8 +206,6 @@ public class TreatmentFragment extends Fragment implements PopupMenu.OnMenuItemC
                 alertDialog.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        if (mClick != null)
-                            mClick.start();
                         dialogInterface.dismiss();
                     }
                 });

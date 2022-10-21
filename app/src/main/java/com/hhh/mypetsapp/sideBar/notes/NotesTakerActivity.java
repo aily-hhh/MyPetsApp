@@ -37,7 +37,6 @@ public class NotesTakerActivity extends BaseActivity {
     private String name;
     boolean isOld = false;
     private SharedPreferences defPref;
-    MediaPlayer mClick;
     MediaPlayer mAdd;
 
     LinearLayout notesTakerLayout;
@@ -132,18 +131,14 @@ public class NotesTakerActivity extends BaseActivity {
         boolean keySound = defPref.getBoolean("sound", false);;
         if (!keySound){
             //enable
-            mClick = MediaPlayer.create(this, R.raw.click);
             mAdd = MediaPlayer.create(this, R.raw.add);
         }
         else {
-            mClick = null;
             mAdd = null;
         }
     }
 
     private void backToTheNotes() {
-        if (mClick != null)
-            mClick.start();
         finish();
     }
 

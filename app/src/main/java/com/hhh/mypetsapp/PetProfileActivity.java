@@ -68,7 +68,6 @@ public class PetProfileActivity extends BaseActivity {
     String uID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
     ArrayAdapter<CharSequence> adapterSex;
-    MediaPlayer mClick;
     MediaPlayer mDelete;
 
     int DIALOG_DATE = 1;
@@ -150,11 +149,9 @@ public class PetProfileActivity extends BaseActivity {
         boolean keySound = defPref.getBoolean("sound", false);;
         if (!keySound){
             //enable
-            mClick = MediaPlayer.create(this, R.raw.click);
             mDelete = MediaPlayer.create(this, R.raw.delete);
         }
         else {
-            mClick = null;
             mDelete = null;
         }
     }
@@ -182,8 +179,6 @@ public class PetProfileActivity extends BaseActivity {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 dialogInterface.dismiss();
-                if (mClick != null)
-                    mClick.start();
             }
         });
         alertDialog.show();
@@ -248,9 +243,6 @@ public class PetProfileActivity extends BaseActivity {
         updatePet.update("sex", spinnerSex.getSelectedItem().toString().trim());
 
         uploadImage();
-
-        if (mClick != null)
-            mClick.start();
     }
 
     public void onClickBirthday(View view){
@@ -281,8 +273,6 @@ public class PetProfileActivity extends BaseActivity {
         intent.putExtra("petName", petName.getText().toString());
         intent.addFlags( Intent.FLAG_ACTIVITY_REORDER_TO_FRONT );
         startActivity(intent);
-        if (mClick != null)
-            mClick.start();
         finish();
     }
 

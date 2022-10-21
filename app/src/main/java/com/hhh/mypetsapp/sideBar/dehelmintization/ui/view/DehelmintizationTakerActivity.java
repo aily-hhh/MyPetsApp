@@ -48,7 +48,6 @@ public class DehelmintizationTakerActivity extends BaseActivity {
     private boolean isOld = false;
     String idDehelmintization;
     private SharedPreferences defPref;
-    MediaPlayer mClick;
     MediaPlayer mAdd;
 
     int DIALOG_DATE = 1;
@@ -113,8 +112,6 @@ public class DehelmintizationTakerActivity extends BaseActivity {
         backDehelmintization.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (mClick != null)
-                    mClick.start();
                 finish();
             }
         });
@@ -140,11 +137,9 @@ public class DehelmintizationTakerActivity extends BaseActivity {
         boolean keySound = defPref.getBoolean("sound", false);;
         if (!keySound){
             //enable
-            mClick = MediaPlayer.create(this, R.raw.click);
             mAdd = MediaPlayer.create(this, R.raw.add);
         }
         else {
-            mClick = null;
             mAdd = null;
         }
     }

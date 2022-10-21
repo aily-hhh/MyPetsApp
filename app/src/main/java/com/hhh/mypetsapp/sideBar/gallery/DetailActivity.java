@@ -30,22 +30,6 @@ public class DetailActivity extends AppCompatActivity {
         ViewPager2AdapterGallery viewPager2AdapterGallery = new ViewPager2AdapterGallery(
                 this, list);
         viewPager2.setAdapter(viewPager2AdapterGallery);
-        viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                super.onPageScrolled(position, positionOffset, positionOffsetPixels);
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                super.onPageSelected(position);
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-                super.onPageScrollStateChanged(state);
-            }
-        });
     }
 
     @Override

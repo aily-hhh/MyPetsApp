@@ -70,4 +70,3 @@ public class ViewPager2AdapterGallery extends RecyclerView.Adapter<ViewPager2Ada
         }
     }
 }
-

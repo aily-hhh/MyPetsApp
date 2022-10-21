@@ -53,7 +53,6 @@ public class IdentificationFragment extends Fragment {
     EditText tattooNumber;
     static EditText dateOfTattooing;
 
-    MediaPlayer mClick;
     MediaPlayer mAdd;
 
     @Nullable
@@ -117,11 +116,9 @@ public class IdentificationFragment extends Fragment {
         boolean keySound = defPref.getBoolean("sound", false);;
         if (!keySound){
             //enable
-            mClick = MediaPlayer.create(this.getContext(), R.raw.click);
             mAdd = MediaPlayer.create(this.getContext(), R.raw.add);
         }
         else {
-            mClick = null;
             mAdd = null;
         }
     }
