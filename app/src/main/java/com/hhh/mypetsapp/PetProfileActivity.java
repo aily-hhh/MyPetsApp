@@ -2,6 +2,9 @@ package com.hhh.mypetsapp;
 
 import static android.content.ContentValues.TAG;
 
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceManager;
@@ -277,41 +280,26 @@ public class PetProfileActivity extends BaseActivity {
     }
 
     public void updatePetPhoto(){
-        Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
-        photoPickerIntent.setType("image/*");
-        startActivityForResult(photoPickerIntent, GALLERY_REQUEST);
+        mGetContent.launch("image/*");
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        switch (requestCode) {
-            case PERMISSION_REQUEST:
-                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(this, "Permissions granted", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(this, "Permissions granted", Toast.LENGTH_SHORT).show();
+    ActivityResultLauncher<String> mGetContent = registerForActivityResult(new ActivityResultContracts.GetContent(),
+            new ActivityResultCallback<Uri>() {
+                @Override
+                public void onActivityResult(Uri uri) {
+                    setImage(uri);
                 }
-        }
-    }
+            });
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent imageReturnedIntent) {
-        super.onActivityResult(requestCode, resultCode, imageReturnedIntent);
-
+    private void setImage(Uri uri)
+    {
+        filePath = uri;
         Bitmap bitmap = null;
-
-        switch(requestCode) {
-            case GALLERY_REQUEST:
-                if(resultCode == RESULT_OK){
-                    filePath = imageReturnedIntent.getData();
-                    try {
-                        bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
-                        petPhoto.setImageBitmap(bitmap);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
+        try {
+            bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
+            petPhoto.setImageBitmap(bitmap);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

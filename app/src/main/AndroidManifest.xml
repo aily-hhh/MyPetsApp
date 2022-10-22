@@ -19,14 +19,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyPetsApp">
         <activity
-            android:name=".sideBar.testtt.Testtt"
+            android:name=".tessst.ScrollingActivity"
             android:exported="false"
-            android:label="@string/title_activity_testtt"
-            android:theme="@style/Theme.MyPetsApp.NoActionBar" />
-        <activity
-            android:name=".sideBar.Test"
-            android:exported="false"
-            android:label="@string/title_activity_test"
+            android:label="@string/title_activity_scrolling"
             android:theme="@style/Theme.MyPetsApp.NoActionBar" />
         <activity
             android:name=".sideBar.gallery.DetailActivity"

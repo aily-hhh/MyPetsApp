@@ -60,7 +60,8 @@
             android:layout_height="50dp"
             style="@style/buttonStyle"
             android:text="@string/update"
-            android:onClick="updateInformationForUser" />
+            android:onClick="updateInformationForUser"
+            tools:ignore="UsingOnClickInXml" />
 
     </LinearLayout>
 

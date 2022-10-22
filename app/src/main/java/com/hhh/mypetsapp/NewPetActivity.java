@@ -2,8 +2,12 @@ package com.hhh.mypetsapp;
 
 import static android.content.ContentValues.TAG;
 
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.preference.PreferenceManager;
 
 import android.Manifest;
@@ -29,6 +33,9 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.appbar.CollapsingToolbarLayout;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.annotations.Nullable;
@@ -40,11 +47,16 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.hhh.mypetsapp.databinding.ActivityNewPetBinding;
+import com.hhh.mypetsapp.sideBar.gallery.Gallery;
+import com.hhh.mypetsapp.sideBar.gallery.GalleryFragment;
 
 import java.io.IOException;
 import java.util.UUID;
 
 public class NewPetActivity extends BaseActivity {
+
+    private ActivityNewPetBinding binding;
 
     TextInputEditText petNewName, petNewSpecies, petNewBreed, petNewHair;
     EditText petNewBirthday;
@@ -82,7 +94,8 @@ public class NewPetActivity extends BaseActivity {
             setTheme(R.style.Theme_MyPetsApp);
         }
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_new_pet);
+         binding = ActivityNewPetBinding.inflate(getLayoutInflater());
+         setContentView(binding.getRoot());
 
         petNewName = (TextInputEditText) findViewById(R.id.petNewName);
         petNewSpecies = (TextInputEditText) findViewById(R.id.petNewSpecies);
@@ -92,17 +105,24 @@ public class NewPetActivity extends BaseActivity {
         spinnerNewSex = (Spinner) findViewById(R.id.spinnerNewSex);
         petNewPhoto = (ImageView) findViewById(R.id.petNewPhoto);
 
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED) {
-            requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISSION_REQUEST);
-        }
+        Toolbar toolbar = binding.toolbarNewPet;
+        setSupportActionBar(toolbar);
+        CollapsingToolbarLayout toolBarLayout = binding.toolbarLayoutNewPet;
+        toolBarLayout.setTitle(getTitle());
 
-        petNewPhoto.setOnClickListener(new View.OnClickListener() {
+        FloatingActionButton fab = binding.changeImageNewPetFab;
+        fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 updatePetNewPhoto();
             }
         });
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISSION_REQUEST);
+        }
+
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
 
@@ -129,8 +149,6 @@ public class NewPetActivity extends BaseActivity {
     }
 
     public void createInformationForPet(View view){
-        Toast.makeText(this, R.string.imageWarning, Toast.LENGTH_LONG).show();
-
         Pet pet = new Pet();
         pet.setName(petNewName.getText().toString().trim());
         pet.setSpecies(petNewSpecies.getText().toString().trim());
@@ -139,18 +157,25 @@ public class NewPetActivity extends BaseActivity {
         pet.setHair(petNewHair.getText().toString().trim());
         pet.setSex(spinnerNewSex.getSelectedItem().toString().trim());
 
-        db.collection("users").document(uID)
-                .collection("pets").document(pet.getName()).set(pet);
+        if (pet.getName().equals("") || pet.getName().isEmpty()){
+            Toast.makeText(NewPetActivity.this, R.string.inputName, Toast.LENGTH_SHORT).show();
+        }
+        else {
+            Toast.makeText(this, R.string.imageWarning, Toast.LENGTH_LONG).show();
 
-        uploadImage();
+            db.collection("users").document(uID)
+                    .collection("pets").document(pet.getName()).set(pet);
 
-        Intent intent = new Intent(NewPetActivity.this, VetPassportActivity.class);
-        intent.putExtra("petName", petNewName.getText().toString().trim());
-        intent.addFlags( Intent.FLAG_ACTIVITY_REORDER_TO_FRONT );
-        startActivity(intent);
-        if (mNewPet != null)
-            mNewPet.start();
-        finish();
+            uploadImage();
+
+            Intent intent = new Intent(NewPetActivity.this, VetPassportActivity.class);
+            intent.putExtra("petName", petNewName.getText().toString().trim());
+            intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+            startActivity(intent);
+            if (mNewPet != null)
+                mNewPet.start();
+            finish();
+        }
     }
 
     public void onClickBirthday(View view){
@@ -176,42 +201,27 @@ public class NewPetActivity extends BaseActivity {
         }
     };
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        switch (requestCode) {
-            case PERMISSION_REQUEST:
-                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(this, "Permissions granted", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(this, "Permissions granted", Toast.LENGTH_SHORT).show();
-                }
-        }
-    }
-
     private void updatePetNewPhoto(){
-        Intent photoPickerIntent = new Intent(Intent.ACTION_PICK,
-                MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(photoPickerIntent, GALLERY_REQUEST);
+        mGetContent.launch("image/*");
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent imageReturnedIntent) {
-        super.onActivityResult(requestCode, resultCode, imageReturnedIntent);
-
-        Bitmap bitmap = null;
-
-        switch(requestCode) {
-            case GALLERY_REQUEST:
-                if(resultCode == RESULT_OK){
-                    filePath = imageReturnedIntent.getData();
-                    try {
-                        bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
-                        petNewPhoto.setImageBitmap(bitmap);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+    ActivityResultLauncher<String> mGetContent = registerForActivityResult(new ActivityResultContracts.GetContent(),
+            new ActivityResultCallback<Uri>() {
+                @Override
+                public void onActivityResult(Uri uri) {
+                    setImage(uri);
                 }
+            });
+
+    private void setImage(Uri uri)
+    {
+        filePath = uri;
+        Bitmap bitmap = null;
+        try {
+            bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
+            petNewPhoto.setImageBitmap(bitmap);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

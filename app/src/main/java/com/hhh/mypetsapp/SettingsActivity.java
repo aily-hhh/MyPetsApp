@@ -11,6 +11,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceManager;
 
+import java.util.Objects;
+
 public class SettingsActivity extends BaseActivity{
 
     private SharedPreferences defPref;
@@ -58,10 +60,11 @@ public class SettingsActivity extends BaseActivity{
                 @Override
                 public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
                     if (key.equals("language")) {
-                        Intent i = getContext().getPackageManager().getLaunchIntentForPackage(getContext().getPackageName());
-                        //i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                        //startActivity(i);
-                        getActivity().recreate();
+                        Intent i = requireContext().getPackageManager().getLaunchIntentForPackage(getContext().getPackageName());
+                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        i.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                        startActivity(i);
                     }
                     else
                         getActivity().recreate();

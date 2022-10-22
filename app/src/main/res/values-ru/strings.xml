@@ -105,4 +105,5 @@
     <string name="deleteButton">Delete this pet profile</string>
     <string name="galleryImage">Gallary image</string>
     <string name="notElem">there are no elements here yet</string>
+    <string name="inputName">Enter the pet\'s name</string>
 </resources>

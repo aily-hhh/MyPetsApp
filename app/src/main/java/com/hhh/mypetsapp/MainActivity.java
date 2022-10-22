@@ -6,10 +6,12 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.graphics.Shader;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.content.Intent;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -42,7 +44,6 @@ public class MainActivity extends BaseActivity {
     String uID = FirebaseAuth.getInstance().getCurrentUser().getUid();
     ArrayAdapter<String> adapter;
     private SharedPreferences defPref;
-    private MediaPlayer mClick;;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,14 +96,6 @@ public class MainActivity extends BaseActivity {
             setTheme(R.style.Theme_MyPetsApp);
         }
 
-        boolean keySound = defPref.getBoolean("sound", false);;
-        if (!keySound){
-            //enable
-            mClick = MediaPlayer.create(this, R.raw.click);
-        }
-        else {
-            mClick = null;
-        }
         super.onResume();
     }
 
@@ -149,15 +142,11 @@ public class MainActivity extends BaseActivity {
                         Toast.makeText(MainActivity.this, R.string.userSignedOut, Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(MainActivity.this, AuthActivity.class);
                         startActivity(intent);
-                        if (mClick != null)
-                            mClick.start();
                     }
                 });
     }
 
     private void goToVetPass(ArrayAdapter adapter){
-        if (mClick != null)
-            mClick.start();
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
         alertDialog.setIcon(R.drawable.icon);
         alertDialog.setTitle("Choose your pet");
@@ -168,16 +157,12 @@ public class MainActivity extends BaseActivity {
                 intent.addFlags( Intent.FLAG_ACTIVITY_REORDER_TO_FRONT );
                 intent.putExtra("petName", adapter.getItem(i).toString());
                 startActivity(intent);
-                if (mClick != null)
-                    mClick.start();
             }
         });
         alertDialog.setPositiveButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 dialogInterface.dismiss();
-                if (mClick != null)
-                    mClick.start();
             }
         });
         alertDialog.setNeutralButton("Add a new pet", new DialogInterface.OnClickListener() {
@@ -187,8 +172,6 @@ public class MainActivity extends BaseActivity {
                 intent.addFlags( Intent.FLAG_ACTIVITY_REORDER_TO_FRONT );
                 startActivity(intent);
                 adapter.clear();
-                if (mClick != null)
-                    mClick.start();
             }
         });
         alertDialog.show();
@@ -198,15 +181,11 @@ public class MainActivity extends BaseActivity {
         Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
         intent.addFlags( Intent.FLAG_ACTIVITY_REORDER_TO_FRONT );
         startActivity(intent);
-        if (mClick != null)
-            mClick.start();
     }
 
     private void goToUserProfile(){
         Intent intent = new Intent(MainActivity.this, AboutMeActivity.class);
         intent.addFlags( Intent.FLAG_ACTIVITY_REORDER_TO_FRONT );
         startActivity(intent);
-        if (mClick != null)
-            mClick.start();
     }
 }

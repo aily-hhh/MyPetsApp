@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    android:id="@+id/layoutNewPet"
-    tools:context=".NewPetActivity">
+    tools:context=".tessst.ScrollingActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarNewPet"
@@ -30,7 +29,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_centerInParent="true"
-                android:scaleType="centerCrop"/>
+                android:scaleType="centerCrop" />
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbarNewPet"
@@ -51,6 +50,6 @@
         android:layout_marginEnd="@dimen/fab_margin"
         app:layout_anchor="@id/appBarNewPet"
         app:layout_anchorGravity="bottom|end"
-        app:srcCompat="@drawable/foot" />
+        app:srcCompat="@android:drawable/ic_dialog_email" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
