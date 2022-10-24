@@ -168,6 +168,13 @@ public class GalleryFragment extends Fragment implements PopupMenu.OnMenuItemCli
                 intent.putExtra("positionImage", pos);
                 startActivity (intent);
             }
+
+            @Override
+            public void onLongClick(Gallery gallery, CardView cardView) {
+                selectedImage = new Gallery();
+                selectedImage = gallery;
+                showPopUp(cardView);
+            }
         });
 
         recyclerGallery.setAdapter(galleryAdapter);
@@ -225,15 +232,6 @@ public class GalleryFragment extends Fragment implements PopupMenu.OnMenuItemCli
                     }
                 });
     }
-
-    private final GalleryClickListener galleryClickListener = new GalleryClickListener() {
-        @Override
-        public void onLongClick(Gallery gallery, CardView cardView) {
-            selectedImage = new Gallery();
-            selectedImage = gallery;
-            showPopUp(cardView);
-        }
-    };
 
     private void showPopUp(CardView cardView) {
         PopupMenu popupMenu = new PopupMenu(this.getContext(), cardView);

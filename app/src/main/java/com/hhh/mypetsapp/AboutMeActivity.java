@@ -7,6 +7,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.preference.PreferenceManager;
 
 import android.Manifest;
@@ -29,6 +30,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.appbar.CollapsingToolbarLayout;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.annotations.Nullable;
@@ -40,11 +43,15 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.hhh.mypetsapp.databinding.ActivityAboutMeBinding;
+import com.hhh.mypetsapp.databinding.ActivityNewPetBinding;
 
 import java.io.IOException;
 import java.util.UUID;
 
 public class AboutMeActivity extends BaseActivity {
+
+    private ActivityAboutMeBinding binding;
 
     TextInputEditText userName, userEmail;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -70,20 +77,28 @@ public class AboutMeActivity extends BaseActivity {
             setTheme(R.style.Theme_MyPetsApp);
         }
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_about_me);
+        binding = ActivityAboutMeBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
         userName = (TextInputEditText) findViewById(R.id.userName);
         userEmail = (TextInputEditText) findViewById(R.id.userEmail);
         userPhoto = (ImageView) findViewById(R.id.userPhoto);
 
-        infoFromDatabase();
+        Toolbar toolbar = binding.toolbarUser;
+        setSupportActionBar(toolbar);
+        CollapsingToolbarLayout toolBarLayout = binding.toolbarLayoutUser;
+        toolBarLayout.setTitle(getTitle());
 
-        userPhoto.setOnClickListener(new View.OnClickListener() {
+        FloatingActionButton fab = binding.changeImageUserFab;
+        fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 updateUserPhoto();
             }
         });
+
+        infoFromDatabase();
+
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
 

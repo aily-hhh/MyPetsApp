@@ -94,8 +94,8 @@ public class NewPetActivity extends BaseActivity {
             setTheme(R.style.Theme_MyPetsApp);
         }
         super.onCreate(savedInstanceState);
-         binding = ActivityNewPetBinding.inflate(getLayoutInflater());
-         setContentView(binding.getRoot());
+        binding = ActivityNewPetBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
         petNewName = (TextInputEditText) findViewById(R.id.petNewName);
         petNewSpecies = (TextInputEditText) findViewById(R.id.petNewSpecies);

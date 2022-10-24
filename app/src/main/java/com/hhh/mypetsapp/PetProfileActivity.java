@@ -7,6 +7,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.preference.PreferenceManager;
 
 import android.Manifest;
@@ -37,6 +38,8 @@ import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.appbar.CollapsingToolbarLayout;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.annotations.Nullable;
@@ -48,11 +51,14 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.hhh.mypetsapp.databinding.ActivityPetProfileBinding;
 
 import java.io.IOException;
 import java.util.UUID;
 
 public class PetProfileActivity extends BaseActivity {
+
+    private ActivityPetProfileBinding binding;
 
     TextInputEditText petName, petSpecies, petBreed, petHair;
     EditText petBirthday;
@@ -91,7 +97,8 @@ public class PetProfileActivity extends BaseActivity {
             setTheme(R.style.Theme_MyPetsApp);
         }
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_pet_profile);
+        binding = ActivityPetProfileBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
         petName = (TextInputEditText) findViewById(R.id.petName);
         petSpecies = (TextInputEditText) findViewById(R.id.petSpecies);
@@ -109,12 +116,19 @@ public class PetProfileActivity extends BaseActivity {
         adapterSex.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerSex.setAdapter(adapterSex);
 
-        petPhoto.setOnClickListener(new View.OnClickListener() {
+        Toolbar toolbar = binding.toolbarPet;
+        setSupportActionBar(toolbar);
+        CollapsingToolbarLayout toolBarLayout = binding.toolbarLayoutPet;
+        toolBarLayout.setTitle(getTitle());
+
+        FloatingActionButton fab = binding.changeImagePetFab;
+        fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 updatePetPhoto();
             }
         });
+
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
 
