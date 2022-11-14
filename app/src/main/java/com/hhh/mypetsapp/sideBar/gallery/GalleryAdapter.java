@@ -2,6 +2,8 @@ package com.hhh.mypetsapp.sideBar.gallery;
 
 import static com.firebase.ui.auth.AuthUI.getApplicationContext;
 
+import static java.util.Objects.*;
+
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -13,6 +15,8 @@ import android.content.Context;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnLongClickListener;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
@@ -21,6 +25,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHolder> {
 
@@ -61,7 +66,15 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                photoListener.onPhotoClick(position);
+                photoListener.onClick(position);
+            }
+        });
+
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                photoListener.onLongClick(image, holder.itemView);
+                return true;
             }
         });
     }
@@ -81,10 +94,5 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
             galleryImage = itemView.findViewById(R.id.galleryImage);
 
         }
-    }
-
-    public interface PhotoListener{
-        void onPhotoClick(int pos);
-        void onLongClick(Gallery gallery, CardView cardView);
     }
 }

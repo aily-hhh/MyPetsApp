@@ -140,7 +140,6 @@ public class NotesFragment extends Fragment implements PopupMenu.OnMenuItemClick
 
         @Override
         public void onLongClick(Notes currentNote, CardView cardView) {
-            selectedNote = new Notes();
             selectedNote = currentNote;
             showPopUp(cardView);
         }

@@ -31,6 +31,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -38,7 +39,6 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -49,7 +49,6 @@ import com.google.firebase.storage.UploadTask;
 import com.hhh.mypetsapp.ItemViewModel;
 import com.hhh.mypetsapp.R;
 import com.hhh.mypetsapp.databinding.FragmentGalleryBinding;
-import com.hhh.mypetsapp.sideBar.notes.NotesFragment;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -73,8 +72,7 @@ public class GalleryFragment extends Fragment implements PopupMenu.OnMenuItemCli
     MediaPlayer mDelete;
     Calendar calendar = Calendar.getInstance();
     SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy ',' HH:mm");
-    private Gallery selectedImage;
-
+    private String selectedImage;
 
     private static final int MY_READ_PERMISSION_CODE = 101;
 
@@ -108,6 +106,16 @@ public class GalleryFragment extends Fragment implements PopupMenu.OnMenuItemCli
             }
         });
 
+        SwipeRefreshLayout swipeRefreshLayout = binding.refreshLayout;
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                    @Override
+                    public void onRefresh() {
+                        images.clear();
+                        infoFromDataBase();
+                        swipeRefreshLayout.setRefreshing(false);
+                    }
+                }
+        );
 
         return root;
     }
@@ -134,20 +142,19 @@ public class GalleryFragment extends Fragment implements PopupMenu.OnMenuItemCli
             public void onSuccess(
                     UploadTask.TaskSnapshot taskSnapshot)
             {
-                Toast.makeText(GalleryFragment.this.getContext(), "Image Uploaded!!",
-                        Toast.LENGTH_SHORT).show();
+                //Toast.makeText(GalleryFragment.this.getContext(), "Image Uploaded!!",
+                 //       Toast.LENGTH_SHORT).show();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e)
             {
-                Toast.makeText(GalleryFragment.this.getContext(), "Failed " + e.getMessage(),
-                        Toast.LENGTH_SHORT).show();
+                //Toast.makeText(GalleryFragment.this.getContext(), "Failed " + e.getMessage(),
+                //        Toast.LENGTH_SHORT).show();
             }
         });
         Gallery newPhoto = new Gallery();
-        newPhoto.setId(UUID.randomUUID().toString());
-        newPhoto.setImageName(photoStr);
+        newPhoto.setId(photoStr);
         String date = dateFormat.format(calendar.getTime());
         newPhoto.setDate(date);
         db.collection("users").document(uID)
@@ -159,26 +166,26 @@ public class GalleryFragment extends Fragment implements PopupMenu.OnMenuItemCli
     private void loadImages() {
         recyclerGallery.setHasFixedSize(true);
         recyclerGallery.setLayoutManager(new GridLayoutManager(this.getContext(), 4));
-        galleryAdapter = new GalleryAdapter(this.getContext(), images, new GalleryAdapter.PhotoListener() {
-            @Override
-            public void onPhotoClick(int pos) {
-                //do something with photo
-                Intent intent  = new Intent (GalleryFragment.this.getContext(), DetailActivity.class);
-                intent.putExtra("imagesGallery", images);
-                intent.putExtra("positionImage", pos);
-                startActivity (intent);
-            }
-
-            @Override
-            public void onLongClick(Gallery gallery, CardView cardView) {
-                selectedImage = new Gallery();
-                selectedImage = gallery;
-                showPopUp(cardView);
-            }
-        });
-
+        galleryAdapter = new GalleryAdapter(this.getContext(), images, photoListener);
         recyclerGallery.setAdapter(galleryAdapter);
     }
+
+    private final PhotoListener photoListener = new PhotoListener() {
+        @Override
+        public void onClick(int pos) {
+            //do something with photo
+            Intent intent  = new Intent (GalleryFragment.this.getContext(), DetailActivity.class);
+            intent.putExtra("imagesGallery", images);
+            intent.putExtra("positionImage", pos);
+            startActivity (intent);
+        }
+
+        @Override
+        public void onLongClick(String gallery, View view) {
+            selectedImage = gallery;
+            showPopUp(view);
+        }
+    };
 
     @Override
     public void onResume() {
@@ -219,7 +226,7 @@ public class GalleryFragment extends Fragment implements PopupMenu.OnMenuItemCli
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 Log.d(TAG,document.getId() + " => " + document.getData());
                                 Gallery newImage = document.toObject(Gallery.class);
-                                images.add(newImage.imageName);
+                                images.add(newImage.getId());
                             }
                             loadImages();
                             if (images.isEmpty())
@@ -233,8 +240,8 @@ public class GalleryFragment extends Fragment implements PopupMenu.OnMenuItemCli
                 });
     }
 
-    private void showPopUp(CardView cardView) {
-        PopupMenu popupMenu = new PopupMenu(this.getContext(), cardView);
+    private void showPopUp(View view) {
+        PopupMenu popupMenu = new PopupMenu(this.getContext(), view);
         popupMenu.setOnMenuItemClickListener(this);
         popupMenu.inflate(R.menu.delete_menu);
         popupMenu.show();
@@ -254,7 +261,11 @@ public class GalleryFragment extends Fragment implements PopupMenu.OnMenuItemCli
                             mDelete.start();
                         db.collection("users").document(uID)
                                 .collection("pets").document(name)
-                                .collection("gallery").document(selectedImage.getId()).delete();
+                                .collection("gallery").document(selectedImage).delete();
+
+                        StorageReference deleteItem = storageReference.child("images/" + selectedImage);
+                        deleteItem.delete();
+
                         Toast.makeText(GalleryFragment.this.getContext(), R.string.deleted, Toast.LENGTH_SHORT).show();
                         dialogInterface.dismiss();
                         images.clear();
