@@ -32,6 +32,12 @@
                 android:layout_centerInParent="true"
                 android:scaleType="centerCrop"/>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="160dp"
+                android:layout_gravity="bottom"
+                android:background="@drawable/scrim"/>
+
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbarPet"
                 android:layout_width="match_parent"

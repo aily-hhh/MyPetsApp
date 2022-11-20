@@ -105,11 +105,6 @@ public class NewPetActivity extends BaseActivity {
         spinnerNewSex = (Spinner) findViewById(R.id.spinnerNewSex);
         petNewPhoto = (ImageView) findViewById(R.id.petNewPhoto);
 
-        Toolbar toolbar = binding.toolbarNewPet;
-        setSupportActionBar(toolbar);
-        CollapsingToolbarLayout toolBarLayout = binding.toolbarLayoutNewPet;
-        toolBarLayout.setTitle(getTitle());
-
         FloatingActionButton fab = binding.changeImageNewPetFab;
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -216,12 +211,14 @@ public class NewPetActivity extends BaseActivity {
     private void setImage(Uri uri)
     {
         filePath = uri;
-        Bitmap bitmap = null;
-        try {
-            bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
-            petNewPhoto.setImageBitmap(bitmap);
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (filePath != null) {
+            Bitmap bitmap = null;
+            try {
+                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
+                petNewPhoto.setImageBitmap(bitmap);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 

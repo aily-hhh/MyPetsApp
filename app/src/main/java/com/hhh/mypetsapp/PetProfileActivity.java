@@ -60,17 +60,18 @@ public class PetProfileActivity extends BaseActivity {
 
     private ActivityPetProfileBinding binding;
 
-    TextInputEditText petName, petSpecies, petBreed, petHair;
+    TextInputEditText petSpecies, petBreed, petHair;
     EditText petBirthday;
     Spinner spinnerSex;
     Button buttonBack, buttonUpdate, buttonDelete;
+
+    private String petName;
 
     ImageView petPhoto;
     private Uri filePath;
     private SharedPreferences defPref;
     FirebaseStorage storage;
     StorageReference storageReference;
-    private final int GALLERY_REQUEST = 1;
     private final int PERMISSION_REQUEST = 0;
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -100,7 +101,6 @@ public class PetProfileActivity extends BaseActivity {
         binding = ActivityPetProfileBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        petName = (TextInputEditText) findViewById(R.id.petName);
         petSpecies = (TextInputEditText) findViewById(R.id.petSpecies);
         petBreed = (TextInputEditText) findViewById(R.id.petBreed);
         petHair = (TextInputEditText) findViewById(R.id.petHair);
@@ -115,11 +115,6 @@ public class PetProfileActivity extends BaseActivity {
                 R.array.sexArray, android.R.layout.simple_spinner_item);
         adapterSex.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerSex.setAdapter(adapterSex);
-
-        Toolbar toolbar = binding.toolbarPet;
-        setSupportActionBar(toolbar);
-        CollapsingToolbarLayout toolBarLayout = binding.toolbarLayoutPet;
-        toolBarLayout.setTitle(getTitle());
 
         FloatingActionButton fab = binding.changeImagePetFab;
         fab.setOnClickListener(new View.OnClickListener() {
@@ -155,7 +150,10 @@ public class PetProfileActivity extends BaseActivity {
         });
 
         Intent intent = getIntent();
-        petName.setText(intent.getStringExtra("petName"));
+        petName = intent.getStringExtra("petName");
+        Toolbar toolbar = binding.toolbarPet;
+        toolbar.setTitle(petName);
+        setSupportActionBar(toolbar);
 
         infoFromDatabase();
     }
@@ -181,7 +179,7 @@ public class PetProfileActivity extends BaseActivity {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 DocumentReference deletePet = db.collection("users").document(uID)
-                        .collection("pets").document(petName.getText().toString());
+                        .collection("pets").document(petName);
                 Toast.makeText(PetProfileActivity.this, R.string.deleted, Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(PetProfileActivity.this, MainActivity.class);
                 intent.addFlags( Intent.FLAG_ACTIVITY_REORDER_TO_FRONT );
@@ -203,7 +201,7 @@ public class PetProfileActivity extends BaseActivity {
 
     private void infoFromDatabase() {
         final DocumentReference docRef = db.collection("users").document(uID)
-                .collection("pets").document(petName.getText().toString());
+                .collection("pets").document(petName);
         docRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot snapshot,
@@ -215,8 +213,6 @@ public class PetProfileActivity extends BaseActivity {
 
                 if (snapshot != null && snapshot.exists()) {
                     Log.d(TAG, "Current data: " + snapshot.getData());
-                    petName.setText(snapshot.get("name").toString());
-                    petName.setEnabled(false);
                     if(snapshot.get("species") != null)
                         petSpecies.setText(snapshot.get("species").toString());
                     if(snapshot.get("breed") != null)
@@ -252,7 +248,7 @@ public class PetProfileActivity extends BaseActivity {
 
     public void updateInformationForPet(View view){
         DocumentReference updatePet = db.collection("users").document(uID)
-                .collection("pets").document(petName.getText().toString());
+                .collection("pets").document(petName);
         updatePet.update("breed", petBreed.getText().toString().trim());
         updatePet.update("hair", petHair.getText().toString().trim());
         updatePet.update("species", petSpecies.getText().toString().trim());
@@ -287,7 +283,7 @@ public class PetProfileActivity extends BaseActivity {
 
     private void backToVetPass(){
         Intent intent = new Intent(PetProfileActivity.this, VetPassportActivity.class);
-        intent.putExtra("petName", petName.getText().toString());
+        intent.putExtra("petName", petName);
         intent.addFlags( Intent.FLAG_ACTIVITY_REORDER_TO_FRONT );
         startActivity(intent);
         finish();
@@ -308,12 +304,14 @@ public class PetProfileActivity extends BaseActivity {
     private void setImage(Uri uri)
     {
         filePath = uri;
-        Bitmap bitmap = null;
-        try {
-            bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
-            petPhoto.setImageBitmap(bitmap);
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (filePath != null) {
+            Bitmap bitmap = null;
+            try {
+                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
+                petPhoto.setImageBitmap(bitmap);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -324,7 +322,7 @@ public class PetProfileActivity extends BaseActivity {
             StorageReference ref
                     = storageReference.child("images/"+photoStr);
             DocumentReference updatePhoto = db.collection("users").document(uID)
-                    .collection("pets").document(petName.getText().toString());
+                    .collection("pets").document(petName);
             updatePhoto.addSnapshotListener(new EventListener<DocumentSnapshot>() {
                 @Override
                 public void onEvent(@Nullable DocumentSnapshot snapshot,
@@ -366,7 +364,7 @@ public class PetProfileActivity extends BaseActivity {
                         public void onSuccess(
                                 UploadTask.TaskSnapshot taskSnapshot)
                         {
-                            Toast.makeText(PetProfileActivity.this, "Image Uploaded!!",
+                            Toast.makeText(PetProfileActivity.this, R.string.imageUploaded,
                                     Toast.LENGTH_SHORT).show();
                         }
                     }).addOnFailureListener(new OnFailureListener() {
@@ -384,7 +382,7 @@ public class PetProfileActivity extends BaseActivity {
     public void onBackPressed() {
         super.onBackPressed();
         Intent intent = new Intent(PetProfileActivity.this, VetPassportActivity.class);
-        intent.putExtra("petName", petName.getText().toString());
+        intent.putExtra("petName", petName);
         intent.addFlags( Intent.FLAG_ACTIVITY_REORDER_TO_FRONT );
         startActivity(intent);
         finish();

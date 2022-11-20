@@ -34,7 +34,7 @@
     <string name="typeVaccine">Type of vaccine</string>
     <string name="dateVaccine">Date of vaccination</string>
     <string name="validUntil">Valid until</string>
-    <string name="title_activity_settings">SettingsActivity</string>
+    <string name="title_activity_settings" translatable="false">SettingsActivity</string>
     <string name="title_notes">Title</string>
     <string name="type_of_surgical_procedure">Type of surgical procedure</string>
     <string name="title">Title: </string>
@@ -76,7 +76,7 @@
     <string name="identification">Identification</string>
     <string name="from_external_parasites">From external parasites</string>
     <string name="treatment_from_external_parasites">Treatment from external parasites</string>
-    <string name="title_activity_pet_profile">PetProfileActivity</string>
+    <string name="title_activity_pet_profile" translatable="false">PetProfileActivity</string>
     <string name="back">Back</string>
     <string name="dateHeat">Date of heat</string>
     <string name="dateMating">Date of mating</string>
@@ -98,7 +98,13 @@
     <string name="userInf_title">Delete a user profile</string>
     <string name="theme">Theme</string>
     <string name="themeChoose">Dark theme</string>
-    <string name="galleryImage">Gallary image</string>
+    <string name="galleryImage">Gallery image</string>
     <string name="notElem">there are no elements here yet</string>
     <string name="inputName">Enter the pet\'s name</string>
+    <string name="chooseYourPet">Choose your pet</string>
+    <string name="addNewPet">Add a new pet</string>
+    <string name="cancel">Cancel</string>
+    <string name="pin_unpin">Pin/Unpin</string>
+    <string name="deleteSimple">Delete</string>
+    <string name="unpinned">Unpinned</string>
 </resources>

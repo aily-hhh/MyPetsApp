@@ -1,0 +1,33 @@
+<resources>
+    <!-- Reply Preference -->
+    <string-array name="language_entries">
+        <item>English</item>
+        <item>Русский</item>
+    </string-array>
+
+    <string-array name="language_values">
+        <item>English</item>
+        <item>Русский</item>
+    </string-array>
+
+    <string-array name="sexArray">
+        <item>Не выбрано</item>
+        <item>Мужской</item>
+        <item>Женский</item>
+    </string-array>
+
+    <string-array name="typeVaccineArray">
+        <item>От бешенства</item>
+        <item>Другое</item>
+    </string-array>
+
+    <string-array name="typeSurgicalArray">
+        <item>Стерилизация/Кастрация</item>
+        <item>Стоматологическая хирургия</item>
+        <item>Онкологическая хирургия</item>
+        <item>Офтальмологическая хирургия</item>
+        <item>Ортопедическая хирургия</item>
+        <item>Кардиохирургия</item>
+        <item>Другое</item>
+    </string-array>
+</resources>

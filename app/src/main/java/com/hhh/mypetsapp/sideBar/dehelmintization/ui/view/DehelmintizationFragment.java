@@ -102,7 +102,7 @@ public class DehelmintizationFragment extends Fragment implements PopupMenu.OnMe
         }
         else {
             //light
-            this.getView().setBackgroundResource(R.drawable.background_notes);
+            this.getView().setBackgroundResource(R.drawable.side_nav_bar);
         }
 
         boolean keySound = defPref.getBoolean("sound", false);;

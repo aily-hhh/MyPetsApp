@@ -36,6 +36,7 @@
                 android:id="@+id/toolbarNewPet"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
+                app:title=""
                 app:layout_collapseMode="pin"
                 app:popupTheme="@style/Theme.MyPetsApp.PopupOverlay" />
 

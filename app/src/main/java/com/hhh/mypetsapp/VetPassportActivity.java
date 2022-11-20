@@ -118,7 +118,7 @@ public class VetPassportActivity extends BaseActivity{
         }
         else {
             //light
-            layoutHeader.setBackgroundResource(R.drawable.background_notes);
+            layoutHeader.setBackgroundResource(R.drawable.side_nav_bar);
         }
 
         addedPets.setOnClickListener(new View.OnClickListener() {

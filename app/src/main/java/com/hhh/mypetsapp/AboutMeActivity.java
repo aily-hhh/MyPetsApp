@@ -8,13 +8,16 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.preference.PreferenceManager;
 
 import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
@@ -54,6 +57,7 @@ public class AboutMeActivity extends BaseActivity {
     private ActivityAboutMeBinding binding;
 
     TextInputEditText userName, userEmail;
+    Toolbar toolbarAnim;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     String uID = FirebaseAuth.getInstance().getCurrentUser().getUid();
     ImageView userPhoto;
@@ -61,7 +65,6 @@ public class AboutMeActivity extends BaseActivity {
     FirebaseStorage storage;
     StorageReference storageReference;
     private SharedPreferences defPref;
-    private final int GALLERY_REQUEST = 1;
     private final int PERMISSION_REQUEST = 0;
 
     @Override
@@ -83,11 +86,6 @@ public class AboutMeActivity extends BaseActivity {
         userName = (TextInputEditText) findViewById(R.id.userName);
         userEmail = (TextInputEditText) findViewById(R.id.userEmail);
         userPhoto = (ImageView) findViewById(R.id.userPhoto);
-
-        Toolbar toolbar = binding.toolbarUser;
-        setSupportActionBar(toolbar);
-        CollapsingToolbarLayout toolBarLayout = binding.toolbarLayoutUser;
-        toolBarLayout.setTitle(getTitle());
 
         FloatingActionButton fab = binding.changeImageUserFab;
         fab.setOnClickListener(new View.OnClickListener() {
@@ -155,8 +153,12 @@ public class AboutMeActivity extends BaseActivity {
                         db.collection("users").document(uID)
                                 .update("email", FirebaseAuth.getInstance().getCurrentUser().getEmail().toString());
                     }
-                    if (snapshot.get("userName") != null)
+                    if (snapshot.get("userName") != null) {
                         userName.setText(snapshot.get("userName").toString());
+                        toolbarAnim = binding.toolbarAnim;
+                        toolbarAnim.setTitle(userName.getText());
+                        setSupportActionBar(toolbarAnim);
+                    }
                 } else {
                     Log.d(TAG, "Current data: null");
                 }
@@ -185,12 +187,14 @@ public class AboutMeActivity extends BaseActivity {
     private void setImage(Uri uri)
     {
         filePath = uri;
-        Bitmap bitmap = null;
-        try {
-            bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
-            userPhoto.setImageBitmap(bitmap);
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (filePath != null) {
+            Bitmap bitmap = null;
+            try {
+                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
+                userPhoto.setImageBitmap(bitmap);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -242,7 +246,7 @@ public class AboutMeActivity extends BaseActivity {
                                 public void onSuccess(
                                         UploadTask.TaskSnapshot taskSnapshot)
                                 {
-                                    Toast.makeText(AboutMeActivity.this, "Image Uploaded!!",
+                                    Toast.makeText(AboutMeActivity.this, R.string.imageUploaded,
                                                     Toast.LENGTH_SHORT).show();
                                 }
                             }).addOnFailureListener(new OnFailureListener() {

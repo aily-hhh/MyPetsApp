@@ -96,7 +96,7 @@ public class TreatmentFragment extends Fragment implements PopupMenu.OnMenuItemC
         }
         else {
             //light
-            this.getView().setBackgroundResource(R.drawable.background_notes);
+            this.getView().setBackgroundResource(R.drawable.side_nav_bar);
         }
 
         boolean keySound = defPref.getBoolean("sound", false);;

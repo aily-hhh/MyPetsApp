@@ -105,7 +105,7 @@ public class IdentificationFragment extends Fragment {
         boolean key = defPref.getBoolean("theme", false);
         if (key){
             //dark
-            this.getView().setBackgroundResource(R.drawable.side_nav_bar_dark);
+            this.getView().setBackgroundResource(R.drawable.side_nav_bar);
             saveIdentification.setColorFilter(R.color.forButtons);
         }
         else {

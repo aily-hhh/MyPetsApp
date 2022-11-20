@@ -149,7 +149,7 @@ public class MainActivity extends BaseActivity {
     private void goToVetPass(ArrayAdapter adapter){
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
         alertDialog.setIcon(R.drawable.icon);
-        alertDialog.setTitle("Choose your pet");
+        alertDialog.setTitle(R.string.chooseYourPet);
         alertDialog.setAdapter(adapter, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
@@ -159,13 +159,13 @@ public class MainActivity extends BaseActivity {
                 startActivity(intent);
             }
         });
-        alertDialog.setPositiveButton("Cancel", new DialogInterface.OnClickListener() {
+        alertDialog.setPositiveButton(R.string.cancel, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 dialogInterface.dismiss();
             }
         });
-        alertDialog.setNeutralButton("Add a new pet", new DialogInterface.OnClickListener() {
+        alertDialog.setNeutralButton(R.string.addNewPet, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 Intent intent = new Intent(MainActivity.this, NewPetActivity.class);
