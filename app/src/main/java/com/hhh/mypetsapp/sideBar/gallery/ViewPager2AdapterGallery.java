@@ -17,6 +17,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.github.chrisbanes.photoview.PhotoView;
+import com.github.chrisbanes.photoview.PhotoViewAttacher;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.storage.FirebaseStorage;
@@ -28,6 +30,7 @@ public class ViewPager2AdapterGallery extends RecyclerView.Adapter<ViewPager2Ada
 
     private List<String> images;
     private Context ctx;
+    PhotoViewAttacher attacher;
 
     public ViewPager2AdapterGallery(Context ctx, List<String> images){
         this.ctx = ctx;
@@ -44,6 +47,8 @@ public class ViewPager2AdapterGallery extends RecyclerView.Adapter<ViewPager2Ada
     @Override
     public void onBindViewHolder(@NonNull ViewPager2AdapterGallery.ViewHolder holder, int position) {
         String image = images.get(position);
+        attacher = new PhotoViewAttacher(holder.galleryDetailImageView);
+        attacher.setMaximumScale(4.0f);
 
         Task<Uri> storageReference = FirebaseStorage.getInstance().getReference()
                 .child("images/"+image).getDownloadUrl()
@@ -54,6 +59,7 @@ public class ViewPager2AdapterGallery extends RecyclerView.Adapter<ViewPager2Ada
                         Glide.with(getApplicationContext())
                                 .load(uri)
                                 .into(holder.galleryDetailImageView);
+                        attacher.update();
                     }
                 });
     }
@@ -65,7 +71,7 @@ public class ViewPager2AdapterGallery extends RecyclerView.Adapter<ViewPager2Ada
 
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        ImageView galleryDetailImageView;
+        PhotoView galleryDetailImageView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

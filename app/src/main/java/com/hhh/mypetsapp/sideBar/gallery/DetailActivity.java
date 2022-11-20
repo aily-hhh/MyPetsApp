@@ -56,7 +56,7 @@ public class DetailActivity extends AppCompatActivity {
     }
 }
 
-    class ZoomOutPageTransformer implements ViewPager2.PageTransformer {
+class ZoomOutPageTransformer implements ViewPager2.PageTransformer {
     private static final float MIN_SCALE = 0.85f;
     private static final float MIN_ALPHA = 0.5f;
 

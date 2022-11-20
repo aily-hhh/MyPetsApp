@@ -18,8 +18,8 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onRestart() {
-        super.onRestart();
+    protected void onResume() {
+        super.onResume();
         Locale locale = new Locale.Builder().setLanguage(getLocale(this)).build();
 
         if (!locale.equals(mCurrentLocale)) {
