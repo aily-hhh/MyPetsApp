@@ -156,20 +156,6 @@ public class VetPassportActivity extends BaseActivity{
         }
     }
 
-    private void signOut(){
-        AuthUI.getInstance()
-                .signOut(VetPassportActivity.this)
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        Toast.makeText(VetPassportActivity.this, R.string.userSignedOut, Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(VetPassportActivity.this, AuthActivity.class);
-                        intent.addFlags( Intent.FLAG_ACTIVITY_REORDER_TO_FRONT );
-                        startActivity(intent);
-                    }
-                });
-    }
-
     private void infoFromDB() {
         db.collection("users").document(uID)
                 .collection("pets").document(name)

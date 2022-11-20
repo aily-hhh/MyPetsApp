@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,6 +20,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -138,6 +140,7 @@ public class NotesFragment extends Fragment implements PopupMenu.OnMenuItemClick
             startActivity(intent);
         }
 
+        @RequiresApi(api = Build.VERSION_CODES.Q)
         @Override
         public void onLongClick(Notes currentNote, CardView cardView) {
             selectedNote = currentNote;
@@ -145,10 +148,12 @@ public class NotesFragment extends Fragment implements PopupMenu.OnMenuItemClick
         }
     };
 
+    @RequiresApi(api = Build.VERSION_CODES.Q)
     private void showPopUp(CardView cardView) {
         PopupMenu popupMenu = new PopupMenu(this.getContext(), cardView);
         popupMenu.setOnMenuItemClickListener(this);
         popupMenu.inflate(R.menu.notes_menu);
+        popupMenu.setForceShowIcon(true);
         popupMenu.show();
     }
 

@@ -10,6 +10,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -24,6 +25,7 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -180,6 +182,7 @@ public class GalleryFragment extends Fragment implements PopupMenu.OnMenuItemCli
             startActivity (intent);
         }
 
+        @RequiresApi(api = Build.VERSION_CODES.Q)
         @Override
         public void onLongClick(String gallery, View view) {
             selectedImage = gallery;
@@ -240,10 +243,12 @@ public class GalleryFragment extends Fragment implements PopupMenu.OnMenuItemCli
                 });
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.Q)
     private void showPopUp(View view) {
         PopupMenu popupMenu = new PopupMenu(this.getContext(), view);
         popupMenu.setOnMenuItemClickListener(this);
         popupMenu.inflate(R.menu.delete_menu);
+        popupMenu.setForceShowIcon(true);
         popupMenu.show();
     }
 
