@@ -1,16 +1,18 @@
 package com.hhh.mypetsapp.sideBar.identification;
 
 import android.app.DatePickerDialog;
+import android.app.DatePickerDialog.OnDateSetListener;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.widget.DatePicker;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 
 import java.util.Calendar;
 
-public class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
+public class DatePickerFragment extends DialogFragment implements OnDateSetListener {
 
     private DatePickerFragment.OnDateReceiveCallBack mListener;
     private Context context;
@@ -26,12 +28,12 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
     }
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         this.context = context;
 
         try {
-            mListener = (DatePickerFragment.OnDateReceiveCallBack) context;
+            mListener = (OnDateReceiveCallBack) context;
         } catch (ClassCastException e) {
             throw new ClassCastException(context.toString() + " must implement OnDateSetListener");
         }
@@ -45,6 +47,7 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
             mListener.onDateReceive2(dayOfMonth,monthOfYear,year);
     }
 
+    @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 

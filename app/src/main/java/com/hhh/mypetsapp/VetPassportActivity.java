@@ -42,11 +42,12 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.storage.FirebaseStorage;
 import com.hhh.mypetsapp.databinding.ActivityVetPassportBinding;
+import com.hhh.mypetsapp.sideBar.identification.DatePickerFragment;
 import com.hhh.mypetsapp.sideBar.identification.IdentificationFragment;
 
 import java.time.LocalDate;
 
-public class VetPassportActivity extends BaseActivity{
+public class VetPassportActivity extends BaseActivity implements DatePickerFragment.OnDateReceiveCallBack{
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityVetPassportBinding binding;

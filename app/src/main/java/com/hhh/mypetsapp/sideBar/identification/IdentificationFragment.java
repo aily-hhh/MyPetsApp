@@ -33,7 +33,7 @@ import com.hhh.mypetsapp.ItemViewModel;
 import com.hhh.mypetsapp.R;
 import com.hhh.mypetsapp.databinding.FragmentIdentificationBinding;
 
-public class IdentificationFragment extends Fragment {
+public class IdentificationFragment extends Fragment{
 
     private FragmentIdentificationBinding binding;
     private SharedPreferences defPref;
@@ -134,7 +134,7 @@ public class IdentificationFragment extends Fragment {
     public void showDatePickerDialog(View v, int id)
     {
         DialogFragment newFragment = new DatePickerFragment(id);
-        newFragment.show(getFragmentManager(), "datePicker");
+        newFragment.show(getActivity().getSupportFragmentManager(), "datePicker");
     }
 
     private void infoFromDataBase(){
