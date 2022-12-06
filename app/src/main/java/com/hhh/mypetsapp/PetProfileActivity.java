@@ -182,7 +182,6 @@ public class PetProfileActivity extends BaseActivity {
                         .collection("pets").document(petName);
                 Toast.makeText(PetProfileActivity.this, R.string.deleted, Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(PetProfileActivity.this, MainActivity.class);
-                intent.addFlags( Intent.FLAG_ACTIVITY_REORDER_TO_FRONT );
                 startActivity(intent);
                 deletePet.delete();
                 if (mDelete != null)

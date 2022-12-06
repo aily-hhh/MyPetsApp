@@ -58,7 +58,6 @@ public class VetPassportActivity extends BaseActivity implements DatePickerFragm
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     String uID = FirebaseAuth.getInstance().getCurrentUser().getUid();
-    ArrayAdapter<String> adapter;
 
     TextView namePetProfile;
     TextView agePetProfile;

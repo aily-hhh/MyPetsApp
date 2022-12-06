@@ -27,7 +27,7 @@ public class AuthActivity extends BaseActivity {
     // display inside our app.
     List<AuthUI.IdpConfig> providers = Arrays.asList(
 
-            new AuthUI.IdpConfig.AnonymousBuilder().build(),
+            //new AuthUI.IdpConfig.AnonymousBuilder().build(),
 
             // below is the line for adding
             // email and password authentication.

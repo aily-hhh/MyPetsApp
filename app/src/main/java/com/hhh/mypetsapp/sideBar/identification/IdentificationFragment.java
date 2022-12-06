@@ -123,11 +123,11 @@ public class IdentificationFragment extends Fragment{
         }
     }
 
-    public static void onClickMicro(int year, int monthOfYear, int dayOfMonth) {
+    public static void onClickMicro(int dayOfMonth, int monthOfYear, int year) {
         dateOfMicrochipping.setText(dayOfMonth + "." + monthOfYear + "." + year);
     }
 
-    public static void onClickTattoo(int year, int monthOfYear, int dayOfMonth) {
+    public static void onClickTattoo(int dayOfMonth, int monthOfYear, int year) {
         dateOfTattooing.setText(dayOfMonth + "." + monthOfYear + "." + year);
     }
 
